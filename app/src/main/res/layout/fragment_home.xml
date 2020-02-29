@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/body_background"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:scaleType="fitStart"
+        android:background="@color/main_background"
+        android:src="@drawable/icon_home_logo"
+        />
+    <!-- 热点关注 -->
+    <LinearLayout
+        android:id="@+id/home_ll_hot"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:orientation="horizontal"
+        android:background="@color/view_background"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_5"
+            android:src="@drawable/icon_home_hot"/>
+
+        <com.chanfinecloud.cflforemployee.weidgt.adtext.ADTextView
+            android:id="@+id/home_ad_hot"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/view_background"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/home_tv_order"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableTop="@drawable/icon_home_order"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/dp_18"
+            android:paddingTop="@dimen/dp_18"
+            android:text="@string/txt_order"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/sp_14" />
+        <TextView
+            android:id="@+id/home_tv_complain"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableTop="@drawable/icon_home_complain"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/dp_18"
+            android:paddingTop="@dimen/dp_18"
+            android:text="@string/txt_complain"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/sp_14" />
+        <TextView
+            android:id="@+id/home_tv_notice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableTop="@drawable/icon_home_notice"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/dp_18"
+            android:paddingTop="@dimen/dp_18"
+            android:text="@string/txt_notice"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/sp_14" />
+        <TextView
+            android:id="@+id/home_tv_inspect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableTop="@drawable/icon_home_inspect"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/dp_18"
+            android:paddingTop="@dimen/dp_18"
+            android:text="@string/txt_inspect"
+            android:textColor="@color/text_primary"
+            android:visibility="gone"
+            android:textSize="@dimen/sp_14" />
+        <TextView
+            android:id="@+id/home_tv_task"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableTop="@drawable/icon_home_task"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/dp_18"
+            android:paddingTop="@dimen/dp_18"
+            android:text="@string/txt_task"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
+    <com.chanfinecloud.cflforemployee.weidgt.easyindicator.EasyIndicator
+        android:id="@+id/home_ei_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:indicator_line_show="true"
+        app:indicator_line_height="@dimen/dp_3"
+        app:indicator_height="@dimen/dp_42"
+        app:indicator_normal_color="@color/text_primary"
+        app:indicator_selected_color="@color/text_night"
+        app:indicator_line_color="@color/text_night"
+        app:indicator_textSize="@dimen/sp_14"
+        app:indicator_width="0dp"/>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/home_vp_tab"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
