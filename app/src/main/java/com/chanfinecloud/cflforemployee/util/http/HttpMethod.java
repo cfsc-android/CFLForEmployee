@@ -10,7 +10,8 @@ public enum HttpMethod {
     Get(0x02),
     Upload(0x03),
     Download(0x04),
-    PostJson(0x05);
+    PostJson(0x05),
+    Put(0x06);
     private final int type;
 
     HttpMethod(int type) {

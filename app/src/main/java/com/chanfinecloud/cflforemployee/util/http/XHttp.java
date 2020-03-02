@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import org.xutils.common.Callback;
 import org.xutils.common.util.LogUtil;
+import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
@@ -67,6 +68,24 @@ public class XHttp {
 
         }
         return x.http().post(params, callback);
+    }
+
+    /**
+     * 发送异步put请求
+     *
+     * @param <T>
+     */
+    public static <T> Callback.Cancelable Put(String url, Object object, Callback.CommonCallback<T> callback) {
+        LogUtil.d(url);
+        RequestParams params = new RequestParams(url);
+        if (null != object) {
+            Gson gson=new Gson();
+            LogUtil.d(gson.toJson(object));
+            params.setAsJsonContent(true);
+            params.setBodyContent(gson.toJson(object));
+
+        }
+        return x.http().request(HttpMethod.PUT,params, callback);
     }
 
     /**

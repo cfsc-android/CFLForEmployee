@@ -65,6 +65,9 @@ public class BaseHandler extends Handler {
             case Upload:
                 taskList.add(XHttp.UpLoadFile(requestParam.getUrl(),requestParam.getPostRequestMap(),requestParam.getCallback()));
                 break;
+            case Put:
+                taskList.add(XHttp.Put(requestParam.getUrl(),requestParam.getPostJsonRequest(),requestParam.getCallback()));
+                break;
         }
     }
     private void alertLogin(final Activity activity){
