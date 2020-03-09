@@ -10,7 +10,6 @@ import android.os.Message;
 import android.view.Window;
 import android.widget.Toast;
 
-
 import com.chanfinecloud.cflforemployee.R;
 import com.chanfinecloud.cflforemployee.entity.Transition;
 import com.chanfinecloud.cflforemployee.receiver.NetBroadcastReceiver;
@@ -18,6 +17,7 @@ import com.chanfinecloud.cflforemployee.util.AtyTransitionUtil;
 import com.chanfinecloud.cflforemployee.util.ExitAppUtils;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.NetworkUtils;
+import com.chanfinecloud.cflforemployee.util.PermissionUtil;
 import com.chanfinecloud.cflforemployee.util.StatusBarUtil;
 import com.chanfinecloud.cflforemployee.util.http.RequestParam;
 import com.chanfinecloud.cflforemployee.weidgt.ProgressDialogView;
@@ -28,11 +28,14 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import static com.chanfinecloud.cflforemployee.CFLApplication.activityTrans;
 import static com.chanfinecloud.cflforemployee.base.BaseHandler.HTTP_REQUEST;
+import static com.chanfinecloud.cflforemployee.util.PermissionUtil.REQUEST_CODE;
 
 
 /**
@@ -52,6 +55,8 @@ public class BaseActivity extends FragmentActivity implements NetBroadcastReceiv
 
     public boolean isNetConnect=true;
     protected static BaseHandler handler;
+    protected boolean permission=false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +105,17 @@ public class BaseActivity extends FragmentActivity implements NetBroadcastReceiv
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         netBroadcastReceiver = new NetBroadcastReceiver();
         registerReceiver(netBroadcastReceiver, filter);
+    }
+
+
+    //检查应用权限
+    protected void checkAppPermission(){
+        String[] unGetPermission = PermissionUtil.checkPermission(this);
+        if(unGetPermission!=null){
+            ActivityCompat.requestPermissions(this,unGetPermission, REQUEST_CODE);
+        }else{
+            permission=true;
+        }
     }
 
     @Override
@@ -331,5 +347,17 @@ public class BaseActivity extends FragmentActivity implements NetBroadcastReceiv
     //显示Toast
     protected void showToast(String content){
         Toast.makeText(this,content, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (REQUEST_CODE == requestCode) {
+            for (int grantResult : grantResults) {
+                if (grantResult == -1) {
+                    permission=false;
+                }
+            }
+        }
     }
 }

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-
 import com.chanfinecloud.cflforemployee.R;
 import com.chanfinecloud.cflforemployee.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.entity.BaseEntity;
@@ -152,6 +151,12 @@ public class LaunchActivity extends BaseActivity {
                     }
                 })
                 .register();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PgyUpdateManager.unRegister();
     }
 
     /**
@@ -347,6 +352,5 @@ public class LaunchActivity extends BaseActivity {
         });
         sendRequest(requestParam,false);
     }
-
 
 }

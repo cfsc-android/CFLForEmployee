@@ -55,7 +55,7 @@ public class HomeTodoFragment extends BaseFragment {
     public HomeTodoFragment() {
     }
 
-    public static HomeTodoFragment newInstance(HomeTodoType type) {
+    public HomeTodoFragment newInstance(HomeTodoType type) {
         HomeTodoFragment fragment = new HomeTodoFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG, type.getType());

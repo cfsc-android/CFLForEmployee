@@ -1,27 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/dp_10"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
     android:orientation="vertical">
-    <TextView
-        android:id="@+id/workflow_action_name"
+    <LinearLayout
+        android:id="@+id/workflow_action_toggle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/text_primary"
-        android:textSize="@dimen/sp_14"/>
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/workflow_action_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:gravity="center"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"/>
+        <ImageView
+            android:id="@+id/workflow_action_toggle_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_action_down"/>
+    </LinearLayout>
+
     <FrameLayout
+        android:id="@+id/workflow_action_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <!--是否接受工单-->
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_10">
+        <!--=======================工单流程处理 start============================-->
+        <!--客服接单-->
         <LinearLayout
-            android:id="@+id/workflow_action_accept_order"
+            android:id="@+id/workflow_action_customer_accept_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容"/>
+                <EditText
+                    android:id="@+id/customer_accept_order_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:hint="输入补充内容"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/customer_accept_order_reject"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_margin="@dimen/dp_20"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_box_night_shape"
+                    android:text="拒绝"
+                    android:textColor="@color/text_desc"
+                    android:textSize="@dimen/sp_16" />
+                <Button
+                    android:id="@+id/customer_accept_order_confirm"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_margin="@dimen/dp_20"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_solid_night_shape"
+                    android:text="接受"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/sp_16" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <!--客服指派职能主管-->
+        <LinearLayout
+            android:id="@+id/workflow_action_customer_dispatch_director"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="主管"/>
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/customer_dispatch_director_director"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_10"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容"/>
+                <EditText
+                    android:id="@+id/customer_dispatch_director_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:hint="输入补充内容"/>
+            </LinearLayout>
             <Button
-                android:id="@+id/accept_order_reject"
+                android:id="@+id/customer_dispatch_director_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_margin="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_solid_night_shape"
+                android:text="提交"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <!--主管分发员工-->
+        <LinearLayout
+            android:id="@+id/workflow_action_director_dispatch_employee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="员工"/>
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/director_dispatch_employee_employee"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_10"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容"/>
+                <EditText
+                    android:id="@+id/director_dispatch_employee_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:hint="输入补充内容"/>
+            </LinearLayout>
+            <Button
+                android:id="@+id/director_dispatch_employee_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_margin="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_solid_night_shape"
+                android:text="提交"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <!--员工检视工单-->
+        <LinearLayout
+            android:id="@+id/workflow_action_employee_check_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容"/>
+                <EditText
+                    android:id="@+id/employee_check_order_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:hint="输入检视内容"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/employee_check_order_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_margin="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_solid_night_shape"
+                android:text="提交"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <!--员工现场拍照-->
+        <LinearLayout
+            android:id="@+id/workflow_action_employee_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="照片"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/employee_photo_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容"/>
+                <EditText
+                    android:id="@+id/employee_photo_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:hint="输入补充内容"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/employee_photo_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_margin="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_solid_night_shape"
+                android:text="提交"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <!--员工接单/拒接-->
+        <LinearLayout
+            android:id="@+id/workflow_action_employee_accept"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+            <Button
+                android:id="@+id/employee_accept_reject"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="@dimen/dp_40"
@@ -32,24 +322,522 @@
                 android:textColor="@color/text_desc"
                 android:textSize="@dimen/sp_16" />
             <Button
-                android:id="@+id/accept_order_confirm"
+                android:id="@+id/employee_accept_confirm"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="@dimen/dp_40"
                 android:layout_margin="@dimen/dp_20"
                 android:layout_gravity="center"
                 android:background="@drawable/btn_solid_night_shape"
-                android:text="接单"
+                android:text="接受"
                 android:textColor="@color/text_white"
                 android:textSize="@dimen/sp_16" />
         </LinearLayout>
 
+        <!--员工发送费用-->
         <LinearLayout
+            android:id="@+id/workflow_action_employee_send_cost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="费用"/>
+                <EditText
+                    android:id="@+id/employee_send_cost_cost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:gravity="top"
+                    android:inputType="numberDecimal"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容"/>
+                <EditText
+                    android:id="@+id/employee_send_cost_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:hint="输入补充内容"/>
+            </LinearLayout>
 
+            <Button
+                android:id="@+id/employee_send_cost_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_solid_night_shape"
+                android:text="提交"
+                android:textColor="@color/text_white"
+                android:textSize="16sp" />
         </LinearLayout>
+
+        <!--员工完成工单-->
+        <LinearLayout
+            android:id="@+id/workflow_action_employee_finish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="照片"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/employee_finish_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容"/>
+                <EditText
+                    android:id="@+id/employee_finish_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:hint="输入补充内容"/>
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/employee_finish_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_margin="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_solid_night_shape"
+                android:text="完成"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+        <!--=======================工单流程处理 end============================-->
+
+        <!--=======================投诉流程处理 start============================-->
+        <!--客服检视投诉-->
+        <LinearLayout
+            android:id="@+id/workflow_action_customer_check_complain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容"/>
+                <EditText
+                    android:id="@+id/customer_check_complain_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:hint="输入检视内容"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/customer_check_complain_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_margin="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_solid_night_shape"
+                android:text="提交"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <!--客服电话沟通业主-->
+        <LinearLayout
+            android:id="@+id/workflow_action_customer_contact_household"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容"/>
+                <EditText
+                    android:id="@+id/customer_contact_household_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:hint="输入沟通内容"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/customer_contact_household_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_margin="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_solid_night_shape"
+                android:text="提交"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <!--客服分发职能主管-->
+        <LinearLayout
+            android:id="@+id/workflow_action_customer_dispatch_director_c"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="主管"/>
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/customer_dispatch_director_c_director"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_10"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容"/>
+                <EditText
+                    android:id="@+id/customer_dispatch_director_c_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:hint="输入补充内容"/>
+            </LinearLayout>
+            <Button
+                android:id="@+id/customer_dispatch_director_c_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_margin="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_solid_night_shape"
+                android:text="提交"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <!--职能主管现场查看-->
+        <LinearLayout
+            android:id="@+id/workflow_action_director_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="照片"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/director_photo_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容"/>
+                <EditText
+                    android:id="@+id/director_photo_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:hint="输入补充内容"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/director_photo_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_margin="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_solid_night_shape"
+                android:text="提交"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <!--职能主管填写解决方案-->
+        <LinearLayout
+            android:id="@+id/workflow_action_director_write_plan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="方案"/>
+                <EditText
+                    android:id="@+id/director_write_plan_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:hint="输入方案内容"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/director_write_plan_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_margin="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_solid_night_shape"
+                android:text="提交"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <!--主管分发员工-->
+        <LinearLayout
+            android:id="@+id/workflow_action_director_dispatch_employee_c"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="员工"/>
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/director_dispatch_employee_c_employee"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_10"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容"/>
+                <EditText
+                    android:id="@+id/director_dispatch_employee_c_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:hint="输入补充内容"/>
+            </LinearLayout>
+            <Button
+                android:id="@+id/director_dispatch_employee_c_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_margin="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_solid_night_shape"
+                android:text="提交"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <!--员工实施投诉解决方案-->
+        <LinearLayout
+            android:id="@+id/workflow_action_employee_finish_c"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="照片"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/employee_finish_c_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容"/>
+                <EditText
+                    android:id="@+id/employee_finish_c_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:hint="输入补充内容"/>
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/employee_finish_c_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_margin="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_solid_night_shape"
+                android:text="完成"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <!--实施投诉解决方案是否完成-->
+        <LinearLayout
+            android:id="@+id/workflow_action_plan_finish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+            <Button
+                android:id="@+id/plan_finish_reject"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_40"
+                android:layout_margin="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_box_night_shape"
+                android:text="未完成"
+                android:textColor="@color/text_desc"
+                android:textSize="@dimen/sp_16" />
+            <Button
+                android:id="@+id/plan_finish_confirm"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_40"
+                android:layout_margin="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_solid_night_shape"
+                android:text="完成"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <!--=======================投诉流程处理 end============================-->
+
     </FrameLayout>
 
 

@@ -14,6 +14,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 
@@ -36,6 +38,14 @@ public class CFLApplication extends Application {
 
     public static Map<Class, Transition> activityTrans=new HashMap<>();
 
+    private RefWatcher refWatcher;
+
+    public static RefWatcher getRefWatcher(Context context) {
+        CFLApplication application = (CFLApplication) context.getApplicationContext();
+        return application.refWatcher;
+    }
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -47,11 +57,13 @@ public class CFLApplication extends Application {
         PgyCrashManager.register();
         UMConfigure.init(this,"5cb6d69f0cafb29742001079","umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
 
+        refWatcher = LeakCanary.install(this);
+
     }
 
     {
-        PlatformConfig.setWeixin("wx9e26096ae63f011d", "22ba1246fa64314bb6cc97a7c10ac25c");
-        PlatformConfig.setQQZone("101569547", "00261965102559b4d8732e9a747c771a");
+        PlatformConfig.setWeixin("wxd49aa41b4120e385", "56aeeca40a0f8165ac28c102795255ff");
+        PlatformConfig.setQQZone("101852439", "acddc3daf0e8f674cde2068ccdf282ea");
     }
 
     public static CFLApplication getInstance() {

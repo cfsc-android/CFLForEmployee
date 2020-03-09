@@ -626,4 +626,5 @@ public class OrderEntity implements Serializable {
     public void setDepartmentLeaderName(String departmentLeaderName) {
         this.departmentLeaderName = departmentLeaderName;
     }
+
 }

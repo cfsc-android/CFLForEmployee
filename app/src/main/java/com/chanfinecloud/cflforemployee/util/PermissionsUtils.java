@@ -49,7 +49,7 @@ public class PermissionsUtils {
         List<String> mPermissionList = new ArrayList<>();
         //逐个判断你要的权限是否已经通过
         for (int i = 0; i < permissions.length; i++) {
-            if (ContextCompat.checkSelfPermission(context, permissions[i]) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(context.getApplicationContext(), permissions[i]) != PackageManager.PERMISSION_GRANTED) {
                 mPermissionList.add(permissions[i]);//添加还未授予的权限
             }
         }

@@ -61,7 +61,6 @@ import static com.chanfinecloud.cflforemployee.base.Config.SD_APP_DIR_NAME;
 
 @ContentView(R.layout.activity_add_order)
 public class AddOrderActivity extends BaseActivity {
-    private static final String[] permission={Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
     private static final int REQUEST_CODE_CHOOSE=0x001;
 
     @ViewInject(R.id.toolbar_tv_title)
@@ -84,7 +83,6 @@ public class AddOrderActivity extends BaseActivity {
     private List<ImageViewInfo> dataList=new ArrayList<>();
     private GridLayoutManager mGridLayoutManager;
     private ImagePreviewListAdapter adapter;
-    private boolean permissionFlag;
     private List<OrderTypeEntity> orderTypeEntityList;
     private List<String> problemData=new ArrayList<>();
     private List<OrderTypeEntity> problemTypeData=new ArrayList<>();
@@ -95,34 +93,20 @@ public class AddOrderActivity extends BaseActivity {
     private MaterialSpinnerAdapter projectDataAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        checkAppPermission();
         super.onCreate(savedInstanceState);
         toolbar_title.setText("创建工单");
         //默认不弹出软键盘
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-        PermissionsUtils.getInstance().checkPermissions(this, permission, new PermissionsUtils.IPermissionsResult() {
-            @Override
-            public void success() {
-                LogUtil.d("申请权限通过");
-                permissionFlag=true;
-            }
-
-            @Override
-            public void fail() {
-                LogUtil.d("申请权限未通过");
-                permissionFlag=false;
-            }
-        });
-
         dataList.add(new ImageViewInfo("plus"));
-        add_order_rlv_pic.setLayoutManager(mGridLayoutManager = new GridLayoutManager(this,3));
+        add_order_rlv_pic.setLayoutManager(mGridLayoutManager = new GridLayoutManager(this,4));
         adapter=new ImagePreviewListAdapter(this,R.layout.item_workflow_image_perview_list,dataList);
         add_order_rlv_pic.setAdapter(adapter);
         add_order_rlv_pic.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if(position==dataList.size()-1){
-                    if(permissionFlag){
+                    if(permission){
                         PhotoPicker.pick(AddOrderActivity.this,10,true,REQUEST_CODE_CHOOSE);
                     }else{
                         showToast("相机或读写手机存储的权限被禁止！");
@@ -293,12 +277,6 @@ public class AddOrderActivity extends BaseActivity {
             }
             compress(_List);
         }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionsUtils.getInstance().onRequestPermissionsResult(this,requestCode,permissions,grantResults);
     }
 
     //压缩图片

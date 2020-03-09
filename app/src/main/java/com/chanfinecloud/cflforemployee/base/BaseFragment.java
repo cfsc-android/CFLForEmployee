@@ -9,12 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.chanfinecloud.cflforemployee.CFLApplication;
 import com.chanfinecloud.cflforemployee.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.base.BaseHandler;
 import com.chanfinecloud.cflforemployee.entity.Transition;
 import com.chanfinecloud.cflforemployee.util.AtyTransitionUtil;
 import com.chanfinecloud.cflforemployee.util.http.RequestParam;
 import com.chanfinecloud.cflforemployee.weidgt.ProgressDialogView;
+import com.squareup.leakcanary.RefWatcher;
 
 import org.xutils.common.Callback;
 import org.xutils.x;
@@ -72,6 +74,8 @@ public class BaseFragment extends Fragment {
             if(!taskList.get(i).isCancelled())
                 taskList.get(i).cancel();
         }
+        RefWatcher refWatcher = CFLApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
     }
 
     protected void sendRequest(RequestParam requestParam, boolean showProgressDialog){
