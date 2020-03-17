@@ -321,8 +321,7 @@ public class ComplainDetailActivity extends BaseActivity {
     private void initAction(WorkflowProcessesEntity lastWorkflow){
         FragmentTransaction transaction=fragmentManager.beginTransaction();
         if((lastWorkflow.getAssigneeId().equals(SharedPreferencesManage.getUserInfo().getUser().getId())
-                ||"客服中心确认工单".equals(lastWorkflow.getNodeName())
-                ||"回访".equals(lastWorkflow.getNodeName()))
+                ||"客服沟通确认".equals(lastWorkflow.getNodeName()))
                 &&(lastWorkflow.getOperationInfos()!=null&&lastWorkflow.getOperationInfos().size()>0)) {
             Bundle bundle = new Bundle();
             bundle.putBoolean("permission", permission);
@@ -332,10 +331,10 @@ public class ComplainDetailActivity extends BaseActivity {
             bundle.putSerializable("operationInfos", (Serializable) lastWorkflow.getOperationInfos());
             if(workflowActionFragment !=null){
                 workflowActionFragment =new WorkflowActionFragment().newInstance(bundle);
-                transaction.replace(R.id.order_detail_workflow_action_fl, workflowActionFragment).commit();
+                transaction.replace(R.id.complain_detail_workflow_action_fl, workflowActionFragment).commit();
             }else{
                 workflowActionFragment =new WorkflowActionFragment().newInstance(bundle);
-                transaction.add(R.id.order_detail_workflow_action_fl, workflowActionFragment).commit();
+                transaction.add(R.id.complain_detail_workflow_action_fl, workflowActionFragment).commit();
             }
         }else{
             if(workflowActionFragment !=null){
