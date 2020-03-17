@@ -81,6 +81,7 @@ public class UserInfoEntity implements Serializable {
          * accountNonLocked : true
          * credentialsNonExpired : true
          * accountNonExpired : true
+         * department:
          */
 
         private String id;
@@ -118,6 +119,16 @@ public class UserInfoEntity implements Serializable {
         private boolean credentialsNonExpired;
         private boolean accountNonExpired;
         private List<SysRolesBean> sysRoles;
+
+        private String department;
+
+        public String getDepartment() {
+            return department;
+        }
+
+        public void setDepartment(String department) {
+            this.department = department;
+        }
 
         public String getId() {
             return id;

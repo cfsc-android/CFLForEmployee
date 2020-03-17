@@ -3,77 +3,77 @@
 3    package="com.umeng.message.lib.test" >
 4
 5    <uses-sdk
-5-->D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7625113750605873150.xml:5:5-74
+5-->D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger2501997587170215549.xml:5:5-74
 6        android:minSdkVersion="14"
-6-->D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7625113750605873150.xml:5:15-41
+6-->D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger2501997587170215549.xml:5:15-41
 7        android:targetSdkVersion="26" />
-7-->D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7625113750605873150.xml:5:42-71
+7-->D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger2501997587170215549.xml:5:42-71
 8
 9    <instrumentation
-9-->D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7625113750605873150.xml:11:5-15:76
+9-->D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger2501997587170215549.xml:11:5-15:76
 10        android:name="android.support.test.runner.AndroidJUnitRunner"
-10-->D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7625113750605873150.xml:11:22-83
+10-->D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger2501997587170215549.xml:11:22-83
 11        android:functionalTest="false"
-11-->D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7625113750605873150.xml:14:22-52
+11-->D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger2501997587170215549.xml:14:22-52
 12        android:handleProfiling="false"
-12-->D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7625113750605873150.xml:13:22-53
+12-->D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger2501997587170215549.xml:13:22-53
 13        android:label="Tests for com.umeng.message.lib.test"
-13-->D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7625113750605873150.xml:15:22-74
+13-->D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger2501997587170215549.xml:15:22-74
 14        android:targetPackage="com.umeng.message.lib.test" />
-14-->D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7625113750605873150.xml:12:22-72
+14-->D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger2501997587170215549.xml:12:22-72
 15
 16    <uses-permission android:name="android.permission.INTERNET" />
-16-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-67
-16-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:22-64
+16-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-67
+16-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:22-64
 17    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-17-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:5-79
-17-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:22-76
+17-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:5-79
+17-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:22-76
 18    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-18-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:5-76
-18-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:22-73
+18-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:5-76
+18-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:22-73
 19    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-19-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:14:5-81
-19-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:14:22-78
+19-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:14:5-81
+19-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:14:22-78
 20    <uses-permission android:name="android.permission.WAKE_LOCK" />
-20-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:5-68
-20-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:22-65
+20-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:5-68
+20-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:22-65
 21    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-21-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:16:5-75
-21-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:16:22-72
+21-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:16:5-75
+21-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:16:22-72
 22    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_ADDED" />
-22-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:5-82
-22-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:22-79
+22-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:5-82
+22-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:22-79
 23    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_CHANGED" />
-23-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:18:5-84
-23-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:18:22-81
+23-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:18:5-84
+23-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:18:22-81
 24    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_INSTALL" />
-24-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:19:5-84
-24-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:19:22-81
+24-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:19:5-84
+24-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:19:22-81
 25    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED" />
-25-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:20:5-85
-25-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:20:22-82
+25-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:20:5-85
+25-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:20:22-82
 26    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
-26-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:21:5-75
-26-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:21:22-72
+26-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:21:5-75
+26-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:21:22-72
 27    <uses-permission android:name="android.permission.GET_TASKS" />
-27-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:22:5-68
-27-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:22:22-65
+27-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:22:5-68
+27-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:22:22-65
 28    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-28-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:23:5-81
-28-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:23:22-78
+28-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:23:5-81
+28-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:23:22-78
 29    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-29-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:24:5-79
-29-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:24:22-76
+29-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:24:5-79
+29-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:24:22-76
 30    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-30-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:25:5-76
-30-->[__tested_artifact__::UMLibrary] D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:25:22-73
+30-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:25:5-76
+30-->[__tested_artifact__::UMLibrary] D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:25:22-73
 31
 32    <application android:debuggable="true" >
-32-->D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7625113750605873150.xml:7:5-9:19
-32-->D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7625113750605873150.xml:7:18-43
+32-->D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger2501997587170215549.xml:7:5-9:19
+32-->D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger2501997587170215549.xml:7:18-43
 33        <uses-library android:name="android.test.runner" />
-33-->D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7625113750605873150.xml:8:9-60
-33-->D:\android_proj\CFL_android\chanfine-cloud-platform-android-yg\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7625113750605873150.xml:8:23-57
+33-->D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger2501997587170215549.xml:8:9-60
+33-->D:\android_pro\CFL\chanfine-cloud-platform-android-yz\UMLibrary\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger2501997587170215549.xml:8:23-57
 34    </application>
 35
 36</manifest>
