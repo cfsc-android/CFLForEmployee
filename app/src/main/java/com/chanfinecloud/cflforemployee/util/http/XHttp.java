@@ -23,11 +23,11 @@ public class XHttp {
      * 发送get请求
      * @param <T>
      */
-    public static <T> Callback.Cancelable Get(String url, Map<String, String> map, Callback.CommonCallback<T> callback){
+    public static <T> Callback.Cancelable Get(String url, Map<String, String> map, Callback.CommonCallback<T> callback,boolean authorization){
         LogUtil.d(url);
         RequestParams params=new RequestParams(url);
-        TokenEntity tokenEntity = SharedPreferencesManage.getToken();
-        params.addHeader("Authorization","bearer "+tokenEntity.getAccess_token());
+        if(authorization)
+            params=addAuthorization(params);
         if(null!=map){
             for(Map.Entry<String, String> entry : map.entrySet()){
                 params.addQueryStringParameter(entry.getKey(), entry.getValue());
@@ -41,9 +41,11 @@ public class XHttp {
      *
      * @param <T>
      */
-    public static <T> Callback.Cancelable Post(String url, Map<String, Object> map, Callback.CommonCallback<T> callback) {
+    public static <T> Callback.Cancelable Post(String url, Map<String, Object> map, Callback.CommonCallback<T> callback,boolean authorization) {
         LogUtil.d(url);
         RequestParams params = new RequestParams(url);
+        if(authorization)
+            params=addAuthorization(params);
         if (null != map) {
             for (Map.Entry<String, Object> entry : map.entrySet()) {
                 params.addParameter(entry.getKey(), entry.getValue());
@@ -57,9 +59,11 @@ public class XHttp {
      *
      * @param <T>
      */
-    public static <T> Callback.Cancelable PostJson(String url, Object object, Callback.CommonCallback<T> callback) {
+    public static <T> Callback.Cancelable PostJson(String url, Object object, Callback.CommonCallback<T> callback,boolean authorization) {
         LogUtil.d(url);
         RequestParams params = new RequestParams(url);
+        if(authorization)
+            params=addAuthorization(params);
         if (null != object) {
             Gson gson=new Gson();
             LogUtil.d(gson.toJson(object));
@@ -75,9 +79,11 @@ public class XHttp {
      *
      * @param <T>
      */
-    public static <T> Callback.Cancelable Put(String url, Object object, Callback.CommonCallback<T> callback) {
+    public static <T> Callback.Cancelable Put(String url, Object object, Callback.CommonCallback<T> callback,boolean authorization) {
         LogUtil.d(url);
         RequestParams params = new RequestParams(url);
+        if(authorization)
+            params=addAuthorization(params);
         if (null != object) {
             Gson gson=new Gson();
             LogUtil.d(gson.toJson(object));
@@ -93,8 +99,11 @@ public class XHttp {
      *
      * @param <T>
      */
-    public static <T> Callback.Cancelable UpLoadFile(String url, Map<String, Object> map, Callback.CommonCallback<T> callback) {
+    public static <T> Callback.Cancelable UpLoadFile(String url, Map<String, Object> map, Callback.CommonCallback<T> callback,boolean authorization) {
+        LogUtil.d(url);
         RequestParams params = new RequestParams(url);
+        if(authorization)
+            params=addAuthorization(params);
         if (null != map) {
             for (Map.Entry<String, Object> entry : map.entrySet()) {
 //                params.addParameter(entry.getKey(), entry.getValue());
@@ -110,12 +119,24 @@ public class XHttp {
      *
      * @param <T>
      */
-    public static <T> Callback.Cancelable DownLoadFile(String url, String filepath, Callback.ProgressCallback<T> callback) {
+    public static <T> Callback.Cancelable DownLoadFile(String url, String filepath, Callback.ProgressCallback<T> callback,boolean authorization) {
+        LogUtil.d(url);
         RequestParams params = new RequestParams(url);
+        if(authorization)
+            params=addAuthorization(params);
         //设置断点续传
         params.setAutoResume(true);
         params.setSaveFilePath(filepath);
         return x.http().get(params, callback);
+    }
+
+    //请求头Authorization
+    private static RequestParams addAuthorization(RequestParams params){
+        TokenEntity tokenEntity = SharedPreferencesManage.getToken();
+        if(tokenEntity!=null){
+            params.addHeader("Authorization","bearer "+tokenEntity.getAccess_token());
+        }
+        return params;
     }
 
 }

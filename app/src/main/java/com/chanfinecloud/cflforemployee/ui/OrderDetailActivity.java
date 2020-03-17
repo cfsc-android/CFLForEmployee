@@ -21,9 +21,9 @@ import com.chanfinecloud.cflforemployee.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.entity.BaseEntity;
 import com.chanfinecloud.cflforemployee.entity.EventBusMessage;
 import com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity;
-import com.chanfinecloud.cflforemployee.entity.OrderEntity;
 import com.chanfinecloud.cflforemployee.entity.ResourceEntity;
-import com.chanfinecloud.cflforemployee.entity.WorkflowOrderEntity;
+import com.chanfinecloud.cflforemployee.entity.WorkflowProcessesEntity;
+import com.chanfinecloud.cflforemployee.entity.WorkflowType;
 import com.chanfinecloud.cflforemployee.util.FilePathUtil;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
@@ -106,10 +106,11 @@ public class OrderDetailActivity extends BaseActivity {
     private SmartRefreshLayout order_detail__srl;
 
     private String orderId;
-    private List<WorkflowOrderEntity> data=new ArrayList<>();
+    private List<WorkflowProcessesEntity> data=new ArrayList<>();
     private NoUnderlineSpan mNoUnderlineSpan;
     private FragmentManager fragmentManager;
-    private OrderWorkflowActionFragment orderWorkflowActionFragment;
+    private WorkflowActionFragment workflowActionFragment;
+
     public static final int REQUEST_CODE_CHOOSE=0x001;
     public String resourceKey;
     @Override
@@ -143,7 +144,7 @@ public class OrderDetailActivity extends BaseActivity {
                 break;
             case R.id.toolbar_tv_action:
                 Bundle bundle=new Bundle();
-                bundle.putSerializable("orderWorkflowList", (Serializable) data);
+                bundle.putSerializable("workflowProcessesList", (Serializable) data);
                 startActivity(WorkflowStepActivity.class,bundle);
                 break;
         }
@@ -151,7 +152,7 @@ public class OrderDetailActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(EventBusMessage message){
-        if("OrderDetailRefresh".equals(message.getMessage())){
+        if("WorkflowActionRefresh".equals(message.getMessage())){
             getData();
         }
     }
@@ -165,7 +166,10 @@ public class OrderDetailActivity extends BaseActivity {
 
     private void getData(){
         RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"/work/order/api/user/findOrderById/"+orderId);
+        requestParam.setUrl(BASE_URL+"/workflow/api/detail/"+orderId);
+        Map<String,String> map=new HashMap<>();
+        map.put("type", WorkflowType.Order.getType());
+        requestParam.setGetRequestMap(map);
         requestParam.setMethod(HttpMethod.Get);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
@@ -174,13 +178,11 @@ public class OrderDetailActivity extends BaseActivity {
                 LogUtils.d("result",result);
                 BaseEntity<OrderDetailsEntity> baseEntity= JsonParse.parse(result,OrderDetailsEntity.class);
                 if(baseEntity.isSuccess()){
-                    initView(baseEntity.getResult().getWorkOrder());
-                    List<WorkflowOrderEntity> workflowList=baseEntity.getResult().getWorkOrderDetailsVo();
-                    WorkflowOrderEntity lastWorkflow=workflowList.get(workflowList.size()-1);
+                    initView(baseEntity.getResult());
+                    List<WorkflowProcessesEntity> workflowList=baseEntity.getResult().getProcesses();
+                    WorkflowProcessesEntity lastWorkflow=workflowList.get(workflowList.size()-1);
+                    initAction(lastWorkflow);
                     if(lastWorkflow.getOperationInfos()!=null&&lastWorkflow.getOperationInfos().size()>0){
-                        if(!"回访".equals(lastWorkflow.getNodeName())){
-                            initAction(lastWorkflow);
-                        }
                         workflowList.remove(workflowList.size()-1);
                     }
                     initWorkFlow(workflowList);
@@ -207,83 +209,89 @@ public class OrderDetailActivity extends BaseActivity {
         sendRequest(requestParam,true);
     }
 
-    private void initWorkFlow(final List<WorkflowOrderEntity> list){
-        order_detail_workflow_ll.removeAllViews();
-        for (int i = 0; i < list.size(); i++) {
-            View v = LayoutInflater.from(this).inflate(R.layout.item_workflow_list,null);
-            ImageView item_workflow_avatar=v.findViewById(R.id.item_workflow_avatar);
-            TextView item_workflow_user_name=v.findViewById(R.id.item_workflow_user_name);
-            TextView item_workflow_user_role=v.findViewById(R.id.item_workflow_user_role);
-            TextView item_workflow_tel=v.findViewById(R.id.item_workflow_tel);
-            TextView item_workflow_content=v.findViewById(R.id.item_workflow_content);
-            RecyclerView item_workflow_pic=v.findViewById(R.id.item_workflow_pic);
-            TextView item_workflow_node=v.findViewById(R.id.item_workflow_node);
-            TextView item_workflow_time=v.findViewById(R.id.item_workflow_time);
-            WorkflowOrderEntity item=list.get(i);
-            if(TextUtils.isEmpty(item.getAvatarUrl())){
-                Glide.with(this)
-                        .load(R.drawable.ic_launcher)
-                        .circleCrop()
-                        .error(R.drawable.ic_no_img)
-                        .into(item_workflow_avatar);
-            }else{
-                Glide.with(this)
-                        .load(item.getAvatarUrl())
-                        .circleCrop()
-                        .error(R.drawable.ic_no_img)
-                        .into(item_workflow_avatar);
-            }
-            item_workflow_user_name.setText(item.getHandlerName());
-            item_workflow_user_role.setText(item.getShortDesc());
-            if (!TextUtils.isEmpty(item.getHandlerMobile())) {
-                item_workflow_tel.setText(item.getHandlerMobile());
-            } else {
-                item_workflow_tel.setVisibility(View.GONE);
-            }
-            if (item_workflow_tel.getText() instanceof Spannable) {
-                Spannable s = (Spannable) item_workflow_tel.getText();
-                s.setSpan(mNoUnderlineSpan, 0, s.length(), Spanned.SPAN_MARK_MARK);
-            }
-            item_workflow_content.setText(item.getRemark());
-            item_workflow_node.setText(item.getNodeName());
-            item_workflow_time.setText(item.getCreateTime());
-            List<ResourceEntity> picData=item.getResourceValues();
-            if(picData!=null&&picData.size()>0){
-                final List<ImageViewInfo> data=new ArrayList<>();
-                for (int j = 0; j < picData.size(); j++) {
-                    data.add(new ImageViewInfo(picData.get(j).getUrl()));
+    private void initWorkFlow(List<WorkflowProcessesEntity> list){
+        if(list.size()>0){
+            order_detail_workflow_ll.removeAllViews();
+            for (int i = 0; i < list.size(); i++) {
+                View v = LayoutInflater.from(this).inflate(R.layout.item_workflow_list,null);
+                ImageView item_workflow_avatar=v.findViewById(R.id.item_workflow_avatar);
+                TextView item_workflow_user_name=v.findViewById(R.id.item_workflow_user_name);
+                TextView item_workflow_user_role=v.findViewById(R.id.item_workflow_user_role);
+                TextView item_workflow_tel=v.findViewById(R.id.item_workflow_tel);
+                TextView item_workflow_content=v.findViewById(R.id.item_workflow_content);
+                RecyclerView item_workflow_pic=v.findViewById(R.id.item_workflow_pic);
+                TextView item_workflow_node=v.findViewById(R.id.item_workflow_node);
+                TextView item_workflow_time=v.findViewById(R.id.item_workflow_time);
+                WorkflowProcessesEntity item=list.get(i);
+                if(TextUtils.isEmpty(item.getAvatarUrl())){
+                    Glide.with(this)
+                            .load(R.drawable.ic_launcher)
+                            .circleCrop()
+                            .error(R.drawable.ic_no_img)
+                            .into(item_workflow_avatar);
+                }else{
+                    Glide.with(this)
+                            .load(item.getAvatarUrl())
+                            .circleCrop()
+                            .error(R.drawable.ic_no_img)
+                            .into(item_workflow_avatar);
                 }
-                final ImagePreviewListAdapter imageAdapter=new ImagePreviewListAdapter(this,R.layout.item_workflow_image_perview_list,data);
-                final GridLayoutManager mGridLayoutManager = new GridLayoutManager(this,4);
-                item_workflow_pic.setLayoutManager(mGridLayoutManager);
-                item_workflow_pic.setAdapter(imageAdapter);
-                item_workflow_pic.addOnItemTouchListener(new com.chad.library.adapter.base.listener.OnItemClickListener() {
-                    @Override
-                    public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        for (int k = mGridLayoutManager.findFirstVisibleItemPosition(); k < adapter.getItemCount(); k++) {
-                            View itemView = mGridLayoutManager.findViewByPosition(k);
-                            Rect bounds = new Rect();
-                            if (itemView != null) {
-                                ImageView imageView = itemView.findViewById(R.id.iiv_item_image_preview);
-                                imageView.getGlobalVisibleRect(bounds);
-                            }
-                            //计算返回的边界
-                            imageAdapter.getItem(k).setBounds(bounds);
-                        }
-                        PreviewBuilder.from(OrderDetailActivity.this)
-                                .setImgs(data)
-                                .setCurrentIndex(position)
-                                .setSingleFling(true)
-                                .setType(PreviewBuilder.IndicatorType.Number)
-                                .start();
+                item_workflow_user_name.setText(item.getHandlerName());
+                item_workflow_user_role.setText(item.getBriefDesc());
+                if (!TextUtils.isEmpty(item.getHandlerMobile())) {
+                    item_workflow_tel.setText(item.getHandlerMobile());
+                } else {
+                    item_workflow_tel.setVisibility(View.GONE);
+                }
+                if (item_workflow_tel.getText() instanceof Spannable) {
+                    Spannable s = (Spannable) item_workflow_tel.getText();
+                    s.setSpan(mNoUnderlineSpan, 0, s.length(), Spanned.SPAN_MARK_MARK);
+                }
+                item_workflow_content.setText(item.getRemark());
+                item_workflow_node.setText(item.getNodeName());
+                item_workflow_time.setText(item.getCreateTime());
+                List<ResourceEntity> picData=item.getResourceValues();
+                if(picData!=null&&picData.size()>0){
+                    final List<ImageViewInfo> data=new ArrayList<>();
+                    for (int j = 0; j < picData.size(); j++) {
+                        data.add(new ImageViewInfo(picData.get(j).getUrl()));
                     }
-                });
+                    final ImagePreviewListAdapter imageAdapter=new ImagePreviewListAdapter(this,R.layout.item_workflow_image_perview_list,data);
+                    final GridLayoutManager mGridLayoutManager = new GridLayoutManager(this,4);
+                    item_workflow_pic.setLayoutManager(mGridLayoutManager);
+                    item_workflow_pic.setAdapter(imageAdapter);
+                    item_workflow_pic.addOnItemTouchListener(new com.chad.library.adapter.base.listener.OnItemClickListener() {
+                        @Override
+                        public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            for (int k = mGridLayoutManager.findFirstVisibleItemPosition(); k < adapter.getItemCount(); k++) {
+                                View itemView = mGridLayoutManager.findViewByPosition(k);
+                                Rect bounds = new Rect();
+                                if (itemView != null) {
+                                    ImageView imageView = itemView.findViewById(R.id.iiv_item_image_preview);
+                                    imageView.getGlobalVisibleRect(bounds);
+                                }
+                                //计算返回的边界
+                                imageAdapter.getItem(k).setBounds(bounds);
+                            }
+                            PreviewBuilder.from(OrderDetailActivity.this)
+                                    .setImgs(data)
+                                    .setCurrentIndex(position)
+                                    .setSingleFling(true)
+                                    .setType(PreviewBuilder.IndicatorType.Number)
+                                    .start();
+                        }
+                    });
+                }
+                order_detail_workflow_ll.addView(v);
             }
-            order_detail_workflow_ll.addView(v);
+            order_detail_workflow_ll.setVisibility(View.VISIBLE);
+        }else{
+            order_detail_workflow_ll.setVisibility(View.GONE);
         }
+
     }
 
-    private void initView(OrderEntity workOrder){
+    private void initView(OrderDetailsEntity workOrder){
         if(TextUtils.isEmpty(workOrder.getCreatorAvatarUrl())){
             Glide.with(this)
                     .load(R.drawable.icon_user_default)
@@ -298,9 +306,9 @@ public class OrderDetailActivity extends BaseActivity {
                     .into(order_detail_user_avatar);
         }
         order_detail_user_name.setText(workOrder.getCreateName());
-        order_detail_user_room.setText(workOrder.getRoomNameAll());
+        order_detail_user_room.setText(workOrder.getBriefDesc());
         order_detail_order_type.setText(workOrder.getWorkTypeName());
-        order_detail_address.setText(getString(R.string.address_value,workOrder.getProjectName(),workOrder.getPhaseName(),workOrder.getRoomNameAll()));
+        order_detail_address.setText(getString(R.string.address_value,workOrder.getProjectName(),workOrder.getPhaseName(),workOrder.getBriefDesc()));
         order_detail_contact.setText(workOrder.getHouseholdName());
         if (!TextUtils.isEmpty(workOrder.getHouseholdMobile())) {
             order_detail_contact_tel.setText(workOrder.getHouseholdMobile());
@@ -315,25 +323,28 @@ public class OrderDetailActivity extends BaseActivity {
         order_detail_remark_time.setText(workOrder.getCreateTime());
     }
 
-    private void initAction(WorkflowOrderEntity lastWorkflow){
+    private void initAction(WorkflowProcessesEntity lastWorkflow){
         FragmentTransaction transaction=fragmentManager.beginTransaction();
-        if(lastWorkflow.getHandlerId().equals(SharedPreferencesManage.getUserInfo().getUser().getId())) {
+        if((lastWorkflow.getAssigneeId().equals(SharedPreferencesManage.getUserInfo().getUser().getId())
+                ||"客服中心确认工单".equals(lastWorkflow.getNodeName())
+                ||"回访".equals(lastWorkflow.getNodeName()))
+                &&(lastWorkflow.getOperationInfos()!=null&&lastWorkflow.getOperationInfos().size()>0)) {
             Bundle bundle = new Bundle();
             bundle.putBoolean("permission", permission);
+            bundle.putString("businessId", orderId);
             bundle.putString("action", lastWorkflow.getNodeName());
-            bundle.putString("workOrderId", orderId);
-            bundle.putString("operationName", lastWorkflow.getOperation());
+            bundle.putSerializable("workflowType", WorkflowType.Order);
             bundle.putSerializable("operationInfos", (Serializable) lastWorkflow.getOperationInfos());
-            if(orderWorkflowActionFragment !=null){
-                orderWorkflowActionFragment =new OrderWorkflowActionFragment().newInstance(bundle);
-                transaction.replace(R.id.order_detail_workflow_action_fl, orderWorkflowActionFragment).commit();
+            if(workflowActionFragment !=null){
+                workflowActionFragment =new WorkflowActionFragment().newInstance(bundle);
+                transaction.replace(R.id.order_detail_workflow_action_fl, workflowActionFragment).commit();
             }else{
-                orderWorkflowActionFragment =new OrderWorkflowActionFragment().newInstance(bundle);
-                transaction.add(R.id.order_detail_workflow_action_fl, orderWorkflowActionFragment).commit();
+                workflowActionFragment =new WorkflowActionFragment().newInstance(bundle);
+                transaction.add(R.id.order_detail_workflow_action_fl, workflowActionFragment).commit();
             }
         }else{
-            if(orderWorkflowActionFragment !=null){
-                transaction.remove(orderWorkflowActionFragment);
+            if(workflowActionFragment !=null){
+                transaction.remove(workflowActionFragment).commit();
             }
         }
     }
@@ -407,7 +418,7 @@ public class OrderDetailActivity extends BaseActivity {
             public void onSuccess(String result) {
                 super.onSuccess(result);
                 LogUtils.d(result);
-                orderWorkflowActionFragment.setPicData(new ImageViewInfo(path));
+                workflowActionFragment.setPicData(new ImageViewInfo(path));
             }
 
             @Override

@@ -30,6 +30,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dp_10">
+        <LinearLayout
+            android:id="@+id/workflow_action_content_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
         <!--=======================工单流程处理 start============================-->
         <!--客服接单-->
         <LinearLayout
@@ -511,6 +519,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="主管"/>
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/customer_contact_household_director"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_10"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="内容"/>
                 <EditText
                     android:id="@+id/customer_contact_household_remark"
@@ -524,17 +548,34 @@
                     android:gravity="top"
                     android:hint="输入沟通内容"/>
             </LinearLayout>
-
-            <Button
-                android:id="@+id/customer_contact_household_submit"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
-                android:layout_margin="@dimen/dp_20"
-                android:layout_gravity="center"
-                android:background="@drawable/btn_solid_night_shape"
-                android:text="提交"
-                android:textColor="@color/text_white"
-                android:textSize="@dimen/sp_16" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/customer_contact_household_reject"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_margin="@dimen/dp_20"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_box_night_shape"
+                    android:text="关闭投诉"
+                    android:textColor="@color/text_desc"
+                    android:textSize="@dimen/sp_16" />
+                <Button
+                    android:id="@+id/customer_contact_household_accept"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_margin="@dimen/dp_20"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_solid_night_shape"
+                    android:text="分发投诉"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/sp_16" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <!--客服分发职能主管-->
@@ -650,9 +691,9 @@
                 android:textSize="@dimen/sp_16" />
         </LinearLayout>
 
-        <!--职能主管填写解决方案-->
+        <!--已填投诉解决方案-->
         <LinearLayout
-            android:id="@+id/workflow_action_director_write_plan"
+            android:id="@+id/workflow_action_write_plan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -660,35 +701,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="方案"/>
-                <EditText
-                    android:id="@+id/director_write_plan_remark"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:textSize="@dimen/sp_14"
-                    android:textColor="@color/text_primary"
-                    android:background="@drawable/bg_box_desc_shape"
-                    android:minLines="5"
-                    android:gravity="top"
-                    android:hint="输入方案内容"/>
+                <Button
+                    android:id="@+id/write_plan_household_reject"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_margin="@dimen/dp_20"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_box_night_shape"
+                    android:text="不接受"
+                    android:textColor="@color/text_desc"
+                    android:textSize="@dimen/sp_16" />
+                <Button
+                    android:id="@+id/write_plan_household_accept"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_margin="@dimen/dp_20"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_solid_night_shape"
+                    android:text="接受"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/sp_16" />
             </LinearLayout>
-
-            <Button
-                android:id="@+id/director_write_plan_submit"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
-                android:layout_margin="@dimen/dp_20"
-                android:layout_gravity="center"
-                android:background="@drawable/btn_solid_night_shape"
-                android:text="提交"
-                android:textColor="@color/text_white"
-                android:textSize="@dimen/sp_16" />
         </LinearLayout>
 
         <!--主管分发员工-->
@@ -836,6 +872,64 @@
                 android:textSize="@dimen/sp_16" />
         </LinearLayout>
 
+        <!--回访业主-->
+        <LinearLayout
+            android:id="@+id/workflow_action_customer_callback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容"/>
+                <EditText
+                    android:id="@+id/customer_callback_c_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_box_desc_shape"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:hint="输入补充内容"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/customer_callback_reject"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_margin="@dimen/dp_20"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_box_night_shape"
+                    android:text="不满意"
+                    android:textColor="@color/text_desc"
+                    android:textSize="@dimen/sp_16" />
+                <Button
+                    android:id="@+id/customer_callback_confirm"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_margin="@dimen/dp_20"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_solid_night_shape"
+                    android:text="满意"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/sp_16" />
+            </LinearLayout>
+
+
+        </LinearLayout>
         <!--=======================投诉流程处理 end============================-->
 
     </FrameLayout>

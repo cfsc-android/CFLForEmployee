@@ -6,31 +6,33 @@ import java.util.List;
 /**
  * Created by Loong on 2020/2/17.
  * Version: 1.0
- * Describe: 工单工作流实体类
+ * Describe: 工作流实体类
  */
-public class WorkflowOrderEntity implements Serializable {
+public class WorkflowProcessesEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-
     /**
-     * id : 1706112715997204dfcf23d4986ad245
+     * id : 170d32863ebf82f3a30c75f4363a88ff
      * handlerId : a75d45a015c44384a04449ee80dc3503
      * handlerName : 超级管理员
+     * assigneeId :
      * avatarUrl : http://img3.imgtn.bdimg.com/it/u=378824344,1185609431&fm=26&gp=0.jpg
-     * handlerType : 住户
+     * handlerType : 员工
      * handlerMobile : 13787176775
-     * nodeName : 填报工单
-     * operation : pc新建工单
+     * nodeName : 客服中心确认工单
+     * operation : 客服接单
      * resourceKey :
      * notAcceptable : 接受
-     * remark : 流程实例[435014] 任务[填报工单,usertask1]指派[a75d45a015c44384a04449ee80dc3503]
-     * shortDesc : 长房数创科技有限公司
-     * createTime : 2020-02-20 13:29:24
+     * remark :
+     * shortDesc : 工程部
+     * createTime : 2020-03-13 17:10:05
+     * processResult :
      */
 
     private String id;
     private String handlerId;
     private String handlerName;
+    private String assigneeId;
     private String avatarUrl;
     private String handlerType;
     private String handlerMobile;
@@ -39,10 +41,27 @@ public class WorkflowOrderEntity implements Serializable {
     private String resourceKey;
     private String notAcceptable;
     private String remark;
-    private String shortDesc;
+    private String briefDesc;
     private String createTime;
+    private String processResult;
     private List<ResourceEntity> resourceValues;
     private List<OperationInfoEntity> operationInfos;
+
+    public List<ResourceEntity> getResourceValues() {
+        return resourceValues;
+    }
+
+    public void setResourceValues(List<ResourceEntity> resourceValues) {
+        this.resourceValues = resourceValues;
+    }
+
+    public List<OperationInfoEntity> getOperationInfos() {
+        return operationInfos;
+    }
+
+    public void setOperationInfos(List<OperationInfoEntity> operationInfos) {
+        this.operationInfos = operationInfos;
+    }
 
     public String getId() {
         return id;
@@ -66,6 +85,14 @@ public class WorkflowOrderEntity implements Serializable {
 
     public void setHandlerName(String handlerName) {
         this.handlerName = handlerName;
+    }
+
+    public String getAssigneeId() {
+        return assigneeId;
+    }
+
+    public void setAssigneeId(String assigneeId) {
+        this.assigneeId = assigneeId;
     }
 
     public String getAvatarUrl() {
@@ -132,12 +159,12 @@ public class WorkflowOrderEntity implements Serializable {
         this.remark = remark;
     }
 
-    public String getShortDesc() {
-        return shortDesc;
+    public String getBriefDesc() {
+        return briefDesc;
     }
 
-    public void setShortDesc(String shortDesc) {
-        this.shortDesc = shortDesc;
+    public void setBriefDesc(String briefDesc) {
+        this.briefDesc = briefDesc;
     }
 
     public String getCreateTime() {
@@ -148,19 +175,11 @@ public class WorkflowOrderEntity implements Serializable {
         this.createTime = createTime;
     }
 
-    public List<ResourceEntity> getResourceValues() {
-        return resourceValues;
+    public String getProcessResult() {
+        return processResult;
     }
 
-    public void setResourceValues(List<ResourceEntity> resourceValues) {
-        this.resourceValues = resourceValues;
-    }
-
-    public List<OperationInfoEntity> getOperationInfos() {
-        return operationInfos;
-    }
-
-    public void setOperationInfos(List<OperationInfoEntity> operationInfos) {
-        this.operationInfos = operationInfos;
+    public void setProcessResult(String processResult) {
+        this.processResult = processResult;
     }
 }

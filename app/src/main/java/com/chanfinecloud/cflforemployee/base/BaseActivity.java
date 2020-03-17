@@ -22,11 +22,7 @@ import com.chanfinecloud.cflforemployee.util.StatusBarUtil;
 import com.chanfinecloud.cflforemployee.util.http.RequestParam;
 import com.chanfinecloud.cflforemployee.weidgt.ProgressDialogView;
 
-import org.xutils.common.Callback;
 import org.xutils.x;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +30,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import static com.chanfinecloud.cflforemployee.CFLApplication.activityTrans;
+import static com.chanfinecloud.cflforemployee.base.BaseHandler.HTTP_CANCEL;
 import static com.chanfinecloud.cflforemployee.base.BaseHandler.HTTP_REQUEST;
 import static com.chanfinecloud.cflforemployee.util.PermissionUtil.REQUEST_CODE;
 
@@ -45,14 +42,10 @@ import static com.chanfinecloud.cflforemployee.util.PermissionUtil.REQUEST_CODE;
  */
 public class BaseActivity extends FragmentActivity implements NetBroadcastReceiver.NetEvent {
     public NetBroadcastReceiver netBroadcastReceiver;
-    public static NetBroadcastReceiver.NetEvent event;
     private ProgressDialogView progressDialogView = null;
 
     private boolean isFullScreen;
     private boolean showStatus;
-
-    private static List<Callback.Cancelable> taskList;
-
     public boolean isNetConnect=true;
     protected static BaseHandler handler;
     protected boolean permission=false;
@@ -60,7 +53,6 @@ public class BaseActivity extends FragmentActivity implements NetBroadcastReceiv
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        event=this;
         ExitAppUtils.getInstance().addActivity(this);
 
         //设置无标题
@@ -80,8 +72,7 @@ public class BaseActivity extends FragmentActivity implements NetBroadcastReceiv
         x.view().inject(this);
 
         initReceiver();
-        taskList=new ArrayList<>();
-        handler=new BaseHandler(this,taskList);
+        handler=new BaseHandler(this);
     }
 
 
@@ -103,7 +94,7 @@ public class BaseActivity extends FragmentActivity implements NetBroadcastReceiv
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        netBroadcastReceiver = new NetBroadcastReceiver();
+        netBroadcastReceiver = new NetBroadcastReceiver(this);
         registerReceiver(netBroadcastReceiver, filter);
     }
 
@@ -121,14 +112,11 @@ public class BaseActivity extends FragmentActivity implements NetBroadcastReceiv
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        handler.sendEmptyMessage(HTTP_CANCEL);
         unregisterReceiver(netBroadcastReceiver);
         if (progressDialogView != null) {
             progressDialogView.stopLoad();
             progressDialogView = null;
-        }
-        for (int i = 0; i < taskList.size(); i++) {
-            if(!taskList.get(i).isCancelled())
-                taskList.get(i).cancel();
         }
         ExitAppUtils.getInstance().delActivity(this);
         if(isActivityTrans()){

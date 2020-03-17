@@ -27,6 +27,7 @@ import java.util.List;
 import androidx.fragment.app.Fragment;
 
 import static com.chanfinecloud.cflforemployee.CFLApplication.activityTrans;
+import static com.chanfinecloud.cflforemployee.base.BaseHandler.HTTP_CANCEL;
 import static com.chanfinecloud.cflforemployee.base.BaseHandler.HTTP_REQUEST;
 
 /**
@@ -39,14 +40,13 @@ public class BaseFragment extends Fragment {
     private Context context;// 上下文
     private boolean injected = false;
     private ProgressDialogView progressDialogView = null;
-    private static List<Callback.Cancelable> taskList;
     protected static BaseHandler handler;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context=context;
-        taskList=new ArrayList<>();
-        handler=new BaseHandler(getActivity(),taskList);
+        handler=new BaseHandler(getActivity());
     }
 
     @Override
@@ -66,13 +66,10 @@ public class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        handler.sendEmptyMessage(HTTP_CANCEL);
         if (progressDialogView != null) {
             progressDialogView.stopLoad();
             progressDialogView = null;
-        }
-        for (int i = 0; i < taskList.size(); i++) {
-            if(!taskList.get(i).isCancelled())
-                taskList.get(i).cancel();
         }
         RefWatcher refWatcher = CFLApplication.getRefWatcher(getActivity());
         refWatcher.watch(this);

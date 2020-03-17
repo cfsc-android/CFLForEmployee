@@ -3,10 +3,10 @@ package com.chanfinecloud.cflforemployee.util;
 
 import com.chanfinecloud.cflforemployee.CFLApplication;
 import com.chanfinecloud.cflforemployee.entity.LoginEntity;
-import com.chanfinecloud.cflforemployee.entity.OrderEntity;
 import com.chanfinecloud.cflforemployee.entity.OrderStatusEntity;
 import com.chanfinecloud.cflforemployee.entity.OrderTypeEntity;
 import com.chanfinecloud.cflforemployee.entity.TokenEntity;
+import com.chanfinecloud.cflforemployee.entity.UserEntity;
 import com.chanfinecloud.cflforemployee.entity.UserInfoEntity;
 
 import java.util.List;
@@ -70,6 +70,13 @@ public class SharedPreferencesManage {
     }
     public static UserInfoEntity getUserInfo(){
         return (UserInfoEntity) SharedPreferencesUtil.getInstance().getObject(CFLApplication.getAppContext(),"cfl","UserInfo");
+    }
+
+    public static void setUserList(List<UserEntity> userList){
+        SharedPreferencesUtil.getInstance().saveObject(CFLApplication.getAppContext(),"cfl","UserList",userList);
+    }
+    public static List<UserEntity> getUserList(){
+        return (List<UserEntity>) SharedPreferencesUtil.getInstance().getObject(CFLApplication.getAppContext(),"cfl","UserList");
     }
 }
 

@@ -5,11 +5,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.adapter.ComplainWorkflowStepAdapter;
-import com.chanfinecloud.cflforemployee.adapter.OrderWorkflowStepAdapter;
+import com.chanfinecloud.cflforemployee.adapter.WorkflowStepAdapter;
 import com.chanfinecloud.cflforemployee.base.BaseActivity;
-import com.chanfinecloud.cflforemployee.entity.WorkflowComplainEntity;
-import com.chanfinecloud.cflforemployee.entity.WorkflowOrderEntity;
+import com.chanfinecloud.cflforemployee.entity.WorkflowProcessesEntity;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 
 import org.xutils.view.annotation.ContentView;
@@ -32,18 +30,11 @@ public class WorkflowStepActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         toolbar_title.setText("进度");
-        if(getIntent().getExtras().getSerializable("orderWorkflowList")!=null){
-            List<WorkflowOrderEntity> data = (List<WorkflowOrderEntity>) getIntent().getExtras().getSerializable("orderWorkflowList");
+        if(getIntent().getExtras().getSerializable("workflowProcessesList")!=null){
+            List<WorkflowProcessesEntity> data = (List<WorkflowProcessesEntity>) getIntent().getExtras().getSerializable("workflowProcessesList");
             if(data!=null){
                 workflow_step_rlv.setLayoutManager(new LinearLayoutManager(this));
-                workflow_step_rlv.setAdapter(new OrderWorkflowStepAdapter(this,data));
-                LogUtils.d("data:"+data.size());
-            }
-        }else{
-            List<WorkflowComplainEntity> data = (List<WorkflowComplainEntity>) getIntent().getExtras().getSerializable("complainWorkflowList");
-            if(data!=null){
-                workflow_step_rlv.setLayoutManager(new LinearLayoutManager(this));
-                workflow_step_rlv.setAdapter(new ComplainWorkflowStepAdapter(this,data));
+                workflow_step_rlv.setAdapter(new WorkflowStepAdapter(this,data));
                 LogUtils.d("data:"+data.size());
             }
         }

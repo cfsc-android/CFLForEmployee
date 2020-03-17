@@ -16,7 +16,11 @@ import com.chanfinecloud.cflforemployee.util.NetworkUtils;
  */
 public class NetBroadcastReceiver extends BroadcastReceiver {
 
-    public NetEvent event= BaseActivity.event;
+    private NetEvent event;
+
+    public NetBroadcastReceiver(NetEvent event) {
+        this.event = event;
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {

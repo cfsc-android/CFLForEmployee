@@ -25,4 +25,6 @@
     <color name="blue_color">#1B9AF7</color>
     <color name="blue_color_light">#58b2f2</color>
     <color name="indicator_bottom_line_color">#333333</color>
+
+    <color name="province_line_border">#D0D0D0</color>
 </resources>

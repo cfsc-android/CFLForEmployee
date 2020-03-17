@@ -216,8 +216,9 @@ public class ADTextView extends View {
 
     public void setData(ArrayList<NoticeEntity> data) {
         if (data == null)
-            data = new ArrayList<NoticeEntity>();
+            data = new ArrayList<>();
         this.data = data;
+        invalidate();
     }
 
     public void setHeadColor(int headColor) {

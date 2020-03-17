@@ -1,6 +1,5 @@
 package com.chanfinecloud.cflforemployee.ui;
 
-import android.Manifest;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -19,7 +18,6 @@ import com.chanfinecloud.cflforemployee.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.entity.OrderTypeEntity;
 import com.chanfinecloud.cflforemployee.util.FilePathUtil;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
-import com.chanfinecloud.cflforemployee.util.PermissionsUtils;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
 import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
 import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
@@ -32,14 +30,10 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.jaredrummler.materialspinner.MaterialSpinnerAdapter;
 import com.zhihu.matisse.Matisse;
 
-import org.xutils.common.util.KeyValue;
 import org.xutils.common.util.LogUtil;
-import org.xutils.http.RequestParams;
-import org.xutils.http.body.MultipartBody;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -48,7 +42,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import top.zibin.luban.CompressionPredicate;

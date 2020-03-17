@@ -51,7 +51,7 @@ public class MineFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         userInfo= SharedPreferencesManage.getUserInfo();
         mine_tv_user_name.setText(userInfo.getUser().getUsername());
-        mine_tv_user_depart.setText(userInfo.getUser().getSysRoles().get(0).getRoleName());
+//        mine_tv_user_depart.setText(userInfo.getUser().getSysRoles().get(0).getRoleName());
         if(TextUtils.isEmpty(userInfo.getUser().getAvatarUrl())){
             Glide.with(this)
                     .load(R.drawable.icon_user_default)

@@ -17,6 +17,7 @@ import com.chanfinecloud.cflforemployee.entity.OrderStatusEntity;
 import com.chanfinecloud.cflforemployee.entity.OrderTypeListEntity;
 import com.chanfinecloud.cflforemployee.entity.TokenEntity;
 import com.chanfinecloud.cflforemployee.entity.UserInfoEntity;
+import com.chanfinecloud.cflforemployee.entity.UserListEntity;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
 import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
@@ -72,7 +73,9 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-
+        RequestParam requestParam=new RequestParam();
+        requestParam.setUrl(BASE_URL+"api-auth/oauth/token");
+        requestParam.setMethod(HttpMethod.Post);
         Map<String,Object> params=new HashMap<>();
         params.put("username",login_et_name.getText().toString());
         params.put("password",login_et_password.getText().toString());
@@ -82,7 +85,9 @@ public class LoginActivity extends BaseActivity {
         params.put("client_secret","webApp");
         params.put("grant_type","password");
         params.put("validCode","b2bd");
-        XHttp.Post(BASE_URL+"api-auth/oauth/token",params,new MyCallBack<String>(){
+        requestParam.setPostRequestMap(params);
+        requestParam.setAuthorization(false);
+        requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
                 super.onSuccess(result);
@@ -102,14 +107,10 @@ public class LoginActivity extends BaseActivity {
             public void onError(Throwable ex, boolean isOnCallback) {
                 super.onError(ex, isOnCallback);
                 showToast(ex.getMessage());
-            }
-
-            @Override
-            public void onFinished() {
-                super.onFinished();
                 stopProgressDialog();
             }
         });
+        sendRequest(requestParam,true);
     }
 
 
@@ -271,10 +272,7 @@ public class LoginActivity extends BaseActivity {
                 LogUtils.d("result",result);
                 Gson gson = new Gson();
                 UserInfoEntity userInfo=gson.fromJson(result,UserInfoEntity.class);
-                LogUtils.d(userInfo.toString());
                 SharedPreferencesManage.setUserInfo(userInfo);
-                UserInfoEntity userInfoEntity=SharedPreferencesManage.getUserInfo();
-                LogUtils.d(userInfoEntity.toString());
                 checkInitStatus(1);
             }
 

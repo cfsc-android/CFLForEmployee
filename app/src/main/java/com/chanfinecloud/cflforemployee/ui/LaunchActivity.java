@@ -14,6 +14,7 @@ import com.chanfinecloud.cflforemployee.entity.BaseEntity;
 import com.chanfinecloud.cflforemployee.entity.OrderStatusEntity;
 import com.chanfinecloud.cflforemployee.entity.OrderTypeListEntity;
 import com.chanfinecloud.cflforemployee.entity.TokenEntity;
+import com.chanfinecloud.cflforemployee.entity.UserListEntity;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
 import com.chanfinecloud.cflforemployee.util.Utils;
@@ -185,9 +186,12 @@ public class LaunchActivity extends BaseActivity {
      * 检查是否自动登录
      */
     private void checkAutoLogin(){
+//        startActivity(MainActivity.class);
+//        finish();
 //        initData();
         //清空项目过滤的值
         TokenEntity token= SharedPreferencesManage.getToken();
+        LogUtils.d(token.getAccess_token());
         if(token!=null){
             long time=new Date().getTime()/1000 - token.getInit_time();
             if(token.getExpires_in()-time>3){
@@ -210,7 +214,7 @@ public class LaunchActivity extends BaseActivity {
             startActivity(LoginActivity.class);
             finish();
         }else{
-            if(initStatus.size()==4){
+            if(initStatus.size()==5){
                 startActivity(MainActivity.class);
                 finish();
             }
@@ -222,6 +226,7 @@ public class LaunchActivity extends BaseActivity {
         initOrderStatus();
         initComplainType();
         initComplainStatus();
+        initUserData();
     }
 
     //初始化工单类型
@@ -352,5 +357,37 @@ public class LaunchActivity extends BaseActivity {
         });
         sendRequest(requestParam,false);
     }
+    //初始化员工
+    private void initUserData(){
+        RequestParam requestParam=new RequestParam();
+        requestParam.setUrl(BASE_URL+"sys/user/list");
+        requestParam.setMethod(HttpMethod.Get);
+        Map<String,String> requestMap=new HashMap<>();
+        requestMap.put("pageNo","1");
+        requestMap.put("pageSize","100");
+        requestParam.setGetRequestMap(requestMap);
+        requestParam.setCallback(new MyCallBack<String>(){
+            @Override
+            public void onSuccess(String result) {
+                super.onSuccess(result);
+                LogUtils.d("result",result);
+                BaseEntity<UserListEntity> baseEntity= JsonParse.parse(result,UserListEntity.class);
+                if(baseEntity.isSuccess()){
+                    SharedPreferencesManage.setUserList(baseEntity.getResult().getData());
+                    checkInitStatus(1);
+                }else{
+                    showToast(baseEntity.getMessage());
+                    checkInitStatus(0);
+                }
+            }
 
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                super.onError(ex, isOnCallback);
+                showToast(ex.getMessage());
+                checkInitStatus(0);
+            }
+        });
+        sendRequest(requestParam,false);
+    }
 }

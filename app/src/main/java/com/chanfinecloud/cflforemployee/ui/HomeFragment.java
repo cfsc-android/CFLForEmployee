@@ -14,6 +14,7 @@ import com.chanfinecloud.cflforemployee.entity.NoticeEntity;
 import com.chanfinecloud.cflforemployee.entity.NoticeListEntity;
 import com.chanfinecloud.cflforemployee.entity.NoticeReceiverType;
 import com.chanfinecloud.cflforemployee.entity.NoticeType;
+import com.chanfinecloud.cflforemployee.entity.WorkflowType;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
 import com.chanfinecloud.cflforemployee.util.http.JsonParse;
@@ -130,18 +131,23 @@ public class HomeFragment extends BaseFragment {
 
     @Event({R.id.home_tv_order,R.id.home_tv_complain,R.id.home_tv_inspect,R.id.home_tv_task,R.id.home_tv_notice})
     private void onClickEvent(View v){
+        Bundle bundle=new Bundle();
         switch (v.getId()){
             case R.id.home_tv_order:
-                startActivity(OrderActivity.class);
+//                startActivity(OrderActivity.class);
+                bundle.putSerializable("workflowType", WorkflowType.Order);
+                startActivity(WorkflowListActivity.class,bundle);
                 break;
             case R.id.home_tv_complain:
-                startActivity(ComplainActivity.class);
+//                startActivity(ComplainActivity.class);
+                bundle.putSerializable("workflowType", WorkflowType.Complain);
+                startActivity(WorkflowListActivity.class,bundle);
                 break;
             case R.id.home_tv_inspect:
-                showToast("待开发");
+                showToast("巡检待开发");
                 break;
             case R.id.home_tv_task:
-                showToast("待开发");
+                showToast("任务待开发");
                 break;
             case R.id.home_tv_notice:
                 startActivity(NoticeActivity.class);

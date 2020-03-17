@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.entity.WorkflowOrderEntity;
+import com.chanfinecloud.cflforemployee.entity.WorkflowProcessesEntity;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 
 import java.util.List;
@@ -20,15 +20,15 @@ import androidx.annotation.Nullable;
  * Version: 1.0
  * Describe:
  */
-public class OrderWorkflowStepAdapter extends BaseQuickAdapter<WorkflowOrderEntity, BaseViewHolder> {
+public class WorkflowStepAdapter extends BaseQuickAdapter<WorkflowProcessesEntity, BaseViewHolder> {
     private Context context;
-    public OrderWorkflowStepAdapter(Context context, @Nullable List<WorkflowOrderEntity> data) {
+    public WorkflowStepAdapter(Context context, @Nullable List<WorkflowProcessesEntity> data) {
         super(R.layout.item_workflow_step_list, data);
         this.context=context;
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, WorkflowOrderEntity item) {
+    protected void convert(@NonNull BaseViewHolder helper, WorkflowProcessesEntity item) {
         LogUtils.d("position:"+helper.getAdapterPosition());
         if(helper.getAdapterPosition()==0){
             helper.setGone(R.id.workflow_step_up_line,false);

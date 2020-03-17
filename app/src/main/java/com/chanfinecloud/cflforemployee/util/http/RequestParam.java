@@ -13,14 +13,27 @@ import java.util.Map;
 public class RequestParam<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    public RequestParam() {
+        this.authorization=true;
+    }
+
     private String url;
     private HttpMethod method;
     private Map<String, String> getRequestMap;
     private Map<String, Object> postRequestMap;
     private Object postJsonRequest;
+    private boolean authorization;
     private String filepath;
     private Callback.CommonCallback<T> callback;
     private Callback.ProgressCallback<T> progressCallback;
+
+    public boolean isAuthorization() {
+        return authorization;
+    }
+
+    public void setAuthorization(boolean authorization) {
+        this.authorization = authorization;
+    }
 
     public Callback.ProgressCallback<T> getProgressCallback() {
         return progressCallback;

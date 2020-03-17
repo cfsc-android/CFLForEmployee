@@ -20,11 +20,10 @@ import com.chanfinecloud.cflforemployee.R;
 import com.chanfinecloud.cflforemployee.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.entity.BaseEntity;
 import com.chanfinecloud.cflforemployee.entity.ComplainDetailsEntity;
-import com.chanfinecloud.cflforemployee.entity.ComplainEntity;
 import com.chanfinecloud.cflforemployee.entity.EventBusMessage;
 import com.chanfinecloud.cflforemployee.entity.ResourceEntity;
-import com.chanfinecloud.cflforemployee.entity.WorkflowComplainEntity;
-import com.chanfinecloud.cflforemployee.util.DicDataTransUtil;
+import com.chanfinecloud.cflforemployee.entity.WorkflowProcessesEntity;
+import com.chanfinecloud.cflforemployee.entity.WorkflowType;
 import com.chanfinecloud.cflforemployee.util.FilePathUtil;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
@@ -103,11 +102,12 @@ public class ComplainDetailActivity extends BaseActivity {
 
     private String complainId;
     private NoUnderlineSpan mNoUnderlineSpan;
-    private List<WorkflowComplainEntity> data=new ArrayList<>();
+    private List<WorkflowProcessesEntity> data=new ArrayList<>();
     private FragmentManager fragmentManager;
-    private ComplainWorkflowActionFragment complainWorkflowActionFragment;
-    public static final int REQUEST_CODE_CHOOSE=0x001;
+    private WorkflowActionFragment workflowActionFragment;
+    public static final int REQUEST_CODE_CHOOSE=0x002;
     public String resourceKey;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +149,7 @@ public class ComplainDetailActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(EventBusMessage message){
-        if("ComplainDetailRefresh".equals(message.getMessage())){
+        if("WorkflowActionRefresh".equals(message.getMessage())){
             getData();
         }
     }
@@ -161,10 +161,13 @@ public class ComplainDetailActivity extends BaseActivity {
     }
 
 
-
+    //获取投诉数据
     private void getData(){
         RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"work/complaintOwner/getUserComplaintDetails/"+complainId);
+        requestParam.setUrl(BASE_URL+"/workflow/api/detail/"+complainId);
+        Map<String,String> map=new HashMap<>();
+        map.put("type", WorkflowType.Complain.getType());
+        requestParam.setGetRequestMap(map);
         requestParam.setMethod(HttpMethod.Get);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
@@ -173,11 +176,11 @@ public class ComplainDetailActivity extends BaseActivity {
                 LogUtils.d("result",result);
                 BaseEntity<ComplainDetailsEntity> baseEntity= JsonParse.parse(result,ComplainDetailsEntity.class);
                 if(baseEntity.isSuccess()){
-                    initView(baseEntity.getResult().getComplaint());
-                    List<WorkflowComplainEntity> workflowList=baseEntity.getResult().getCfcComplaintDetailsVo();
-                    WorkflowComplainEntity lastWorkflow=workflowList.get(workflowList.size()-1);
+                    initView(baseEntity.getResult());
+                    List<WorkflowProcessesEntity> workflowList=baseEntity.getResult().getProcesses();
+                    WorkflowProcessesEntity lastWorkflow=workflowList.get(workflowList.size()-1);
+                    initAction(lastWorkflow);
                     if(lastWorkflow.getOperationInfos()!=null&&lastWorkflow.getOperationInfos().size()>0){
-                        initAction(lastWorkflow);
                         workflowList.remove(workflowList.size()-1);
                     }
                     initWorkFlow(workflowList);
@@ -203,9 +206,8 @@ public class ComplainDetailActivity extends BaseActivity {
         });
         sendRequest(requestParam,true);
     }
-
-
-    private void initView(ComplainEntity complainEntity){
+    //初始化主视图
+    private void initView(ComplainDetailsEntity complainEntity){
         if(TextUtils.isEmpty(complainEntity.getCreatorAvatarUrl())){
             Glide.with(this)
                     .load(R.drawable.icon_user_default)
@@ -220,8 +222,8 @@ public class ComplainDetailActivity extends BaseActivity {
                     .into(complain_detail_user_avatar);
         }
         complain_detail_user_name.setText(complainEntity.getHouseholdName());
-        complain_detail_user_room.setText(complainEntity.getRoomNameAll());
-        complain_detail_complain_type.setText(DicDataTransUtil.getInstance().getComplainTypeChs(complainEntity.getTypeId()));
+        complain_detail_user_room.setText(complainEntity.getBriefDesc());
+        complain_detail_complain_type.setText(complainEntity.getComplaintTypeName());
         if (!TextUtils.isEmpty(complainEntity.getHouseholdMobile())) {
             complain_detail_contact_tel.setText(complainEntity.getHouseholdMobile());
         } else {
@@ -231,11 +233,11 @@ public class ComplainDetailActivity extends BaseActivity {
             Spannable s = (Spannable) complain_detail_contact_tel.getText();
             s.setSpan(mNoUnderlineSpan, 0, s.length(), Spanned.SPAN_MARK_MARK);
         }
-        complain_detail_remark_text.setText(complainEntity.getContent());
-        complain_detail_remark_time.setText(complainEntity.getComplainTime());
+        complain_detail_remark_text.setText(complainEntity.getProblemDesc());
+        complain_detail_remark_time.setText(complainEntity.getCreateTime());
     }
-
-    private void initWorkFlow(final List<WorkflowComplainEntity> list){
+    //初始化流程视图
+    private void initWorkFlow(List<WorkflowProcessesEntity> list){
         if(list.size()>0){
             complain_detail_workflow_ll.removeAllViews();
             for (int i = 0; i < list.size(); i++) {
@@ -248,7 +250,7 @@ public class ComplainDetailActivity extends BaseActivity {
                 RecyclerView item_workflow_pic=v.findViewById(R.id.item_workflow_pic);
                 TextView item_workflow_node=v.findViewById(R.id.item_workflow_node);
                 TextView item_workflow_time=v.findViewById(R.id.item_workflow_time);
-                WorkflowComplainEntity item=list.get(i);
+                WorkflowProcessesEntity item=list.get(i);
                 if(TextUtils.isEmpty(item.getAvatarUrl())){
                     Glide.with(this)
                             .load(R.drawable.ic_launcher)
@@ -263,9 +265,9 @@ public class ComplainDetailActivity extends BaseActivity {
                             .into(item_workflow_avatar);
                 }
                 item_workflow_user_name.setText(item.getHandlerName());
-                item_workflow_user_role.setText(item.getShortDesc());
-                if (!TextUtils.isEmpty(item.getMobile())) {
-                    item_workflow_tel.setText(item.getMobile());
+                item_workflow_user_role.setText(item.getBriefDesc());
+                if (!TextUtils.isEmpty(item.getHandlerMobile())) {
+                    item_workflow_tel.setText(item.getHandlerMobile());
                 } else {
                     item_workflow_tel.setVisibility(View.GONE);
                 }
@@ -273,12 +275,12 @@ public class ComplainDetailActivity extends BaseActivity {
                     Spannable s = (Spannable) item_workflow_tel.getText();
                     s.setSpan(mNoUnderlineSpan, 0, s.length(), Spanned.SPAN_MARK_MARK);
                 }
-                item_workflow_content.setText(item.getComment());
+                item_workflow_content.setText(item.getRemark());
                 item_workflow_node.setText(item.getNodeName());
                 item_workflow_time.setText(item.getCreateTime());
-                final List<ImageViewInfo> data=new ArrayList<>();
-                List<ResourceEntity> picData=item.getResourceValue();
+                List<ResourceEntity> picData=item.getResourceValues();
                 if(picData!=null&&picData.size()>0){
+                    final List<ImageViewInfo> data=new ArrayList<>();
                     for (int j = 0; j < picData.size(); j++) {
                         data.add(new ImageViewInfo(picData.get(j).getUrl()));
                     }
@@ -308,33 +310,36 @@ public class ComplainDetailActivity extends BaseActivity {
                         }
                     });
                 }
-
                 complain_detail_workflow_ll.addView(v);
             }
+            complain_detail_workflow_ll.setVisibility(View.VISIBLE);
         }else{
             complain_detail_workflow_ll.setVisibility(View.GONE);
         }
     }
-
-    private void initAction(WorkflowComplainEntity lastWorkflow){
+    //初始化流程处理
+    private void initAction(WorkflowProcessesEntity lastWorkflow){
         FragmentTransaction transaction=fragmentManager.beginTransaction();
-        if(lastWorkflow.getHandlerId().equals(SharedPreferencesManage.getUserInfo().getUser().getId())) {
+        if((lastWorkflow.getAssigneeId().equals(SharedPreferencesManage.getUserInfo().getUser().getId())
+                ||"客服中心确认工单".equals(lastWorkflow.getNodeName())
+                ||"回访".equals(lastWorkflow.getNodeName()))
+                &&(lastWorkflow.getOperationInfos()!=null&&lastWorkflow.getOperationInfos().size()>0)) {
             Bundle bundle = new Bundle();
             bundle.putBoolean("permission", permission);
+            bundle.putString("businessId", complainId);
             bundle.putString("action", lastWorkflow.getNodeName());
-            bundle.putString("complaintId", complainId);
-            bundle.putString("operationName", lastWorkflow.getOperation());
+            bundle.putSerializable("workflowType", WorkflowType.Complain);
             bundle.putSerializable("operationInfos", (Serializable) lastWorkflow.getOperationInfos());
-            if(complainWorkflowActionFragment !=null){
-                complainWorkflowActionFragment =new ComplainWorkflowActionFragment().newInstance(bundle);
-                transaction.replace(R.id.complain_detail_workflow_action_fl, complainWorkflowActionFragment).commit();
+            if(workflowActionFragment !=null){
+                workflowActionFragment =new WorkflowActionFragment().newInstance(bundle);
+                transaction.replace(R.id.order_detail_workflow_action_fl, workflowActionFragment).commit();
             }else{
-                complainWorkflowActionFragment =new ComplainWorkflowActionFragment().newInstance(bundle);
-                transaction.add(R.id.complain_detail_workflow_action_fl, complainWorkflowActionFragment).commit();
+                workflowActionFragment =new WorkflowActionFragment().newInstance(bundle);
+                transaction.add(R.id.order_detail_workflow_action_fl, workflowActionFragment).commit();
             }
         }else{
-            if(complainWorkflowActionFragment !=null){
-                transaction.remove(complainWorkflowActionFragment);
+            if(workflowActionFragment !=null){
+                transaction.remove(workflowActionFragment).commit();
             }
         }
     }
@@ -408,7 +413,7 @@ public class ComplainDetailActivity extends BaseActivity {
             public void onSuccess(String result) {
                 super.onSuccess(result);
                 LogUtils.d(result);
-                complainWorkflowActionFragment.setPicData(new ImageViewInfo(path));
+                workflowActionFragment.setPicData(new ImageViewInfo(path));
             }
 
             @Override
