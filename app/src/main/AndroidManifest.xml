@@ -25,6 +25,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".ui.setting.SettingActivity" />
+        <activity android:name=".ui.setting.SettingDetailActivity" />
+        <activity android:name=".ui.setting.SettingAboutActivity" />
         <activity android:name=".ui.WorkflowListActivity"></activity>
         <activity android:name=".ui.NoticeAttachmentActivity" />
         <activity android:name=".ui.NoticeDetailActivity" />

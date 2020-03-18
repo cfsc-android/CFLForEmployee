@@ -191,8 +191,8 @@ public class LaunchActivity extends BaseActivity {
 //        initData();
         //清空项目过滤的值
         TokenEntity token= SharedPreferencesManage.getToken();
-        LogUtils.d(token.getAccess_token());
         if(token!=null){
+            LogUtils.d(token.getAccess_token());
             long time=new Date().getTime()/1000 - token.getInit_time();
             if(token.getExpires_in()-time>3){
                 initData();

@@ -3,22 +3,16 @@ package com.chanfinecloud.cflforemployee.ui;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chanfinecloud.cflforemployee.R;
 import com.chanfinecloud.cflforemployee.base.BaseFragment;
-import com.chanfinecloud.cflforemployee.entity.EventBusMessage;
-import com.chanfinecloud.cflforemployee.entity.LoginEntity;
-import com.chanfinecloud.cflforemployee.entity.TokenEntity;
 import com.chanfinecloud.cflforemployee.entity.UserInfoEntity;
-import com.chanfinecloud.cflforemployee.util.ExitAppUtils;
+import com.chanfinecloud.cflforemployee.ui.setting.SettingActivity;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
 
-import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -74,8 +68,8 @@ public class MineFragment extends BaseFragment {
                 startActivity(AttendanceActivity.class);
                 break;
             case R.id.mine_tv_setting:
-                EventBus.getDefault().post(new EventBusMessage<>("Quit"));
-
+                //EventBus.getDefault().post(new EventBusMessage<>("Quit"));
+                startActivity(SettingActivity.class);
                 break;
 
         }

@@ -84,7 +84,7 @@
             android:gravity="center_horizontal"
             android:paddingBottom="@dimen/dp_18"
             android:paddingTop="@dimen/dp_18"
-            android:text="@string/txt_logout"
+            android:text="@string/txt_setting"
             android:textColor="@color/text_primary"
             android:textSize="@dimen/sp_14" />
         <TextView

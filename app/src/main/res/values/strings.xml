@@ -9,7 +9,7 @@
     <string name="txt_notice">社区公告</string>
     <string name="txt_person">个人资料</string>
     <string name="txt_sign">签到</string>
-    <string name="txt_logout">退出</string>
+    <string name="txt_setting">设置</string>
     <string name="txt_submit">提交</string>
 
     <!--fragment_mine-->
