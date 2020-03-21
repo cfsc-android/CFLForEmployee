@@ -7,6 +7,7 @@ import com.chanfinecloud.cflforemployee.entity.OrderStatusEntity;
 import com.chanfinecloud.cflforemployee.entity.OrderTypeEntity;
 import com.chanfinecloud.cflforemployee.entity.TokenEntity;
 import com.chanfinecloud.cflforemployee.entity.UserEntity;
+import com.chanfinecloud.cflforemployee.entity.UserInfoAllEntity;
 import com.chanfinecloud.cflforemployee.entity.UserInfoEntity;
 
 import java.util.List;

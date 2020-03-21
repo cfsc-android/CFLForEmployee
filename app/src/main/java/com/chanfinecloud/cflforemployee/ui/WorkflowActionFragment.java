@@ -224,7 +224,7 @@ public class WorkflowActionFragment extends BaseFragment {
                                 request_code= ComplainDetailActivity.REQUEST_CODE_CHOOSE;
                                 break;
                         }
-                        PhotoPicker.pick(context,10,true, ComplainDetailActivity.REQUEST_CODE_CHOOSE);
+                        PhotoPicker.pick(context,10,true, request_code);
                     }else{
                         showToast("相机或读写手机存储的权限被禁止！");
                     }

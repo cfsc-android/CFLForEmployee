@@ -9,10 +9,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chanfinecloud.cflforemployee.R;
 import com.chanfinecloud.cflforemployee.base.BaseFragment;
+import com.chanfinecloud.cflforemployee.entity.EventBusMessage;
+import com.chanfinecloud.cflforemployee.entity.UserInfoAllEntity;
 import com.chanfinecloud.cflforemployee.entity.UserInfoEntity;
 import com.chanfinecloud.cflforemployee.ui.setting.SettingActivity;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -38,22 +43,26 @@ public class MineFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initView();
+    }
+
+    private void initView(){
         userInfo= SharedPreferencesManage.getUserInfo();
-        mine_tv_user_name.setText(userInfo.getUser().getUsername());
-        mine_tv_user_depart.setText(userInfo.getUser().getDepartment());
-        if(!TextUtils.isEmpty(userInfo.getUser().getAvatarUrl())){
+        mine_tv_user_name.setText(userInfo.getUsername());
+        mine_tv_user_depart.setText(userInfo.getDepartment());
+        if(!TextUtils.isEmpty(userInfo.getAvatarId())){
             Glide.with(this)
-                    .load(userInfo.getUser().getAvatarUrl())
+                    .load(userInfo.getAvatarResuorce().getUrl())
                     .circleCrop()
                     .into(mine_iv_user_avatar);
         }
     }
-
 
     @Event({R.id.mine_ll_user,R.id.mine_tv_person,R.id.mine_tv_sign,R.id.mine_tv_setting})
     private void onClickEvent(View v){
@@ -75,5 +84,17 @@ public class MineFragment extends BaseFragment {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(EventBusMessage message){
+        if("refresh".equals(message.getMessage())){
+            initView();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 
 }

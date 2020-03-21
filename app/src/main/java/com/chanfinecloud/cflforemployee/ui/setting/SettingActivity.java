@@ -226,8 +226,8 @@ public class SettingActivity extends BaseActivity {
                 .setBarBackgroundColor("#FF0000")      // 设置顶部按钮和底部背景色，默认颜色为 #2E2D2D
                 .setBarButtonPressedColor("#FF0000")        //设置顶部按钮和底部按钮按下时的反馈色 默认颜色为 #383737
                 .setColorPickerBackgroundColor("#FF0000")   //设置颜色选择器的背景色,默认颜色为 #272828
-                .setMoreParam("用户昵称", SharedPreferencesManage.getUserInfo().getUser().getUsername()) //自定义的反馈数据
-                .setMoreParam("用户手机",SharedPreferencesManage.getUserInfo().getUser().getPhone()) //自定义的反馈数据
+                .setMoreParam("用户昵称", SharedPreferencesManage.getUserInfo().getUsername()) //自定义的反馈数据
+                .setMoreParam("用户手机",SharedPreferencesManage.getUserInfo().getPhone()) //自定义的反馈数据
                 .builder()
                 .invoke();                  //激活直接显示的方式
     }

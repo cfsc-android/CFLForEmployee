@@ -56,7 +56,7 @@ public class UserEntity implements Serializable {
     private String phone;
     private String email;
     private String birthday;
-    private int sex;
+    private int gender;
     private int status;
     private String workNo;
     private String post;
@@ -183,12 +183,12 @@ public class UserEntity implements Serializable {
         this.birthday = birthday;
     }
 
-    public int getSex() {
-        return sex;
+    public int getGender() {
+        return gender;
     }
 
-    public void setSex(int sex) {
-        this.sex = sex;
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public int getStatus() {

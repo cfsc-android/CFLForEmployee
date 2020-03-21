@@ -325,7 +325,7 @@ public class OrderDetailActivity extends BaseActivity {
 
     private void initAction(WorkflowProcessesEntity lastWorkflow){
         FragmentTransaction transaction=fragmentManager.beginTransaction();
-        if((lastWorkflow.getAssigneeId().equals(SharedPreferencesManage.getUserInfo().getUser().getId())
+        if((lastWorkflow.getAssigneeId().equals(SharedPreferencesManage.getUserInfo().getId())
                 ||"客服中心确认工单".equals(lastWorkflow.getNodeName())
                 ||"回访".equals(lastWorkflow.getNodeName()))
                 &&(lastWorkflow.getOperationInfos()!=null&&lastWorkflow.getOperationInfos().size()>0)) {

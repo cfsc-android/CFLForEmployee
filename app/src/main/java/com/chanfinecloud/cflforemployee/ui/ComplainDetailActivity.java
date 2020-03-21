@@ -320,7 +320,7 @@ public class ComplainDetailActivity extends BaseActivity {
     //初始化流程处理
     private void initAction(WorkflowProcessesEntity lastWorkflow){
         FragmentTransaction transaction=fragmentManager.beginTransaction();
-        if((lastWorkflow.getAssigneeId().equals(SharedPreferencesManage.getUserInfo().getUser().getId())
+        if((lastWorkflow.getAssigneeId().equals(SharedPreferencesManage.getUserInfo().getId())
                 ||"客服沟通确认".equals(lastWorkflow.getNodeName()))
                 &&(lastWorkflow.getOperationInfos()!=null&&lastWorkflow.getOperationInfos().size()>0)) {
             Bundle bundle = new Bundle();

@@ -69,7 +69,7 @@ public class BirthWheelDialog extends Dialog implements View.OnClickListener {
         this.click = click;
     }
 
-    public BirthWheelDialog(Context context, int theme, BirthWheelDialog.OnDateTimeConfirm onDateTimeConfirm){
+    public BirthWheelDialog(Context context,int theme,BirthWheelDialog.OnDateTimeConfirm onDateTimeConfirm){
         super(context,theme);
         this.context=context;
         this.onDateTimeConfirm=onDateTimeConfirm;
@@ -338,8 +338,7 @@ public class BirthWheelDialog extends Dialog implements View.OnClickListener {
     }
 
     public interface OnDateTimeConfirm{
-        void returnData(String dateText, String dateValue);
+        void returnData(String dateText,String dateValue);
     }
-
 }
 

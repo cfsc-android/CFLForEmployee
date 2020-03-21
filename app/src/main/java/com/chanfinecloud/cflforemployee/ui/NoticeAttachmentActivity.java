@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,41 +11,27 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chanfinecloud.cflforemployee.R;
 import com.chanfinecloud.cflforemployee.adapter.AttachmentListAdapter;
-import com.chanfinecloud.cflforemployee.adapter.NoticeListAdapter;
 import com.chanfinecloud.cflforemployee.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.base.Config;
-import com.chanfinecloud.cflforemployee.entity.BaseEntity;
-import com.chanfinecloud.cflforemployee.entity.ListLoadingType;
-import com.chanfinecloud.cflforemployee.entity.NoticeListEntity;
-import com.chanfinecloud.cflforemployee.entity.NoticeReceiverType;
-import com.chanfinecloud.cflforemployee.entity.NoticeType;
 import com.chanfinecloud.cflforemployee.entity.ResourceEntity;
 import com.chanfinecloud.cflforemployee.util.FilePathUtil;
-import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
-import com.chanfinecloud.cflforemployee.util.http.JsonParse;
-import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
 import com.chanfinecloud.cflforemployee.util.http.MyProgressCallBack;
 import com.chanfinecloud.cflforemployee.util.http.RequestParam;
 import com.chanfinecloud.cflforemployee.weidgt.RecyclerViewDivider;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.chanfinecloud.cflforemployee.base.Config.BASE_URL;
 import static com.chanfinecloud.cflforemployee.base.Config.File_DIR_NAME;
-import static com.chanfinecloud.cflforemployee.base.Config.PHOTO_DIR_NAME;
 import static com.chanfinecloud.cflforemployee.base.Config.SD_APP_DIR_NAME;
 
 

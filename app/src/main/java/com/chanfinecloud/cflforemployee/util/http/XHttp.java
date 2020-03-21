@@ -1,6 +1,7 @@
 package com.chanfinecloud.cflforemployee.util.http;
 
 import com.chanfinecloud.cflforemployee.entity.TokenEntity;
+import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
 import com.google.gson.Gson;
 
@@ -135,6 +136,7 @@ public class XHttp {
         TokenEntity tokenEntity = SharedPreferencesManage.getToken();
         if(tokenEntity!=null){
             params.addHeader("Authorization","bearer "+tokenEntity.getAccess_token());
+           LogUtils.d(tokenEntity.getAccess_token());
         }
         return params;
     }

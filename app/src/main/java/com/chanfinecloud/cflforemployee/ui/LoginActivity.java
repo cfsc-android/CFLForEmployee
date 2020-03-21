@@ -3,7 +3,6 @@ package com.chanfinecloud.cflforemployee.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,23 +15,20 @@ import com.chanfinecloud.cflforemployee.entity.LoginEntity;
 import com.chanfinecloud.cflforemployee.entity.OrderStatusEntity;
 import com.chanfinecloud.cflforemployee.entity.OrderTypeListEntity;
 import com.chanfinecloud.cflforemployee.entity.TokenEntity;
+import com.chanfinecloud.cflforemployee.entity.UserInfoAllEntity;
 import com.chanfinecloud.cflforemployee.entity.UserInfoEntity;
-import com.chanfinecloud.cflforemployee.entity.UserListEntity;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
 import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
 import com.chanfinecloud.cflforemployee.util.http.JsonParse;
 import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
 import com.chanfinecloud.cflforemployee.util.http.RequestParam;
-import com.chanfinecloud.cflforemployee.util.http.XHttp;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -271,9 +267,38 @@ public class LoginActivity extends BaseActivity {
                 super.onSuccess(result);
                 LogUtils.d("result",result);
                 Gson gson = new Gson();
-                UserInfoEntity userInfo=gson.fromJson(result,UserInfoEntity.class);
-                SharedPreferencesManage.setUserInfo(userInfo);
-                checkInitStatus(1);
+                UserInfoAllEntity userInfoAllEntity=gson.fromJson(result, UserInfoAllEntity.class);
+                getUserInfo(userInfoAllEntity.getUser().getId());
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                super.onError(ex, isOnCallback);
+                showToast(ex.getMessage());
+                checkInitStatus(0);
+            }
+        });
+        sendRequest(requestParam,false);
+    }
+
+    //获取用户信息
+    private void getUserInfo(String userId){
+        RequestParam requestParam=new RequestParam();
+        requestParam.setUrl(BASE_URL+"sys/user/"+userId);
+        requestParam.setMethod(HttpMethod.Get);
+        requestParam.setCallback(new MyCallBack<String>(){
+            @Override
+            public void onSuccess(String result) {
+                super.onSuccess(result);
+                LogUtils.d("result",result);
+                BaseEntity<UserInfoEntity> baseEntity=JsonParse.parse(result,UserInfoEntity.class);
+                if(baseEntity.isSuccess()){
+                    SharedPreferencesManage.setUserInfo(baseEntity.getResult());
+                    checkInitStatus(1);
+                }else{
+                    showToast(baseEntity.getMessage());
+                    checkInitStatus(0);
+                }
             }
 
             @Override
