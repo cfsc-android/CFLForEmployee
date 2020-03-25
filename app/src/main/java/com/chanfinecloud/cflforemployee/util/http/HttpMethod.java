@@ -6,12 +6,12 @@ package com.chanfinecloud.cflforemployee.util.http;
  * Describe: 请求方法枚举
  */
 public enum HttpMethod {
-    Post(0x01),
-    Get(0x02),
-    Upload(0x03),
-    Download(0x04),
-    PostJson(0x05),
-    Put(0x06);
+    Get(0x01),
+    Post(0x02),
+    Put(0x03),
+    Delete(0x04),
+    Upload(0x05),
+    Download(0x06);
     private final int type;
 
     HttpMethod(int type) {

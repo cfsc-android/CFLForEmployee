@@ -163,12 +163,10 @@ public class ComplainDetailActivity extends BaseActivity {
 
     //获取投诉数据
     private void getData(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"/workflow/api/detail/"+complainId);
+        RequestParam requestParam=new RequestParam(BASE_URL+"/workflow/api/detail/"+complainId,HttpMethod.Get);
         Map<String,String> map=new HashMap<>();
         map.put("type", WorkflowType.Complain.getType());
-        requestParam.setGetRequestMap(map);
-        requestParam.setMethod(HttpMethod.Get);
+        requestParam.setRequestMap(map);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -400,13 +398,11 @@ public class ComplainDetailActivity extends BaseActivity {
 
     //上传照片
     private void uploadPic(final String path){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"file-manager-ms/files-anon");
-        requestParam.setMethod(HttpMethod.Upload);
+        RequestParam requestParam=new RequestParam(BASE_URL+"file-manager-ms/files-anon",HttpMethod.Upload);
         Map<String,Object> map=new HashMap<>();
         map.put("UploadFile",new File(path));
         map.put("resourceKey",resourceKey);
-        requestParam.setPostRequestMap(map);
+        requestParam.setRequestMap(map);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {

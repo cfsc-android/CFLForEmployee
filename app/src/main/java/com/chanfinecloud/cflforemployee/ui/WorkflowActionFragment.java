@@ -33,6 +33,7 @@ import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
 import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
 import com.chanfinecloud.cflforemployee.util.http.JsonParse;
 import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
+import com.chanfinecloud.cflforemployee.util.http.ParamType;
 import com.chanfinecloud.cflforemployee.util.http.RequestParam;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImageViewInfo;
@@ -466,10 +467,9 @@ public class WorkflowActionFragment extends BaseFragment {
     }
 
     private void workflowAction(Map<String,Object> map){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"workflow/api/push/"+workflowType.getType());
-        requestParam.setMethod(HttpMethod.PostJson);
-        requestParam.setPostJsonRequest(map);
+        RequestParam requestParam=new RequestParam(BASE_URL+"workflow/api/push/"+workflowType.getType(),HttpMethod.Post);
+        requestParam.setRequestMap(map);
+        requestParam.setParamType(ParamType.Json);
         requestParam.setCallback(myCallBack);
         sendRequest(requestParam,true);
     }

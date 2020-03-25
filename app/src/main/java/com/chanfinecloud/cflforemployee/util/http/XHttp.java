@@ -24,13 +24,13 @@ public class XHttp {
      * 发送get请求
      * @param <T>
      */
-    public static <T> Callback.Cancelable Get(String url, Map<String, String> map, Callback.CommonCallback<T> callback,boolean authorization){
+    public static <T> Callback.Cancelable Get(String url, Map<String, Object> map, Callback.CommonCallback<T> callback,boolean authorization){
         LogUtil.d(url);
         RequestParams params=new RequestParams(url);
         if(authorization)
             params=addAuthorization(params);
         if(null!=map){
-            for(Map.Entry<String, String> entry : map.entrySet()){
+            for(Map.Entry<String, Object> entry : map.entrySet()){
                 params.addQueryStringParameter(entry.getKey(), entry.getValue());
             }
         }
@@ -42,35 +42,22 @@ public class XHttp {
      *
      * @param <T>
      */
-    public static <T> Callback.Cancelable Post(String url, Map<String, Object> map, Callback.CommonCallback<T> callback,boolean authorization) {
+    public static <T> Callback.Cancelable Post(String url, Map<String, Object> map, Callback.CommonCallback<T> callback,ParamType paramType,boolean authorization) {
         LogUtil.d(url);
         RequestParams params = new RequestParams(url);
         if(authorization)
             params=addAuthorization(params);
         if (null != map) {
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
-                params.addParameter(entry.getKey(), entry.getValue());
+            if(paramType==ParamType.Json){
+                Gson gson=new Gson();
+                LogUtil.d(gson.toJson(map));
+                params.setAsJsonContent(true);
+                params.setBodyContent(gson.toJson(map));
+            }else{
+                for (Map.Entry<String, Object> entry : map.entrySet()) {
+                    params.addParameter(entry.getKey(), entry.getValue());
+                }
             }
-        }
-        return x.http().post(params, callback);
-    }
-
-    /**
-     * 发送异步post请求
-     *
-     * @param <T>
-     */
-    public static <T> Callback.Cancelable PostJson(String url, Object object, Callback.CommonCallback<T> callback,boolean authorization) {
-        LogUtil.d(url);
-        RequestParams params = new RequestParams(url);
-        if(authorization)
-            params=addAuthorization(params);
-        if (null != object) {
-            Gson gson=new Gson();
-            LogUtil.d(gson.toJson(object));
-            params.setAsJsonContent(true);
-            params.setBodyContent(gson.toJson(object));
-
         }
         return x.http().post(params, callback);
     }
@@ -80,19 +67,51 @@ public class XHttp {
      *
      * @param <T>
      */
-    public static <T> Callback.Cancelable Put(String url, Object object, Callback.CommonCallback<T> callback,boolean authorization) {
+    public static <T> Callback.Cancelable Put(String url, Map<String, Object> map, Callback.CommonCallback<T> callback,ParamType paramType,boolean authorization) {
         LogUtil.d(url);
         RequestParams params = new RequestParams(url);
         if(authorization)
             params=addAuthorization(params);
-        if (null != object) {
-            Gson gson=new Gson();
-            LogUtil.d(gson.toJson(object));
-            params.setAsJsonContent(true);
-            params.setBodyContent(gson.toJson(object));
+        if (null != map) {
+            if(paramType==ParamType.Json){
+                Gson gson=new Gson();
+                LogUtil.d(gson.toJson(map));
+                params.setAsJsonContent(true);
+                params.setBodyContent(gson.toJson(map));
+            }else{
+                for (Map.Entry<String, Object> entry : map.entrySet()) {
+                    params.addParameter(entry.getKey(), entry.getValue());
+                }
+            }
 
         }
         return x.http().request(HttpMethod.PUT,params, callback);
+    }
+
+    /**
+     * 发送异步delete请求
+     *
+     * @param <T>
+     */
+    public static <T> Callback.Cancelable Delete(String url, Map<String, Object> map, Callback.CommonCallback<T> callback,ParamType paramType,boolean authorization) {
+        LogUtil.d(url);
+        RequestParams params = new RequestParams(url);
+        if(authorization)
+            params=addAuthorization(params);
+        if (null != map) {
+            if(paramType==ParamType.Json){
+                Gson gson=new Gson();
+                LogUtil.d(gson.toJson(map));
+                params.setAsJsonContent(true);
+                params.setBodyContent(gson.toJson(map));
+            }else{
+                for (Map.Entry<String, Object> entry : map.entrySet()) {
+                    params.addParameter(entry.getKey(), entry.getValue());
+                }
+            }
+
+        }
+        return x.http().request(HttpMethod.DELETE,params, callback);
     }
 
     /**
@@ -114,6 +133,7 @@ public class XHttp {
         params.setMultipart(true);
         return x.http().post(params, callback);
     }
+
 
     /**
      * 下载文件

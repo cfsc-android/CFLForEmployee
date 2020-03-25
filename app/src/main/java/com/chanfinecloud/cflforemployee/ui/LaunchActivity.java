@@ -231,13 +231,11 @@ public class LaunchActivity extends BaseActivity {
 
     //初始化工单类型
     private void initOrderType(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"work/orderType/pageByCondition");
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"work/orderType/pageByCondition",HttpMethod.Get);
         Map<String,String> map=new HashMap<>();
         map.put("pageNo","1");
         map.put("pageSize","100");
-        requestParam.setGetRequestMap(map);
+        requestParam.setRequestMap(map);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -264,9 +262,7 @@ public class LaunchActivity extends BaseActivity {
     }
     //初始化工单状态
     private void initOrderStatus(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"work/orderStatus/selectWorkorderStatus");
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"work/orderStatus/selectWorkorderStatus",HttpMethod.Get);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -295,13 +291,11 @@ public class LaunchActivity extends BaseActivity {
     }
     //初始化投诉类型
     private void initComplainType(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"work/complaintType/pageByCondition");
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"work/complaintType/pageByCondition",HttpMethod.Get);
         Map<String,String> map=new HashMap<>();
         map.put("pageNo","1");
         map.put("pageSize","100");
-        requestParam.setGetRequestMap(map);
+        requestParam.setRequestMap(map);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -328,9 +322,7 @@ public class LaunchActivity extends BaseActivity {
     }
     //初始化投诉状态
     private void initComplainStatus(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"work/complaintStatus/complaintStatusList");
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"work/complaintStatus/complaintStatusList",HttpMethod.Get);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -359,13 +351,11 @@ public class LaunchActivity extends BaseActivity {
     }
     //初始化员工
     private void initUserData(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"sys/user/list");
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"sys/user/list",HttpMethod.Get);
         Map<String,String> requestMap=new HashMap<>();
         requestMap.put("pageNo","1");
         requestMap.put("pageSize","100");
-        requestParam.setGetRequestMap(requestMap);
+        requestParam.setRequestMap(requestMap);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {

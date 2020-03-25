@@ -21,6 +21,7 @@ import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
 import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
 import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
+import com.chanfinecloud.cflforemployee.util.http.ParamType;
 import com.chanfinecloud.cflforemployee.util.http.RequestParam;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImageViewInfo;
@@ -215,9 +216,7 @@ public class AddOrderActivity extends BaseActivity {
             showToast("请输入问题描述");
             return;
         }
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"work/order/api/user/addOrder");
-        requestParam.setMethod(HttpMethod.PostJson);
+        RequestParam requestParam=new RequestParam(BASE_URL+"work/order/api/user/addOrder",HttpMethod.Post);
         Map<String,Object> map=new HashMap<>();
         map.put("address",add_order_et_address.getText().toString());
         map.put("typeId",projectValue);
@@ -229,7 +228,8 @@ public class AddOrderActivity extends BaseActivity {
         map.put("problemDesc",add_order_et_remark.getText().toString());
         if(dataList.size()>1)
             map.put("resourcekey",resourceKey);
-        requestParam.setPostJsonRequest(map);
+        requestParam.setRequestMap(map);
+        requestParam.setParamType(ParamType.Json);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -310,13 +310,11 @@ public class AddOrderActivity extends BaseActivity {
 
     //上传照片
     private void uploadPic(final String path){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"file-manager-ms/files-anon");
-        requestParam.setMethod(HttpMethod.Upload);
+        RequestParam requestParam=new RequestParam(BASE_URL+"file-manager-ms/files-anon",HttpMethod.Upload);
         Map<String,Object> map=new HashMap<>();
         map.put("UploadFile",new File(path));
         map.put("resourceKey",resourceKey);
-        requestParam.setPostRequestMap(map);
+        requestParam.setRequestMap(map);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {

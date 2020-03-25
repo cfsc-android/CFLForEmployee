@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 
+import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
 import com.chanfinecloud.cflforemployee.util.http.RequestParam;
 import com.chanfinecloud.cflforemployee.util.http.XHttp;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Loong on 2020/2/6.
@@ -45,26 +47,30 @@ public class BaseHandler extends Handler {
 
     private void doRequest(Message msg){
         RequestParam requestParam= (RequestParam) msg.getData().getSerializable("request");
-        switch (requestParam.getMethod()){
-            case Get:
-                taskList.add(XHttp.Get(requestParam.getUrl(),requestParam.getGetRequestMap(),requestParam.getCallback(),requestParam.isAuthorization()));
-                break;
-            case Post:
-                taskList.add(XHttp.Post(requestParam.getUrl(),requestParam.getPostRequestMap(),requestParam.getCallback(),requestParam.isAuthorization()));
-                break;
-            case PostJson:
-                taskList.add(XHttp.PostJson(requestParam.getUrl(),requestParam.getPostJsonRequest(),requestParam.getCallback(),requestParam.isAuthorization()));
-                break;
-            case Download:
-                taskList.add(XHttp.DownLoadFile(requestParam.getUrl(),requestParam.getFilepath(),requestParam.getProgressCallback(),requestParam.isAuthorization()));
-                break;
-            case Upload:
-                taskList.add(XHttp.UpLoadFile(requestParam.getUrl(),requestParam.getPostRequestMap(),requestParam.getCallback(),requestParam.isAuthorization()));
-                break;
-            case Put:
-                taskList.add(XHttp.Put(requestParam.getUrl(),requestParam.getPostJsonRequest(),requestParam.getCallback(),requestParam.isAuthorization()));
-                break;
+        if(requestParam!=null){
+            HttpMethod httpMethod=requestParam.getMethod();
+            switch (httpMethod){
+                case Get:
+                    taskList.add(XHttp.Get(requestParam.getUrl(),requestParam.getRequestMap(),requestParam.getCallback(),requestParam.isAuthorization()));
+                    break;
+                case Post:
+                    taskList.add(XHttp.Post(requestParam.getUrl(),requestParam.getRequestMap(),requestParam.getCallback(),requestParam.getParamType(), requestParam.isAuthorization()));
+                    break;
+                case Put:
+                    taskList.add(XHttp.Put(requestParam.getUrl(),requestParam.getRequestMap(),requestParam.getCallback(),requestParam.getParamType(),requestParam.isAuthorization()));
+                    break;
+                case Delete:
+                    taskList.add(XHttp.Delete(requestParam.getUrl(),requestParam.getRequestMap(),requestParam.getCallback(),requestParam.getParamType(),requestParam.isAuthorization()));
+                    break;
+                case Download:
+                    taskList.add(XHttp.DownLoadFile(requestParam.getUrl(),requestParam.getFilepath(),requestParam.getProgressCallback(),requestParam.isAuthorization()));
+                    break;
+                case Upload:
+                    taskList.add(XHttp.UpLoadFile(requestParam.getUrl(),requestParam.getRequestMap(),requestParam.getCallback(),requestParam.isAuthorization()));
+                    break;
+            }
         }
+
     }
 
     private void cancelRequest(){

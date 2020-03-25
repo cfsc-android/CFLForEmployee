@@ -24,6 +24,7 @@ import com.chanfinecloud.cflforemployee.util.Utils;
 import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
 import com.chanfinecloud.cflforemployee.util.http.JsonParse;
 import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
+import com.chanfinecloud.cflforemployee.util.http.ParamType;
 import com.chanfinecloud.cflforemployee.util.http.RequestParam;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
@@ -86,9 +87,7 @@ public class NoticeDetailActivity extends BaseActivity {
 
     private void getData(){
         startProgressDialog();
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"smart/content/"+noticeId);
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"smart/content/"+noticeId,HttpMethod.Get);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -116,13 +115,12 @@ public class NoticeDetailActivity extends BaseActivity {
 
     //预览+1
     private void postPreview(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"smart/contentThumbup/annoucementUp");
-        requestParam.setMethod(HttpMethod.PostJson);
+        RequestParam requestParam=new RequestParam(BASE_URL+"smart/contentThumbup/annoucementUp",HttpMethod.Post);
         Map<String,Object> map=new HashMap<>();
         map.put("announcementId",noticeId);
         map.put("field","browseNum");
-        requestParam.setPostJsonRequest(map);
+        requestParam.setRequestMap(map);
+        requestParam.setParamType(ParamType.Json);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -145,14 +143,13 @@ public class NoticeDetailActivity extends BaseActivity {
 
     //点赞/取消点赞
     private void thumbUp(final String flag){
-        RequestParam requestParam=new RequestParam();
+        RequestParam requestParam;
         if("0".equals(flag)){
-            requestParam.setUrl(BASE_URL+"smart/contentThumbup/noLikeAnnouncement/"+noticeId);
+            requestParam=new RequestParam(BASE_URL+"smart/contentThumbup/noLikeAnnouncement/"+noticeId,HttpMethod.Get);
         }else{
-            requestParam.setUrl(BASE_URL+"smart/contentThumbup/likeAnnouncement/"+noticeId);
+            requestParam=new RequestParam(BASE_URL+"smart/contentThumbup/likeAnnouncement/"+noticeId,HttpMethod.Get);
 
         }
-        requestParam.setMethod(HttpMethod.Get);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {

@@ -24,6 +24,7 @@ import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
 import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
 import com.chanfinecloud.cflforemployee.util.http.JsonParse;
 import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
+import com.chanfinecloud.cflforemployee.util.http.ParamType;
 import com.chanfinecloud.cflforemployee.util.http.RequestParam;
 import com.chanfinecloud.cflforemployee.weidgt.photopicker.PhotoPicker;
 import com.chanfinecloud.cflforemployee.weidgt.wheelview.BirthWheelDialog;
@@ -194,11 +195,10 @@ public class PersonActivity extends BaseActivity {
      * @param map
      */
     private void updateUser(Map<String,Object> map){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"/sys/user/updateUser");
-        requestParam.setMethod(HttpMethod.Put);
+        RequestParam requestParam=new RequestParam(BASE_URL+"/sys/user/updateUser",HttpMethod.Put);
         map.put("id", userInfoEntity.getId());
-        requestParam.setPostJsonRequest(map);
+        requestParam.setRequestMap(map);
+        requestParam.setParamType(ParamType.Json);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -225,9 +225,7 @@ public class PersonActivity extends BaseActivity {
 
     //获取用户信息
     private void getUserInfo(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"sys/user/"+SharedPreferencesManage.getUserInfo().getId());
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"sys/user/"+SharedPreferencesManage.getUserInfo().getId(),HttpMethod.Get);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -315,12 +313,10 @@ public class PersonActivity extends BaseActivity {
 
     //上传照片
     private void uploadPic(final String path){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"file-manager-ms/files-anon");
-        requestParam.setMethod(HttpMethod.Upload);
+        RequestParam requestParam=new RequestParam(BASE_URL+"file-manager-ms/files-anon",HttpMethod.Upload);
         Map<String,Object> map=new HashMap<>();
         map.put("UploadFile",new File(path));
-        requestParam.setPostRequestMap(map);
+        requestParam.setRequestMap(map);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {

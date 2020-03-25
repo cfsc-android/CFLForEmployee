@@ -119,9 +119,7 @@ public class HomeTodoFragment extends BaseFragment {
     }
 
     private void getData(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"workflow/api/todo");
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"workflow/api/todo",HttpMethod.Get);
         Map<String,String> map=new HashMap<>();
         map.put("pageNo","1");
         map.put("pageSize","20");
@@ -130,7 +128,7 @@ public class HomeTodoFragment extends BaseFragment {
         }else if(todoType==HomeTodoType.待处理投诉.getType()){
             map.put("type", WorkflowType.Complain.getType());
         }
-        requestParam.setGetRequestMap(map);
+        requestParam.setRequestMap(map);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {

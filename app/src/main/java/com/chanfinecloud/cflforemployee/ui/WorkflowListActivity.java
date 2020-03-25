@@ -112,16 +112,14 @@ public class WorkflowListActivity extends BaseActivity {
     }
 
     private void getData(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"workflow/api/page");
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"workflow/api/page",HttpMethod.Get);
         Map<String,String> map=new HashMap<>();
         map.put("pageNo",page+"");
         map.put("pageSize",pageSize+"");
         map.put("isFinish", FinishStatusType.UnFinish.getType());
         map.put("type",workflowType.getType());
         map.put("userType", UserType.Employee.getType());
-        requestParam.setGetRequestMap(map);
+        requestParam.setRequestMap(map);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {

@@ -77,9 +77,7 @@ public class HomeFragment extends BaseFragment {
 
 
     private void getData(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"smart/content/pages");
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"smart/content/pages",HttpMethod.Get);
         Map<String,String> map=new HashMap<>();
         map.put("projectId","ec93bb06f5be4c1f19522ca78180e2i9");
         map.put("receiver", NoticeReceiverType.全部.getType()+","+NoticeReceiverType.员工.getType());
@@ -87,7 +85,7 @@ public class HomeFragment extends BaseFragment {
         map.put("auditStatus","1");
         map.put("pageNo","1");
         map.put("pageSize","10");
-        requestParam.setGetRequestMap(map);
+        requestParam.setRequestMap(map);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {

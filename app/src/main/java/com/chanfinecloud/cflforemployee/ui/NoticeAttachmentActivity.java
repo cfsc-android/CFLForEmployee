@@ -67,9 +67,7 @@ public class NoticeAttachmentActivity extends BaseActivity {
         if (file.exists()) {
             openFile(file,type);
         } else {
-            RequestParam requestParam=new RequestParam();
-            requestParam.setUrl(url);
-            requestParam.setMethod(HttpMethod.Download);
+            RequestParam requestParam=new RequestParam(url,HttpMethod.Download);
             requestParam.setFilepath(_Path+"/"+path);
             requestParam.setProgressCallback(new MyProgressCallBack<File>(){
                 @Override

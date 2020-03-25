@@ -13,15 +13,17 @@ import java.util.Map;
 public class RequestParam<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public RequestParam() {
+    public RequestParam(String url, HttpMethod method) {
+        this.url = url;
+        this.method = method;
+        this.paramType=ParamType.Urlencoded;
         this.authorization=true;
     }
 
     private String url;
     private HttpMethod method;
-    private Map<String, String> getRequestMap;
-    private Map<String, Object> postRequestMap;
-    private Object postJsonRequest;
+    private ParamType paramType;
+    private Map<String, Object> requestMap;
     private boolean authorization;
     private String filepath;
     private Callback.CommonCallback<T> callback;
@@ -51,13 +53,7 @@ public class RequestParam<T> implements Serializable {
         this.filepath = filepath;
     }
 
-    public Object getPostJsonRequest() {
-        return postJsonRequest;
-    }
 
-    public void setPostJsonRequest(Object postJsonRequest) {
-        this.postJsonRequest = postJsonRequest;
-    }
 
     public String getUrl() {
         return url;
@@ -75,20 +71,20 @@ public class RequestParam<T> implements Serializable {
         this.method = method;
     }
 
-    public Map<String, String> getGetRequestMap() {
-        return getRequestMap;
+    public ParamType getParamType() {
+        return paramType;
     }
 
-    public void setGetRequestMap(Map<String, String> getRequestMap) {
-        this.getRequestMap = getRequestMap;
+    public void setParamType(ParamType paramType) {
+        this.paramType = paramType;
     }
 
-    public Map<String, Object> getPostRequestMap() {
-        return postRequestMap;
+    public Map<String, Object> getRequestMap() {
+        return requestMap;
     }
 
-    public void setPostRequestMap(Map<String, Object> postRequestMap) {
-        this.postRequestMap = postRequestMap;
+    public void setRequestMap(Map<String, Object> requestMap) {
+        this.requestMap = requestMap;
     }
 
     public Callback.CommonCallback<T> getCallback() {

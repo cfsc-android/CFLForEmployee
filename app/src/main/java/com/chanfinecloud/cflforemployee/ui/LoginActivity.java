@@ -69,9 +69,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"api-auth/oauth/token");
-        requestParam.setMethod(HttpMethod.Post);
+        RequestParam requestParam=new RequestParam(BASE_URL+"api-auth/oauth/token",HttpMethod.Post);
         Map<String,Object> params=new HashMap<>();
         params.put("username",login_et_name.getText().toString());
         params.put("password",login_et_password.getText().toString());
@@ -81,7 +79,7 @@ public class LoginActivity extends BaseActivity {
         params.put("client_secret","webApp");
         params.put("grant_type","password");
         params.put("validCode","b2bd");
-        requestParam.setPostRequestMap(params);
+        requestParam.setRequestMap(params);
         requestParam.setAuthorization(false);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
@@ -130,13 +128,11 @@ public class LoginActivity extends BaseActivity {
 
     //初始化工单类型
     private void initOrderType(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"work/orderType/pageByCondition");
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"work/orderType/pageByCondition",HttpMethod.Get);
         Map<String,String> map=new HashMap<>();
         map.put("pageNo","1");
         map.put("pageSize","100");
-        requestParam.setGetRequestMap(map);
+        requestParam.setRequestMap(map);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -163,9 +159,7 @@ public class LoginActivity extends BaseActivity {
     }
     //初始化工单状态
     private void initOrderStatus(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"work/orderStatus/selectWorkorderStatus");
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"work/orderStatus/selectWorkorderStatus",HttpMethod.Get);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -194,13 +188,11 @@ public class LoginActivity extends BaseActivity {
     }
     //初始化投诉类型
     private void initComplainType(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"work/complaintType/pageByCondition");
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"work/complaintType/pageByCondition",HttpMethod.Get);
         Map<String,String> map=new HashMap<>();
         map.put("pageNo","1");
         map.put("pageSize","100");
-        requestParam.setGetRequestMap(map);
+        requestParam.setRequestMap(map);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -227,9 +219,7 @@ public class LoginActivity extends BaseActivity {
     }
     //初始化投诉状态
     private void initComplainStatus(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"work/complaintStatus/complaintStatusList");
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"work/complaintStatus/complaintStatusList",HttpMethod.Get);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -258,9 +248,7 @@ public class LoginActivity extends BaseActivity {
     }
     //获取用户信息
     private void getUserInfo(){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"api-auth/oauth/userinfo");
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"api-auth/oauth/userinfo",HttpMethod.Get);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -283,9 +271,7 @@ public class LoginActivity extends BaseActivity {
 
     //获取用户信息
     private void getUserInfo(String userId){
-        RequestParam requestParam=new RequestParam();
-        requestParam.setUrl(BASE_URL+"sys/user/"+userId);
-        requestParam.setMethod(HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+"sys/user/"+userId,HttpMethod.Get);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
