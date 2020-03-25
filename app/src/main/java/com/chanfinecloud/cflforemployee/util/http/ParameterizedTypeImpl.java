@@ -15,6 +15,10 @@ public class ParameterizedTypeImpl implements ParameterizedType {
         this.raw = raw;
         this.args = args != null ? args : new Type[0];
     }
+    public ParameterizedTypeImpl(Class raw, Type type) {
+        this.raw = raw;
+        this.args = new Type[]{type};
+    }
     @Override
     public Type[] getActualTypeArguments() {
         return args;

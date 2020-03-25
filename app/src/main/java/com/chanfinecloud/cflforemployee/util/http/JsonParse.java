@@ -24,14 +24,9 @@ public class JsonParse {
         return new Gson().fromJson(json, type);
     }
 
-    public static Object parseList( String json,Type type){
-        try {
-            JSONObject jsonObject=new JSONObject(json);
-            Gson gson=new Gson();
-            return gson.fromJson(jsonObject.getJSONArray("result").toString(),type);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
+
+    public static <T> BaseEntity<T> parse( String json, Type mtype){
+        Type type = new ParameterizedTypeImpl(BaseEntity.class, mtype);
+        return new Gson().fromJson(json, type);
     }
 }

@@ -53,4 +53,14 @@ public class OrderStatusEntity implements Serializable {
     public void setOrderNO(String orderNO) {
         this.orderNO = orderNO;
     }
+
+    @Override
+    public String toString() {
+        return "OrderStatusEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", remark='" + remark + '\'' +
+                ", orderNO='" + orderNO + '\'' +
+                '}';
+    }
 }

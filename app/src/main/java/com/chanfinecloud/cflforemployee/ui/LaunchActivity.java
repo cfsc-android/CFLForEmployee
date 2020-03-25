@@ -41,6 +41,7 @@ import java.util.Map;
 
 import androidx.annotation.Nullable;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static com.chanfinecloud.cflforemployee.base.Config.BASE_URL;
 
 
@@ -268,11 +269,10 @@ public class LaunchActivity extends BaseActivity {
             public void onSuccess(String result) {
                 super.onSuccess(result);
                 LogUtils.d("result",result);
-                BaseEntity baseEntity=JsonParse.parse(result);
+                Type type = new TypeToken<List<OrderStatusEntity>>() {}.getType();
+                BaseEntity<List<OrderStatusEntity>> baseEntity=JsonParse.parse(result,type);
                 if(baseEntity.isSuccess()){
-                    Type type = new TypeToken<List<OrderStatusEntity>>() {}.getType();
-                    List<OrderStatusEntity> list= (List<OrderStatusEntity>) JsonParse.parseList(result,type);
-                    SharedPreferencesManage.setOrderStatus(list);
+                    SharedPreferencesManage.setOrderStatus(baseEntity.getResult());
                     checkInitStatus(1);
                 }else{
                     showToast(baseEntity.getMessage());
@@ -328,11 +328,10 @@ public class LaunchActivity extends BaseActivity {
             public void onSuccess(String result) {
                 super.onSuccess(result);
                 LogUtils.d("result",result);
-                BaseEntity baseEntity=JsonParse.parse(result);
+                Type type = new TypeToken<List<OrderStatusEntity>>() {}.getType();
+                BaseEntity<List<OrderStatusEntity>> baseEntity=JsonParse.parse(result,type);
                 if(baseEntity.isSuccess()){
-                    Type type = new TypeToken<List<OrderStatusEntity>>() {}.getType();
-                    List<OrderStatusEntity> list= (List<OrderStatusEntity>) JsonParse.parseList(result,type);
-                    SharedPreferencesManage.setComplainStatus(list);
+                    SharedPreferencesManage.setComplainStatus(baseEntity.getResult());
                     checkInitStatus(1);
                 }else{
                     showToast(baseEntity.getMessage());

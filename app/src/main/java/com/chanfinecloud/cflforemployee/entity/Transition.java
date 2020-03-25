@@ -6,14 +6,14 @@ package com.chanfinecloud.cflforemployee.entity;
  * Describe: 转场动画枚举
  */
 public enum Transition {
-    TopIn(0x001),
-    TopOut(-0x001),
-    LeftIn(0x002),
-    LeftOut(-0x002),
-    BottomIn(0x003),
-    BottomOut(-0x003),
-    RightIn(0x004),
-    RightOut(-0x004);
+    TopIn(0x01),
+    TopOut(-0x01),
+    LeftIn(0x02),
+    LeftOut(-0x02),
+    BottomIn(0x03),
+    BottomOut(-0x03),
+    RightIn(0x04),
+    RightOut(-0x04);
     private final int type;
 
     Transition(int type) {
