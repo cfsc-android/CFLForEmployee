@@ -8,9 +8,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.base.BaseFragment;
+import com.chanfinecloud.cflforemployee.ui.base.BaseFragment;
 import com.chanfinecloud.cflforemployee.entity.EventBusMessage;
-import com.chanfinecloud.cflforemployee.entity.UserInfoAllEntity;
 import com.chanfinecloud.cflforemployee.entity.UserInfoEntity;
 import com.chanfinecloud.cflforemployee.ui.setting.SettingActivity;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;

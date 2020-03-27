@@ -18,9 +18,9 @@ public class FilePathUtil {
 
     /**
      * 通过Uri获取文件路径
-     * @param context
-     * @param pUri
-     * @return
+     * @param context Context
+     * @param pUri Uri
+     * @return String
      */
     public static String getPathByUri(Context context,Uri pUri)
     {
@@ -41,12 +41,22 @@ public class FilePathUtil {
         return picturePath;
     }
 
+    /**
+     * 获取子路径
+     * @param pPath 完整路径
+     * @return String
+     */
     private static String subPath(String pPath)
     {
         String[] array = pPath.split("/");
         return pPath.substring(array[1].length() + 1);
     }
 
+    /**
+     * 路径不存在则创建
+     * @param pPath 完整路径
+     * @return String
+     */
     public static String createPathIfNotExist(String pPath)
     {
         boolean sdExist = android.os.Environment.MEDIA_MOUNTED.equals(android.os.Environment.getExternalStorageState());

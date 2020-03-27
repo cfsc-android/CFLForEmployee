@@ -14,15 +14,15 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.base.BaseActivity;
+import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.entity.OrderTypeEntity;
 import com.chanfinecloud.cflforemployee.util.FilePathUtil;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
-import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
-import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
-import com.chanfinecloud.cflforemployee.util.http.ParamType;
-import com.chanfinecloud.cflforemployee.util.http.RequestParam;
+import com.chanfinecloud.cflforemployee.http.HttpMethod;
+import com.chanfinecloud.cflforemployee.http.MyCallBack;
+import com.chanfinecloud.cflforemployee.http.ParamType;
+import com.chanfinecloud.cflforemployee.http.RequestParam;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImageViewInfo;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.PreviewBuilder;
@@ -49,9 +49,9 @@ import top.zibin.luban.CompressionPredicate;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
-import static com.chanfinecloud.cflforemployee.base.Config.BASE_URL;
-import static com.chanfinecloud.cflforemployee.base.Config.PHOTO_DIR_NAME;
-import static com.chanfinecloud.cflforemployee.base.Config.SD_APP_DIR_NAME;
+import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.PHOTO_DIR_NAME;
+import static com.chanfinecloud.cflforemployee.config.Config.SD_APP_DIR_NAME;
 
 @ContentView(R.layout.activity_add_order)
 public class AddOrderActivity extends BaseActivity {

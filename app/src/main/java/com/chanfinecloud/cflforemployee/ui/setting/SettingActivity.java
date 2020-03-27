@@ -3,7 +3,6 @@ package com.chanfinecloud.cflforemployee.ui.setting;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.Spanned;
@@ -15,7 +14,7 @@ import android.widget.TextView;
 
 import com.chanfinecloud.cflforemployee.entity.TokenEntity;
 import com.chanfinecloud.cflforemployee.ui.LoginActivity;
-import com.chanfinecloud.cflforemployee.util.ExitAppUtils;
+import com.chanfinecloud.cflforemployee.util.LynActivityManager;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
 import com.chanfinecloud.cflforemployee.util.Utils;
 import com.chanfinecloud.cflforemployee.weidgt.NoUnderlineSpan;
@@ -29,7 +28,7 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.base.BaseActivity;
+import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 
 import java.io.File;
 import java.util.Map;
@@ -57,7 +56,7 @@ public class SettingActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         toolbar_tv_title.setText("设置");
-        tv_setting_version.setText(Utils.getCurrentVersion(this));
+        tv_setting_version.setText(Utils.getCurrentVersion());
         initCheckVersion();
         NoUnderlineSpan mNoUnderlineSpan = new NoUnderlineSpan();
         if(tv_setting_contact.getText() instanceof Spannable){
@@ -130,7 +129,7 @@ public class SettingActivity extends BaseActivity {
         builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ExitAppUtils.getInstance().exit();
+                LynActivityManager.getInstance().exit();
                 dialog.dismiss();
             }
         });
@@ -209,8 +208,8 @@ public class SettingActivity extends BaseActivity {
         TokenEntity tokenEntity= SharedPreferencesManage.getToken();
         tokenEntity.setExpires_in(0);
         SharedPreferencesManage.setToken(tokenEntity);
+        LynActivityManager.getInstance().removeAllActivity();
         startActivity(LoginActivity.class);
-        ExitAppUtils.getInstance().exit();
     }
 
     /**

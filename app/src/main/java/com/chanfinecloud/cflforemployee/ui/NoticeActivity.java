@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chanfinecloud.cflforemployee.R;
 import com.chanfinecloud.cflforemployee.adapter.NoticeListAdapter;
-import com.chanfinecloud.cflforemployee.base.BaseActivity;
+import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.entity.BaseEntity;
 import com.chanfinecloud.cflforemployee.entity.ListLoadingType;
 import com.chanfinecloud.cflforemployee.entity.NoticeEntity;
@@ -16,10 +16,10 @@ import com.chanfinecloud.cflforemployee.entity.NoticeListEntity;
 import com.chanfinecloud.cflforemployee.entity.NoticeReceiverType;
 import com.chanfinecloud.cflforemployee.entity.NoticeType;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
-import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
-import com.chanfinecloud.cflforemployee.util.http.JsonParse;
-import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
-import com.chanfinecloud.cflforemployee.util.http.RequestParam;
+import com.chanfinecloud.cflforemployee.http.HttpMethod;
+import com.chanfinecloud.cflforemployee.http.JsonParse;
+import com.chanfinecloud.cflforemployee.http.MyCallBack;
+import com.chanfinecloud.cflforemployee.http.RequestParam;
 import com.chanfinecloud.cflforemployee.weidgt.RecyclerViewDivider;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -38,7 +38,7 @@ import java.util.Map;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.chanfinecloud.cflforemployee.base.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
 
 @ContentView(R.layout.activity_notice)
 public class NoticeActivity extends BaseActivity {

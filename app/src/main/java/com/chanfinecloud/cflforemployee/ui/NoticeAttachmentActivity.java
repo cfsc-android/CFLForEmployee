@@ -11,13 +11,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chanfinecloud.cflforemployee.R;
 import com.chanfinecloud.cflforemployee.adapter.AttachmentListAdapter;
-import com.chanfinecloud.cflforemployee.base.BaseActivity;
-import com.chanfinecloud.cflforemployee.base.Config;
+import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
+import com.chanfinecloud.cflforemployee.config.Config;
 import com.chanfinecloud.cflforemployee.entity.ResourceEntity;
 import com.chanfinecloud.cflforemployee.util.FilePathUtil;
-import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
-import com.chanfinecloud.cflforemployee.util.http.MyProgressCallBack;
-import com.chanfinecloud.cflforemployee.util.http.RequestParam;
+import com.chanfinecloud.cflforemployee.http.HttpMethod;
+import com.chanfinecloud.cflforemployee.http.MyProgressCallBack;
+import com.chanfinecloud.cflforemployee.http.RequestParam;
 import com.chanfinecloud.cflforemployee.weidgt.RecyclerViewDivider;
 
 import org.xutils.view.annotation.ContentView;
@@ -31,8 +31,8 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.chanfinecloud.cflforemployee.base.Config.File_DIR_NAME;
-import static com.chanfinecloud.cflforemployee.base.Config.SD_APP_DIR_NAME;
+import static com.chanfinecloud.cflforemployee.config.Config.File_DIR_NAME;
+import static com.chanfinecloud.cflforemployee.config.Config.SD_APP_DIR_NAME;
 
 
 @ContentView(R.layout.activity_notice_attachment)

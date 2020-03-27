@@ -6,20 +6,19 @@ import android.view.View;
 
 import com.chanfinecloud.cflforemployee.adapter.HomeTodoPagerAdapter;
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.base.BaseFragment;
+import com.chanfinecloud.cflforemployee.ui.base.BaseFragment;
 import com.chanfinecloud.cflforemployee.entity.BaseEntity;
 import com.chanfinecloud.cflforemployee.entity.HomeTodoType;
-import com.chanfinecloud.cflforemployee.entity.ListLoadingType;
 import com.chanfinecloud.cflforemployee.entity.NoticeEntity;
 import com.chanfinecloud.cflforemployee.entity.NoticeListEntity;
 import com.chanfinecloud.cflforemployee.entity.NoticeReceiverType;
 import com.chanfinecloud.cflforemployee.entity.NoticeType;
 import com.chanfinecloud.cflforemployee.entity.WorkflowType;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
-import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
-import com.chanfinecloud.cflforemployee.util.http.JsonParse;
-import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
-import com.chanfinecloud.cflforemployee.util.http.RequestParam;
+import com.chanfinecloud.cflforemployee.http.HttpMethod;
+import com.chanfinecloud.cflforemployee.http.JsonParse;
+import com.chanfinecloud.cflforemployee.http.MyCallBack;
+import com.chanfinecloud.cflforemployee.http.RequestParam;
 import com.chanfinecloud.cflforemployee.weidgt.adtext.ADTextView;
 import com.chanfinecloud.cflforemployee.weidgt.adtext.OnAdConetentClickListener;
 import com.chanfinecloud.cflforemployee.weidgt.easyindicator.EasyIndicator;
@@ -35,7 +34,7 @@ import java.util.Map;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
-import static com.chanfinecloud.cflforemployee.base.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
 
 /**
  * Created by Loong on 2020/2/12.

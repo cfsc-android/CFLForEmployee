@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.base.BaseActivity;
+import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.util.Utils;
 
 import org.xutils.view.annotation.ContentView;
@@ -23,7 +23,7 @@ public class SettingAboutActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         toolbar_tv_title.setText("关于长房里");
-        tv_setting_about_version.setText("Version "+ Utils.getCurrentVersion(this));
+        tv_setting_about_version.setText("Version "+ Utils.getCurrentVersion());
     }
 
     @Event({R.id.toolbar_btn_back})

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 
-import com.chanfinecloud.cflforemployee.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.util.NetworkUtils;
 
 

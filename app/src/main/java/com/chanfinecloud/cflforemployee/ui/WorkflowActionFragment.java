@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.base.BaseFragment;
+import com.chanfinecloud.cflforemployee.ui.base.BaseFragment;
 import com.chanfinecloud.cflforemployee.entity.BaseEntity;
 import com.chanfinecloud.cflforemployee.entity.EmergencyLevelType;
 import com.chanfinecloud.cflforemployee.entity.EventBusMessage;
@@ -30,11 +30,11 @@ import com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity;
 import com.chanfinecloud.cflforemployee.util.AnimationUtil;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
-import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
-import com.chanfinecloud.cflforemployee.util.http.JsonParse;
-import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
-import com.chanfinecloud.cflforemployee.util.http.ParamType;
-import com.chanfinecloud.cflforemployee.util.http.RequestParam;
+import com.chanfinecloud.cflforemployee.http.HttpMethod;
+import com.chanfinecloud.cflforemployee.http.JsonParse;
+import com.chanfinecloud.cflforemployee.http.MyCallBack;
+import com.chanfinecloud.cflforemployee.http.ParamType;
+import com.chanfinecloud.cflforemployee.http.RequestParam;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImageViewInfo;
 import com.chanfinecloud.cflforemployee.weidgt.photopicker.PhotoPicker;
@@ -60,7 +60,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.chanfinecloud.cflforemployee.base.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
 
 /**
  * Created by Loong on 2020/2/21.

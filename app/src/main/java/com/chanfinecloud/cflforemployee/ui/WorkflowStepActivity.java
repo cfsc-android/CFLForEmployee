@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.chanfinecloud.cflforemployee.R;
 import com.chanfinecloud.cflforemployee.adapter.WorkflowStepAdapter;
-import com.chanfinecloud.cflforemployee.base.BaseActivity;
+import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.entity.WorkflowProcessesEntity;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 

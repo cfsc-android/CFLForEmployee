@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by Loong on 2020/2/3.
@@ -51,30 +52,23 @@ public class CFLApplication extends Application {
         super.onCreate();
         getInstance = this;
         mContext = getApplicationContext();
-        x.Ext.init(this);
+        x.Ext.init(this);//XUtils3注册
         x.Ext.setDebug(BuildConfig.DEBUG); // 是否输出debug日志, 开启debug会影响性能.
-        //蒲公英crash收集注册
-        PgyCrashManager.register();
-        UMConfigure.init(this,"5cb6d69f0cafb29742001079","umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
 
-        refWatcher = LeakCanary.install(this);
+        PgyCrashManager.register();//蒲公英crash收集注册
+
+        UMConfigure.init(this,UMConfigure.DEVICE_TYPE_PHONE,"");//友盟注册
+        UMConfigure.setLogEnabled(true);//友盟日志
+
+        refWatcher = LeakCanary.install(this);//LeakCanary注册
+
+        //极光推送初始化
+        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);            // 初始化 JPush
 
     }
 
-    {
-        PlatformConfig.setWeixin("wxd49aa41b4120e385", "56aeeca40a0f8165ac28c102795255ff");
-        PlatformConfig.setQQZone("101852439", "acddc3daf0e8f674cde2068ccdf282ea");
-    }
-
-    public static CFLApplication getInstance() {
-        return getInstance;
-    }
-
-    public static Context getAppContext() {
-        return CFLApplication.getInstance.mContext;
-    }
-
-    static {//static 代码段可以防止内存泄露
+    static {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
             @NonNull
@@ -93,7 +87,20 @@ public class CFLApplication extends Application {
             }
 
         });
+
+        //友盟第三方登录/分享渠道设置
+        PlatformConfig.setWeixin("wxd49aa41b4120e385", "56aeeca40a0f8165ac28c102795255ff");//微信
+        PlatformConfig.setQQZone("101569547", "00261965102559b4d8732e9a747c771a");//QQ
     }
+
+    public static CFLApplication getInstance() {
+        return getInstance;
+    }
+
+    public static Context getAppContext() {
+        return CFLApplication.getInstance.mContext;
+    }
+
 
 
 }

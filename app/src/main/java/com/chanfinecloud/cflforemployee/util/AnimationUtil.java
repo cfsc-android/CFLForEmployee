@@ -19,10 +19,10 @@ public class AnimationUtil {
     public static final int ACCELERATE = 1;//加速sss
     /**
      * 旋转动画
-     *
-     * @param paramView
-     * @param duration
-     *            时间
+     * @param paramView View
+     * @param fromDegrees 起始角度
+     * @param toDegrees 结束角度
+     * @param duration 持续时间
      */
     public static void startRotateAnimation(View paramView, float fromDegrees, float toDegrees, int duration) {
         float[] arrayOfFloat = new float[2];
@@ -37,10 +37,11 @@ public class AnimationUtil {
     }
     /**
      * 旋转动画
-     *
-     * @param paramView
-     * @param duration
-     *            时间
+     * @param paramView View
+     * @param fromDegrees 起始角度
+     * @param toDegrees 结束角度
+     * @param duration 持续时间
+     * @param listener AnimationListener
      */
     public static void startRotateAnimation(View paramView, float fromDegrees, float toDegrees, int duration,AnimationListener listener) {
         float[] arrayOfFloat = new float[2];
@@ -54,15 +55,16 @@ public class AnimationUtil {
         localObjectAnimator.addListener(listener);
         localObjectAnimator.start();
     }
+
     /**
      * 开启Alpha 动画
-     *
-     * @param view
-     * @param fromAlpha
-     * @param toAlpha
+     * @param view View
+     * @param fromAlpha 起始alpha
+     * @param toAlpha 结束alpha
+     * @param speedType 速度
+     * @param duration 持续时间
      */
-    public static void startAlphaAnima(View view,
-                                       float fromAlpha, float toAlpha, int speedType,int duration) {
+    public static void startAlphaAnima(View view, float fromAlpha, float toAlpha, int speedType,int duration) {
         if (view == null) {
             return;
         }
@@ -84,8 +86,7 @@ public class AnimationUtil {
     }
     /**
      * 清理目标View的动画
-     *
-     * @param paramView
+     * @param paramView View
      */
     public static void clearAnimation(View paramView) {
         if (paramView == null)
@@ -100,11 +101,11 @@ public class AnimationUtil {
     }
 
     /**
-     * 水平移动
-     * @param view
-     * @param fromX
-     * @param toX
-     * @param duration
+     * 竖直移动
+     * @param view View
+     * @param fromX 起始X的坐标
+     * @param toX 终点X的坐标
+     * @param duration 持续时间
      */
     public static void startTransXAnimation(View view, int fromX,int toX,int duration) {
         ObjectAnimator translationX = ObjectAnimator.ofFloat(view, "translationX", fromX, toX);
@@ -117,10 +118,10 @@ public class AnimationUtil {
 
     /**
      * 竖直移动
-     * @param view
-     * @param fromY
-     * @param toY
-     * @param duration
+     * @param view View
+     * @param fromY 起始Y的坐标
+     * @param toY 终点Y的坐标
+     * @param duration 持续时间
      */
     public static void startTransYAnimation(View view, int fromY,int toY,int duration) {
         ObjectAnimator translationY = ObjectAnimator.ofFloat(view, "translationY", fromY, toY);
@@ -133,11 +134,11 @@ public class AnimationUtil {
 
     /**
      * 竖直移动
-     * @param view
-     * @param fromY
-     * @param toY
-     * @param duration
-     * @param listener
+     * @param view View
+     * @param fromY 起始Y的坐标
+     * @param toY 终点Y的坐标
+     * @param duration 持续时间
+     * @param listener AnimationListener
      */
     public static void startTransYAnimation(View view, int fromY,int toY,int duration,AnimationListener listener ) {
         ObjectAnimator translationY = ObjectAnimator.ofFloat(view, "translationY", fromY, toY);
@@ -151,12 +152,12 @@ public class AnimationUtil {
 
     /**
      * 水平和竖直同时移动
-     * @param view
+     * @param view View
      * @param fromX 起始X的坐标
      * @param toX 终点X的坐标
      * @param fromY 起始Y的坐标
      * @param toY 终点Y的坐标
-     * @param duration
+     * @param duration 持续时间
      */
     public static void startTransXYAnimation(View view, int fromX,int toX,int fromY,int toY,int duration) {
         ObjectAnimator translationX = ObjectAnimator.ofFloat(view, "translationX", fromX, toX);

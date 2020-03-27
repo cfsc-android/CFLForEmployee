@@ -4,15 +4,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.base.BaseActivity;
+import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;

@@ -10,21 +10,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.base.BaseActivity;
-import com.chanfinecloud.cflforemployee.entity.BaseEntity;
+import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.entity.EventBusMessage;
 import com.chanfinecloud.cflforemployee.entity.LoginEntity;
-import com.chanfinecloud.cflforemployee.entity.OrderStatusEntity;
-import com.chanfinecloud.cflforemployee.entity.OrderTypeListEntity;
 import com.chanfinecloud.cflforemployee.entity.TokenEntity;
-import com.chanfinecloud.cflforemployee.util.ExitAppUtils;
-import com.chanfinecloud.cflforemployee.util.LogUtils;
+import com.chanfinecloud.cflforemployee.util.LynActivityManager;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
-import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
-import com.chanfinecloud.cflforemployee.util.http.JsonParse;
-import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
-import com.chanfinecloud.cflforemployee.util.http.RequestParam;
-import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,18 +24,15 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-import java.lang.reflect.Type;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import static com.chanfinecloud.cflforemployee.base.Config.BASE_URL;
+import cn.jpush.android.api.JPushInterface;
 
 
 /**
@@ -69,11 +57,25 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        checkAppPermission();
         super.onCreate(savedInstanceState);
         context=this;
         fragmentManager = getSupportFragmentManager();
         setTabSelection(0);
         EventBus.getDefault().register(this);
+        setAliasAndTag();
+    }
+
+
+    /**
+     * 设置极光推送的alias（别名）和tag(标签)
+     */
+    private void setAliasAndTag(){
+        JPushInterface.setAlias(this,0x01,"KSS");
+        Set<String> tagSet = new LinkedHashSet<>();
+        tagSet.add("YG");
+        tagSet.add("CFJT");
+        JPushInterface.setTags(this,0x02,tagSet);
     }
 
     @Event({R.id.main_tabs_iv_home,R.id.main_tabs_iv_mine,R.id.person_ll_logout_layer,R.id.person_ll_logout_layer_change,
@@ -91,11 +93,11 @@ public class MainActivity extends BaseActivity {
                 TokenEntity tokenEntity=SharedPreferencesManage.getToken();
                 tokenEntity.setExpires_in(0);
                 SharedPreferencesManage.setToken(tokenEntity);
+                LynActivityManager.getInstance().removeAllActivity();
                 startActivity(LoginActivity.class);
-                ExitAppUtils.getInstance().exit();
                 break;
             case R.id.person_ll_logout_out:
-                ExitAppUtils.getInstance().exit();
+                LynActivityManager.getInstance().exit();
                 break;
             default:
                 logout_layer.setVisibility(View.GONE);
@@ -180,7 +182,7 @@ public class MainActivity extends BaseActivity {
         // 判断按返回键时
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if(new Date().getTime()-time<2000&&time!=0){
-                ExitAppUtils.getInstance().exit();
+                LynActivityManager.getInstance().exit();
             }else{
                 showToast("再按一次退出");
                 time=new Date().getTime();

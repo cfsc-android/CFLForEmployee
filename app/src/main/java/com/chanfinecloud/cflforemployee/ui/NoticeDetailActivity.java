@@ -12,20 +12,19 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.base.BaseActivity;
+import com.chanfinecloud.cflforemployee.http.XHttp;
+import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.entity.BaseEntity;
-import com.chanfinecloud.cflforemployee.entity.ListLoadingType;
 import com.chanfinecloud.cflforemployee.entity.NoticeEntity;
-import com.chanfinecloud.cflforemployee.entity.NoticeListEntity;
-import com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.Utils;
-import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
-import com.chanfinecloud.cflforemployee.util.http.JsonParse;
-import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
-import com.chanfinecloud.cflforemployee.util.http.ParamType;
-import com.chanfinecloud.cflforemployee.util.http.RequestParam;
+import com.chanfinecloud.cflforemployee.http.HttpMethod;
+import com.chanfinecloud.cflforemployee.http.JsonParse;
+import com.chanfinecloud.cflforemployee.http.MyCallBack;
+import com.chanfinecloud.cflforemployee.http.ParamType;
+import com.chanfinecloud.cflforemployee.http.RequestParam;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
@@ -34,7 +33,6 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 
 import org.xutils.common.Callback;
-import org.xutils.image.ImageOptions;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -45,7 +43,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.chanfinecloud.cflforemployee.base.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
 
 
 @ContentView(R.layout.activity_notice_detail)
@@ -302,31 +300,35 @@ public class NoticeDetailActivity extends BaseActivity {
      */
     private void share(){
         String thumbUrl=noticeEntity.getCoverUrl();
+        LogUtils.d(thumbUrl);
         if(!TextUtils.isEmpty(thumbUrl)){
             x.image().loadFile(thumbUrl, Utils.getImageOption(), new Callback.CacheCallback<File>() {
                 @Override
                 public boolean onCache(File result) {
+                    LogUtils.d("onCache:"+result.getAbsolutePath());
                     return false;
                 }
 
                 @Override
                 public void onSuccess(File result) {
+                    LogUtils.d("onCache:"+result.getAbsolutePath());
                     toShare(result);
                 }
 
                 @Override
                 public void onError(Throwable ex, boolean isOnCallback) {
-
+                    LogUtils.d("onCache:"+ex.getMessage());
+                    LogUtils.d("onCache:"+isOnCallback);
                 }
 
                 @Override
                 public void onCancelled(CancelledException cex) {
-
+                    LogUtils.d("onCancelled:"+cex.getMessage());
                 }
 
                 @Override
                 public void onFinished() {
-
+                    LogUtils.d("onFinished");
                 }
             });
         }else{
@@ -339,7 +341,7 @@ public class NoticeDetailActivity extends BaseActivity {
         if(file!=null){
             thumb =  new UMImage(NoticeDetailActivity.this,file);
         }else{
-            thumb =  new UMImage(this, R.drawable.ic_launcher_background);
+            thumb =  new UMImage(this, R.drawable.ic_launcher);
         }
         UMWeb web = new UMWeb(noticeEntity.getDetailUrl());
         web.setTitle("通知公告");//标题

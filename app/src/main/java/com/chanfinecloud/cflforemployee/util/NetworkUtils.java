@@ -10,19 +10,18 @@ import android.net.NetworkInfo;
  * Describe: 网络检查工具类
  */
 public class NetworkUtils {
-    /**
-     * 没有连接网络
-     */
-    private static final int NETWORK_NONE = -1;
-    /**
-     * 移动网络
-     */
-    private static final int NETWORK_MOBILE = 0;
-    /**
-     * 无线网络
-     */
-    private static final int NETWORK_WIFI = 1;
 
+    private static final int NETWORK_NONE = -1;//没有连接网络
+
+    private static final int NETWORK_MOBILE = 0;//移动网络
+
+    private static final int NETWORK_WIFI = 1;//无线网络
+
+    /**
+     * 获取网络状态
+     * @param context Context上下文
+     * @return int
+     */
     public static int getNetWorkState(Context context) {
         // 得到连接管理器对象
         ConnectivityManager connectivityManager = (ConnectivityManager) context
@@ -42,10 +41,10 @@ public class NetworkUtils {
         }
         return NETWORK_NONE;
     }
+
     /**
      * 判断有无网络
-     *
-     * @return true 有网, false 没有网络.
+     * @return boolean
      */
     public static boolean isNetConnect(int netMobile) {
         if (netMobile == 1) {

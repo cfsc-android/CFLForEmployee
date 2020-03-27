@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chanfinecloud.cflforemployee.R;
 import com.chanfinecloud.cflforemployee.adapter.WorkflowListAdapter;
-import com.chanfinecloud.cflforemployee.base.BaseActivity;
+import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.entity.BaseEntity;
 import com.chanfinecloud.cflforemployee.entity.FinishStatusType;
 import com.chanfinecloud.cflforemployee.entity.ListLoadingType;
@@ -17,11 +17,10 @@ import com.chanfinecloud.cflforemployee.entity.WorkflowEntity;
 import com.chanfinecloud.cflforemployee.entity.WorkflowListEntity;
 import com.chanfinecloud.cflforemployee.entity.WorkflowType;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
-import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
-import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
-import com.chanfinecloud.cflforemployee.util.http.JsonParse;
-import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
-import com.chanfinecloud.cflforemployee.util.http.RequestParam;
+import com.chanfinecloud.cflforemployee.http.HttpMethod;
+import com.chanfinecloud.cflforemployee.http.JsonParse;
+import com.chanfinecloud.cflforemployee.http.MyCallBack;
+import com.chanfinecloud.cflforemployee.http.RequestParam;
 import com.chanfinecloud.cflforemployee.weidgt.RecyclerViewDivider;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -40,7 +39,7 @@ import java.util.Map;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.chanfinecloud.cflforemployee.base.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
 
 @ContentView(R.layout.activity_workflow_list)
 public class WorkflowListActivity extends BaseActivity {
@@ -111,6 +110,9 @@ public class WorkflowListActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 获取列表数据
+     */
     private void getData(){
         RequestParam requestParam=new RequestParam(BASE_URL+"workflow/api/page",HttpMethod.Get);
         Map<String,String> map=new HashMap<>();

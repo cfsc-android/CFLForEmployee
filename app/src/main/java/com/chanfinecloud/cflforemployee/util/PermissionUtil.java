@@ -1,35 +1,32 @@
 package com.chanfinecloud.cflforemployee.util;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
-import android.provider.Settings;
+
+
+import com.chanfinecloud.cflforemployee.CFLApplication;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import static com.chanfinecloud.cflforemployee.config.Config.PERMISSION;
+
 
 /**
  * Created by Loong on 2020/3/9.
  * Version: 1.0
- * Describe:
+ * Describe: 应用权限工具类
  */
 public class PermissionUtil {
-    public static final int REQUEST_CODE = 0x100;
-    //应用所需运行时权限
-    private static final String[] PERMISSION={Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+    public static final int REQUEST_CODE = 0x100;//权限检测返回码
 
-
-    //检查应用是否有权限
-    public static String[] checkPermission(Activity context) {
+    /**
+     * 检查应用是否有权限
+     * @return String[]
+     */
+    public static String[] checkPermission() {
         if (Build.VERSION.SDK_INT < 23) {//6.0才用动态权限
             return null;
         }
@@ -37,7 +34,7 @@ public class PermissionUtil {
         List<String> unPermission = new ArrayList<>();
         //逐个判断你要的权限是否已经通过
         for (int i = 0; i < PERMISSION.length; i++) {
-            if (ContextCompat.checkSelfPermission(context.getApplicationContext(), PERMISSION[i]) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(CFLApplication.getAppContext(), PERMISSION[i]) != PackageManager.PERMISSION_GRANTED) {
                 unPermission.add(PERMISSION[i]);//添加还未授予的权限
             }
         }

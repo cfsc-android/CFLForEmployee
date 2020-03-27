@@ -8,7 +8,7 @@ import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.base.BaseActivity;
+import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.IPreviewInfo;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.MediaLoader;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.PreviewBuilder;

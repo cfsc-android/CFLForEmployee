@@ -21,22 +21,26 @@ import java.io.ObjectOutputStream;
  */
 public class SharedPreferencesUtil {
 
-    private static SharedPreferencesUtil instance=null;
-
+    private volatile static SharedPreferencesUtil instance=null;
+    private SharedPreferencesUtil () {}
     public static SharedPreferencesUtil getInstance() {
-        if(instance == null){
-            instance = new SharedPreferencesUtil();
+        if (instance == null) {
+            synchronized (SharedPreferencesUtil.class) {
+                if (instance == null) {
+                    instance = new SharedPreferencesUtil();
+                }
+            }
         }
         return instance;
     }
 
     /**
      * 存储对象数据
-     * @param context
-     * @param spName
-     * @param key
-     * @param ob
-     * @return
+     * @param context 上下文
+     * @param spName 作用域
+     * @param key 键
+     * @param ob 值
+     * @return boolean
      */
     public boolean saveObject(Context context, String spName, String key, Object ob) {
         if (ob == null) {
@@ -78,10 +82,10 @@ public class SharedPreferencesUtil {
 
     /**
      * 获取对象数据
-     * @param context
-     * @param spName
-     * @param key
-     * @return
+     * @param context 上下文
+     * @param spName 作用域
+     * @param key 键
+     * @return Object
      */
     public Object getObject(Context context, String spName, String key) {
         Object ob = null;
@@ -118,10 +122,10 @@ public class SharedPreferencesUtil {
 
     /**
      * 存储Integer数据
-     * @param context
-     * @param spName
-     * @param key
-     * @param value
+     * @param context 上下文
+     * @param spName 作用域
+     * @param key 键
+     * @param value 值
      */
     public void saveIntValue(Context context, String spName, String key,
                              int value) {
@@ -133,20 +137,21 @@ public class SharedPreferencesUtil {
 
     /**
      * 获取Integer数据
-     * @param context
-     * @param spName
-     * @param key
-     * @return
+     * @param context 上下文
+     * @param spName 作用域
+     * @param key 键
+     * @return int
      */
     public int getIntValue(Context context, String spName, String key) {
         return getIntValue(context, spName, key, 0);
     }
     /**
      * 获取Integer数据
-     * @param context
-     * @param spName
-     * @param key
-     * @return
+     * @param context 上下文
+     * @param spName 作用域
+     * @param key 键
+     * @param defaultValue 默认值
+     * @return int
      */
     public int getIntValue(Context context, String spName, String key,
                            int defaultValue) {
@@ -157,10 +162,10 @@ public class SharedPreferencesUtil {
 
     /**
      * 存储Float数据
-     * @param context
-     * @param spName
-     * @param key
-     * @param value
+     * @param context 上下文
+     * @param spName 作用域
+     * @param key 键
+     * @param value 默认值
      */
     public void saveFloatValue(Context context, String spName, String key,
                                float value) {
@@ -172,10 +177,10 @@ public class SharedPreferencesUtil {
 
     /**
      * 获取Float数据
-     * @param context
-     * @param spName
-     * @param key
-     * @return
+     * @param context 上下文
+     * @param spName 作用域
+     * @param key 键
+     * @return float
      */
     public float getFloatValue(Context context, String spName, String key) {
         SharedPreferences preferences = context.getSharedPreferences(spName,
@@ -184,11 +189,11 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * 存储Boolean数据
-     * @param context
-     * @param spName
-     * @param key
-     * @param value
+     * 获取Boolean数据
+     * @param context 上下文
+     * @param spName 作用域
+     * @param key 键
+     * @param value 值
      */
     public void saveBooleanValue(Context context, String spName, String key,
                                  boolean value) {
@@ -201,10 +206,10 @@ public class SharedPreferencesUtil {
 
     /**
      * 获取Boolean数据
-     * @param context
-     * @param spName
-     * @param key
-     * @return
+     * @param context 上下文
+     * @param spName 作用域
+     * @param key 键
+     * @return boolean
      */
     public boolean getBooleanValue(Context context, String spName, String key) {
         SharedPreferences preferences = context.getSharedPreferences(spName,
@@ -214,11 +219,11 @@ public class SharedPreferencesUtil {
 
     /**
      * 获取Boolean数据
-     * @param context
-     * @param spName
-     * @param key
-     * @param isDefault
-     * @return
+     * @param context 上下文
+     * @param spName 作用域
+     * @param key 键
+     * @param isDefault 默认值
+     * @return String
      */
     public boolean getBooleanValue(Context context, String spName, String key,
                                    boolean isDefault) {
@@ -229,10 +234,10 @@ public class SharedPreferencesUtil {
 
     /**
      * 存储Long数据
-     * @param context
-     * @param spName
-     * @param key
-     * @param value
+     * @param context 上下文
+     * @param spName 作用域
+     * @param key 键
+     * @param value 值
      */
     public void saveLongValue(Context context, String spName, String key,
                               long value) {
@@ -245,10 +250,10 @@ public class SharedPreferencesUtil {
 
     /**
      * 获取Long数据
-     * @param context
-     * @param spName
-     * @param key
-     * @return
+     * @param context 上下文
+     * @param spName 作用域
+     * @param key 键
+     * @return long
      */
     public long getLongValue(Context context, String spName, String key) {
         SharedPreferences preferences = context.getSharedPreferences(spName,
@@ -258,10 +263,10 @@ public class SharedPreferencesUtil {
 
     /**
      * 存储String数据
-     * @param context
-     * @param spName
-     * @param key
-     * @param value
+     * @param context 上下文
+     * @param spName 作用域
+     * @param key 键
+     * @param value 值
      */
     public void saveStringValue(Context context, String spName, String key,
                                 String value) {
@@ -272,10 +277,10 @@ public class SharedPreferencesUtil {
 
     /**
      * 获取String数据
-     * @param context
-     * @param spName
-     * @param key
-     * @return
+     * @param context 上下文
+     * @param spName 作用域
+     * @param key 键
+     * @return String
      */
     public String getStringValue(Context context, String spName, String key) {
         SharedPreferences preferences = context.getSharedPreferences(spName,

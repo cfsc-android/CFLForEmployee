@@ -1,6 +1,5 @@
 package com.chanfinecloud.cflforemployee.util;
 
-import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -10,25 +9,27 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
+import com.chanfinecloud.cflforemployee.CFLApplication;
 import com.chanfinecloud.cflforemployee.R;
 
 import org.xutils.image.ImageOptions;
 
+
 /**
- * Created by Loong on 2020/2/10.
+ * Created by Loong on 2020/3/25.
  * Version: 1.0
  * Describe: Utils
  */
 public class Utils {
+
     /**
      * 获取当前客户端版本信息versionName
-     * @param mContext
-     * @return
+     * @return String
      */
-    public static String getCurrentVersion(Context mContext) {
+    public static String getCurrentVersion() {
         try {
-            PackageInfo info = mContext.getPackageManager().getPackageInfo(
-                    mContext.getPackageName(), 0);
+            PackageInfo info = CFLApplication.getAppContext().getPackageManager().getPackageInfo(
+                    CFLApplication.getAppContext().getPackageName(), 0);
             return info.versionName.trim();
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace(System.err);
@@ -37,25 +38,17 @@ public class Utils {
     }
     /**
      * 获取当前客户端版本信息versionCode
-     * @param mContext
-     * @return
+     * @return int
      */
-    public static int getCurrentBuild(Context mContext) {
+    public static int getCurrentBuild() {
         try {
-            PackageInfo info = mContext.getPackageManager().getPackageInfo(
-                    mContext.getPackageName(), 0);
+            PackageInfo info = CFLApplication.getAppContext().getPackageManager().getPackageInfo(
+                    CFLApplication.getAppContext().getPackageName(), 0);
             return info.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace(System.err);
         }
         return 0;
-    }
-
-    public static String transformIOSTime(String time){
-        String str=time.replace("T","日 ");
-        str=str.replaceFirst("-","年");
-        str=str.replaceFirst("-","月");
-        return str;
     }
 
     /**
@@ -114,5 +107,5 @@ public class Utils {
                 .build();
         return imageOptions;
     }
-}
 
+}

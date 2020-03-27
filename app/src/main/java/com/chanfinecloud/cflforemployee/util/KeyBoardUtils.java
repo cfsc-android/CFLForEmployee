@@ -14,10 +14,8 @@ public class KeyBoardUtils {
     /**
      * 打卡软键盘
      *
-     * @param mEditText
-     *            输入框
-     * @param mContext
-     *            上下文
+     * @param mEditText 输入框
+     * @param mContext 上下文
      */
     public static void openKeybord(EditText mEditText, Context mContext)
     {
@@ -31,10 +29,8 @@ public class KeyBoardUtils {
     /**
      * 关闭软键盘
      *
-     * @param mEditText
-     *            输入框
-     * @param mContext
-     *            上下文
+     * @param mEditText 输入框
+     * @param mContext 上下文
      */
     public static void closeKeybord(EditText mEditText, Context mContext)
     {
@@ -43,10 +39,11 @@ public class KeyBoardUtils {
 
         imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
     }
+
     /**
-
      * 隐藏软键盘
-
+     * @param context Context
+     * @param windowToken View
      */
     public static void hideSoftInputMode(Context context, View windowToken) {
 
@@ -55,10 +52,11 @@ public class KeyBoardUtils {
         imm.hideSoftInputFromWindow(windowToken.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
 
     }
+
     /**
-
      * 弹出软键盘
-
+     * @param context Context
+     * @param windowToken View
      */
     public static void showSoftInputMode(Context context,View windowToken) {
 

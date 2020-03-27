@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.base.BaseActivity;
+import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.entity.BaseEntity;
 import com.chanfinecloud.cflforemployee.entity.LoginEntity;
 import com.chanfinecloud.cflforemployee.entity.OrderStatusEntity;
@@ -19,10 +19,10 @@ import com.chanfinecloud.cflforemployee.entity.UserInfoAllEntity;
 import com.chanfinecloud.cflforemployee.entity.UserInfoEntity;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
-import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
-import com.chanfinecloud.cflforemployee.util.http.JsonParse;
-import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
-import com.chanfinecloud.cflforemployee.util.http.RequestParam;
+import com.chanfinecloud.cflforemployee.http.HttpMethod;
+import com.chanfinecloud.cflforemployee.http.JsonParse;
+import com.chanfinecloud.cflforemployee.http.MyCallBack;
+import com.chanfinecloud.cflforemployee.http.RequestParam;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.chanfinecloud.cflforemployee.base.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
 
 
 /**

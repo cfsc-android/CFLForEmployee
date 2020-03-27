@@ -23,7 +23,7 @@ import static android.os.Build.VERSION_CODES.KITKAT;
 public class StatusBarUtil {
     /**
      * 设置状态栏为透明
-     * @param activity
+     * @param activity Activity
      */
     public static void setTranslucentStatus(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -43,8 +43,8 @@ public class StatusBarUtil {
 
     /**
      * 修改状态栏颜色，支持4.4以上版本
-     * @param activity
-     * @param colorId
+     * @param activity Activity
+     * @param colorId 颜色资源Id
      */
     public static void setStatusBarColor(Activity activity, int colorId) {
 
@@ -68,10 +68,9 @@ public class StatusBarUtil {
 
     /**
      * 设置状态栏模式
-     * @param activity
+     * @param activity Activity
      * @param isTextDark 文字、图标是否为黑色 （false为默认的白色）
      * @param colorId 状态栏颜色
-     * @return
      */
     public static void setStatusBarMode(Activity activity, boolean isTextDark, int colorId) {
         //修改状态栏颜色和文字图标颜色
@@ -98,9 +97,9 @@ public class StatusBarUtil {
 
     /**
      * 设置Flyme系统状态栏的文字图标颜色
-     * @param activity
+     * @param activity Activity
      * @param isDark 状态栏文字及图标是否为深色
-     * @return
+     * @return boolean
      */
     public static boolean setFlymeStatusBarTextMode(Activity activity, boolean isDark) {
         Window window = activity.getWindow();
@@ -133,9 +132,9 @@ public class StatusBarUtil {
 
     /**
      * 设置MIUI系统状态栏的文字图标颜色（MIUIV6以上）
-     * @param activity
+     * @param activity Activity
      * @param isDark 状态栏文字及图标是否为深色
-     * @return
+     * @return boolean
      */
     public static boolean setMIUIStatusBarTextMode(Activity activity, boolean isDark) {
         boolean result = false;
@@ -176,8 +175,7 @@ public class StatusBarUtil {
     }
     /**
      * 全屏
-     *
-     * @param activity
+     * @param activity Activity
      */
     public static void fullScreen(Activity activity) {
         fullScreen(activity.getWindow());
@@ -185,8 +183,7 @@ public class StatusBarUtil {
 
     /**
      * 全屏
-     *
-     * @param window
+     * @param window Window
      */
     public static void fullScreen(Window window) {
         if (Build.VERSION.SDK_INT >= KITKAT) {

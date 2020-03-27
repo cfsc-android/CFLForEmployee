@@ -1,7 +1,5 @@
 package com.chanfinecloud.cflforemployee.util;
 
-import android.content.Context;
-
 import com.chanfinecloud.cflforemployee.CFLApplication;
 
 /**
@@ -13,7 +11,7 @@ public class SizeUtils {
 
     /**
      * 将px值转换为dip或dp值，保证尺寸大小不变
-     * @param pxValue
+     * @param pxValue px值
      */
     public static int px2dip(float pxValue) {
         final float scale = CFLApplication.getAppContext().getResources().getDisplayMetrics().density;
@@ -22,7 +20,7 @@ public class SizeUtils {
 
     /**
      * 将dip或dp值转换为px值，保证尺寸大小不变
-     * @param dipValue
+     * @param dipValue dp值
      */
     public static int dip2px(float dipValue) {
         final float scale = CFLApplication.getAppContext().getResources().getDisplayMetrics().density;
@@ -31,7 +29,7 @@ public class SizeUtils {
 
     /**
      * 将px值转换为sp值，保证文字大小不变
-     * @param pxValue
+     * @param pxValue px值
      */
     public static int px2sp(float pxValue) {
         final float fontScale = CFLApplication.getAppContext().getResources().getDisplayMetrics().scaledDensity;
@@ -40,7 +38,7 @@ public class SizeUtils {
 
     /**
      * 将sp值转换为px值，保证文字大小不变
-     * @param spValue
+     * @param spValue sp值
      */
     public static int sp2px(float spValue) {
         final float fontScale = CFLApplication.getAppContext().getResources().getDisplayMetrics().scaledDensity;

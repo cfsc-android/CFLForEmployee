@@ -9,7 +9,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.base.BaseActivity;
+import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.entity.BaseEntity;
 import com.chanfinecloud.cflforemployee.entity.OrderStatusEntity;
 import com.chanfinecloud.cflforemployee.entity.OrderTypeListEntity;
@@ -18,10 +18,10 @@ import com.chanfinecloud.cflforemployee.entity.UserListEntity;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
 import com.chanfinecloud.cflforemployee.util.Utils;
-import com.chanfinecloud.cflforemployee.util.http.HttpMethod;
-import com.chanfinecloud.cflforemployee.util.http.JsonParse;
-import com.chanfinecloud.cflforemployee.util.http.MyCallBack;
-import com.chanfinecloud.cflforemployee.util.http.RequestParam;
+import com.chanfinecloud.cflforemployee.http.HttpMethod;
+import com.chanfinecloud.cflforemployee.http.JsonParse;
+import com.chanfinecloud.cflforemployee.http.MyCallBack;
+import com.chanfinecloud.cflforemployee.http.RequestParam;
 import com.google.gson.reflect.TypeToken;
 import com.pgyersdk.update.DownloadFileListener;
 import com.pgyersdk.update.PgyUpdateManager;
@@ -41,8 +41,7 @@ import java.util.Map;
 
 import androidx.annotation.Nullable;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-import static com.chanfinecloud.cflforemployee.base.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
 
 
 /**
@@ -61,7 +60,7 @@ public class LaunchActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setFullScreen(false);
         super.onCreate(savedInstanceState);
-        tv_loading_version.setText("v-"+ Utils.getCurrentVersion(this)+" : "+Utils.getCurrentBuild(this));
+        tv_loading_version.setText("v-"+ Utils.getCurrentVersion()+" : "+Utils.getCurrentBuild());
         checkVersion();
     }
 
@@ -89,7 +88,7 @@ public class LaunchActivity extends BaseActivity {
                                 + " new versionName is " + appBean.getVersionName());
                         //调用以下方法，DownloadFileListener 才有效；
                         //如果完全使用自己的下载方法，不需要设置DownloadFileListener
-                        if(Utils.getCurrentVersion(LaunchActivity.this).equals(appBean.getVersionName())){
+                        if(Utils.getCurrentVersion().equals(appBean.getVersionName())){
                             new AlertDialog.Builder(LaunchActivity.this)
                                     .setTitle("更新")
                                     .setMessage("发现新版本"+appBean.getVersionName()+"\n"+appBean.getReleaseNote())

@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.base.BaseActivity;
+import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
