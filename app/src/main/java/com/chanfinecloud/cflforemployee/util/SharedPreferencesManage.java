@@ -7,7 +7,6 @@ import com.chanfinecloud.cflforemployee.entity.OrderStatusEntity;
 import com.chanfinecloud.cflforemployee.entity.OrderTypeEntity;
 import com.chanfinecloud.cflforemployee.entity.TokenEntity;
 import com.chanfinecloud.cflforemployee.entity.UserEntity;
-import com.chanfinecloud.cflforemployee.entity.UserInfoAllEntity;
 import com.chanfinecloud.cflforemployee.entity.UserInfoEntity;
 
 import java.util.List;
@@ -79,5 +78,22 @@ public class SharedPreferencesManage {
     public static List<UserEntity> getUserList(){
         return (List<UserEntity>) SharedPreferencesUtil.getInstance().getObject(CFLApplication.getAppContext(),"cfl","UserList");
     }
+
+    public static void setPushFlag(boolean flag){
+        SharedPreferencesUtil.getInstance().saveBooleanValue(CFLApplication.getAppContext(),"cfl","PushFlag",flag);
+    }
+
+    public static boolean getPushFlag(){
+        return SharedPreferencesUtil.getInstance().getBooleanValue(CFLApplication.getAppContext(),"cfl","PushFlag",true);
+    }
+
+    public static void setNotificationFlag(boolean flag){
+        SharedPreferencesUtil.getInstance().saveBooleanValue(CFLApplication.getAppContext(),"cfl","NotificationFlag",flag);
+    }
+
+    public static boolean getNotificationFlag(){
+        return SharedPreferencesUtil.getInstance().getBooleanValue(CFLApplication.getAppContext(),"cfl","NotificationFlag",true);
+    }
+
 }
 

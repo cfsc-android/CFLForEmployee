@@ -1,7 +1,9 @@
 package com.chanfinecloud.cflforemployee.ui;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -9,13 +11,25 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.chanfinecloud.cflforemployee.CFLApplication;
 import com.chanfinecloud.cflforemployee.R;
+import com.chanfinecloud.cflforemployee.entity.BaseEntity;
+import com.chanfinecloud.cflforemployee.entity.OrderStatusEntity;
+import com.chanfinecloud.cflforemployee.entity.OrderTypeListEntity;
+import com.chanfinecloud.cflforemployee.entity.UserListEntity;
+import com.chanfinecloud.cflforemployee.http.HttpMethod;
+import com.chanfinecloud.cflforemployee.http.JsonParse;
+import com.chanfinecloud.cflforemployee.http.MyCallBack;
+import com.chanfinecloud.cflforemployee.http.RequestParam;
 import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.entity.EventBusMessage;
 import com.chanfinecloud.cflforemployee.entity.LoginEntity;
 import com.chanfinecloud.cflforemployee.entity.TokenEntity;
+import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.LynActivityManager;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
+import com.google.gson.reflect.TypeToken;
+import com.pgyersdk.update.PgyUpdateManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -24,8 +38,12 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.lang.reflect.Type;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import androidx.core.content.ContextCompat;
@@ -33,6 +51,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import cn.jpush.android.api.JPushInterface;
+
+import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.SET_JPUSH_ALIAS_SEQUENCE;
+import static com.chanfinecloud.cflforemployee.config.Config.SET_JPUSH_TAGS_SEQUENCE;
+import static com.chanfinecloud.cflforemployee.config.Config.WORKORDER;
+import static com.chanfinecloud.cflforemployee.util.SharedPreferencesManage.getUserInfo;
 
 
 /**
@@ -64,18 +88,207 @@ public class MainActivity extends BaseActivity {
         setTabSelection(0);
         EventBus.getDefault().register(this);
         setAliasAndTag();
+        initData();
     }
 
+    /**
+     * 初始化基础配置数据
+     */
+    private void initData(){
+        initOrderType();
+        initOrderStatus();
+        initComplainType();
+        initComplainStatus();
+        initUserData();
+    }
+    /**
+     * 初始化工单类型
+     */
+    private void initOrderType(){
+        RequestParam requestParam=new RequestParam(BASE_URL+WORKORDER+"work/orderType/pageByCondition", HttpMethod.Get);
+        Map<String,String> map=new HashMap<>();
+        map.put("pageNo","1");
+        map.put("pageSize","100");
+        requestParam.setRequestMap(map);
+        requestParam.setCallback(new MyCallBack<String>(){
+            @Override
+            public void onSuccess(String result) {
+                super.onSuccess(result);
+                LogUtils.d("result",result);
+                BaseEntity<OrderTypeListEntity> baseEntity= JsonParse.parse(result,OrderTypeListEntity.class);
+                if(baseEntity.isSuccess()){
+                    SharedPreferencesManage.setOrderType(baseEntity.getResult().getData());
+                }else{
+                    showToast(baseEntity.getMessage());
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                super.onError(ex, isOnCallback);
+                showToast(ex.getMessage());
+            }
+        });
+        sendRequest(requestParam,false);
+    }
+
+    /**
+     * 初始化工单状态
+     */
+    private void initOrderStatus(){
+        RequestParam requestParam=new RequestParam(BASE_URL+WORKORDER+"work/orderStatus/selectWorkorderStatus",HttpMethod.Get);
+        requestParam.setCallback(new MyCallBack<String>(){
+            @Override
+            public void onSuccess(String result) {
+                super.onSuccess(result);
+                LogUtils.d("result",result);
+                Type type = new TypeToken<List<OrderStatusEntity>>() {}.getType();
+                BaseEntity<List<OrderStatusEntity>> baseEntity=JsonParse.parse(result,type);
+                if(baseEntity.isSuccess()){
+                    SharedPreferencesManage.setOrderStatus(baseEntity.getResult());
+                }else{
+                    showToast(baseEntity.getMessage());
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                super.onError(ex, isOnCallback);
+                showToast(ex.getMessage());
+            }
+        });
+        sendRequest(requestParam,false);
+    }
+
+    /**
+     * 初始化投诉类型
+     */
+    private void initComplainType(){
+        RequestParam requestParam=new RequestParam(BASE_URL+WORKORDER+"work/complaintType/pageByCondition",HttpMethod.Get);
+        Map<String,String> map=new HashMap<>();
+        map.put("pageNo","1");
+        map.put("pageSize","100");
+        requestParam.setRequestMap(map);
+        requestParam.setCallback(new MyCallBack<String>(){
+            @Override
+            public void onSuccess(String result) {
+                super.onSuccess(result);
+                LogUtils.d("result",result);
+                BaseEntity<OrderTypeListEntity> baseEntity= JsonParse.parse(result,OrderTypeListEntity.class);
+                if(baseEntity.isSuccess()){
+                    SharedPreferencesManage.setComplainType(baseEntity.getResult().getData());
+                }else{
+                    showToast(baseEntity.getMessage());
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                super.onError(ex, isOnCallback);
+                showToast(ex.getMessage());
+            }
+        });
+        sendRequest(requestParam,false);
+    }
+
+    /**
+     * 初始化投诉状态
+     */
+    private void initComplainStatus(){
+        RequestParam requestParam=new RequestParam(BASE_URL+WORKORDER+"work/complaintStatus/complaintStatusList",HttpMethod.Get);
+        requestParam.setCallback(new MyCallBack<String>(){
+            @Override
+            public void onSuccess(String result) {
+                super.onSuccess(result);
+                LogUtils.d("result",result);
+                Type type = new TypeToken<List<OrderStatusEntity>>() {}.getType();
+                BaseEntity<List<OrderStatusEntity>> baseEntity=JsonParse.parse(result,type);
+                if(baseEntity.isSuccess()){
+                    SharedPreferencesManage.setComplainStatus(baseEntity.getResult());
+                }else{
+                    showToast(baseEntity.getMessage());
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                super.onError(ex, isOnCallback);
+                showToast(ex.getMessage());
+            }
+        });
+        sendRequest(requestParam,false);
+    }
+    /**
+     * 初始化员工
+     */
+    private void initUserData(){
+        RequestParam requestParam=new RequestParam(BASE_URL+WORKORDER+"sys/user/list",HttpMethod.Get);
+        Map<String,String> requestMap=new HashMap<>();
+        requestMap.put("pageNo","1");
+        requestMap.put("pageSize","100");
+        requestParam.setRequestMap(requestMap);
+        requestParam.setCallback(new MyCallBack<String>(){
+            @Override
+            public void onSuccess(String result) {
+                super.onSuccess(result);
+                LogUtils.d("result",result);
+                BaseEntity<UserListEntity> baseEntity= JsonParse.parse(result,UserListEntity.class);
+                if(baseEntity.isSuccess()){
+                    SharedPreferencesManage.setUserList(baseEntity.getResult().getData());
+                }else{
+                    showToast(baseEntity.getMessage());
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                super.onError(ex, isOnCallback);
+                showToast(ex.getMessage());
+            }
+        });
+        sendRequest(requestParam,false);
+    }
 
     /**
      * 设置极光推送的alias（别名）和tag(标签)
      */
     private void setAliasAndTag(){
-        JPushInterface.setAlias(this,0x01,"KSS");
-        Set<String> tagSet = new LinkedHashSet<>();
-        tagSet.add("YG");
-        tagSet.add("CFJT");
-        JPushInterface.setTags(this,0x02,tagSet);
+        if(!SharedPreferencesManage.getNotificationFlag()){
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("通知权限")
+                    .setMessage("应用通知权限关闭，去开启")
+                    .setCancelable(false)
+                    .setNegativeButton("去开启",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            JPushInterface.goToAppNotificationSettings(CFLApplication.getAppContext());
+                        }
+                    }).
+                    setNeutralButton("下次再说", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+        }
+        if(SharedPreferencesManage.getPushFlag()){
+            JPushInterface.setAlias(this,SET_JPUSH_ALIAS_SEQUENCE, getUserInfo().getId());
+            Set<String> tagSet = new LinkedHashSet<>();
+            tagSet.add("YG");
+            List<String> projectIds= SharedPreferencesManage.getUserInfo().getProjectIds();
+            if(projectIds!=null){
+                for (int i = 0; i < projectIds.size(); i++) {
+                    tagSet.add("P_"+projectIds.get(i));
+                }
+            }
+            List<String> departIds= SharedPreferencesManage.getUserInfo().getDepartId();
+            if(departIds!=null){
+                for (int i = 0; i < departIds.size(); i++) {
+                    tagSet.add("D_"+departIds.get(i));
+                }
+            }
+            JPushInterface.setTags(this,SET_JPUSH_TAGS_SEQUENCE,tagSet);
+        }
     }
 
     @Event({R.id.main_tabs_iv_home,R.id.main_tabs_iv_mine,R.id.person_ll_logout_layer,R.id.person_ll_logout_layer_change,
@@ -121,7 +334,7 @@ public class MainActivity extends BaseActivity {
 
     /**
      * 退出ActionSheet动画
-     * @return
+     * @return AlphaAnimation
      */
     private AlphaAnimation alphaAnimation(){
         AlphaAnimation animation=new AlphaAnimation(0,1);
@@ -132,7 +345,7 @@ public class MainActivity extends BaseActivity {
     /**
      * 根据传入的index参数来设置选中的tab页。
      *
-     * @param index
+     * @param index tab页index
      */
     private void setTabSelection(int index) {
 

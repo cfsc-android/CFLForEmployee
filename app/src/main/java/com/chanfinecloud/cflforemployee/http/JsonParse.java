@@ -43,4 +43,5 @@ public class JsonParse {
         Type type = new ParameterizedTypeImpl(BaseEntity.class, mType);
         return new Gson().fromJson(json, type);
     }
+
 }

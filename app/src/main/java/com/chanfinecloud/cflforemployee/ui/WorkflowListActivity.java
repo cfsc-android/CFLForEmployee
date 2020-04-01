@@ -118,9 +118,9 @@ public class WorkflowListActivity extends BaseActivity {
         Map<String,String> map=new HashMap<>();
         map.put("pageNo",page+"");
         map.put("pageSize",pageSize+"");
-        map.put("isFinish", FinishStatusType.UnFinish.getType());
+//        map.put("isFinish", FinishStatusType.UnFinish.getType());
+//        map.put("projectId","");
         map.put("type",workflowType.getType());
-        map.put("userType", UserType.Employee.getType());
         requestParam.setRequestMap(map);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override

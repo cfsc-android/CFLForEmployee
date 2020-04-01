@@ -38,6 +38,7 @@ import java.util.Map;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.chanfinecloud.cflforemployee.config.Config.ARTICLE;
 import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
 
 @ContentView(R.layout.activity_notice)
@@ -92,8 +93,11 @@ public class NoticeActivity extends BaseActivity {
         notice_srl.autoRefresh();
     }
 
+    /**
+     * 获取新闻列表数据
+     */
     private void getData(){
-        RequestParam requestParam=new RequestParam(BASE_URL+"smart/content/pages",HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+ARTICLE+"smart/content/pages",HttpMethod.Get);
         Map<String,String> map=new HashMap<>();
         map.put("projectId","ec93bb06f5be4c1f19522ca78180e2i9");
         map.put("receiver", NoticeReceiverType.全部.getType()+","+NoticeReceiverType.员工.getType());

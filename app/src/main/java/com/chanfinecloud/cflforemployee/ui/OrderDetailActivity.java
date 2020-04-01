@@ -66,8 +66,10 @@ import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
 import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.FILE;
 import static com.chanfinecloud.cflforemployee.config.Config.PHOTO_DIR_NAME;
 import static com.chanfinecloud.cflforemployee.config.Config.SD_APP_DIR_NAME;
+import static com.chanfinecloud.cflforemployee.config.Config.WORKORDER;
 
 
 @ContentView(R.layout.activity_order_detail)
@@ -95,6 +97,8 @@ public class OrderDetailActivity extends BaseActivity {
     private TextView order_detail_contact_tel;
     @ViewInject(R.id.order_detail_remark_text)
     private TextView order_detail_remark_text;
+    @ViewInject(R.id.order_detail_remark_rlv)
+    private RecyclerView order_detail_remark_rlv;
     @ViewInject(R.id.order_detail_remark_time)
     private TextView order_detail_remark_time;
 
@@ -136,6 +140,11 @@ public class OrderDetailActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
+
     @Event({R.id.toolbar_btn_back,R.id.toolbar_tv_action})
     private void onClickEvent(View v){
         switch (v.getId()){
@@ -163,9 +172,11 @@ public class OrderDetailActivity extends BaseActivity {
         super.onDestroy();
     }
 
-
+    /**
+     * 获取工单详情数据
+     */
     private void getData(){
-        RequestParam requestParam=new RequestParam(BASE_URL+"/workflow/api/detail/"+orderId,HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+WORKORDER+"workflow/api/detail/"+orderId,HttpMethod.Get);
         Map<String,String> map=new HashMap<>();
         map.put("type", WorkflowType.Order.getType());
         requestParam.setRequestMap(map);
@@ -207,6 +218,10 @@ public class OrderDetailActivity extends BaseActivity {
         sendRequest(requestParam,true);
     }
 
+    /**
+     * 初始化流程视图
+     * @param list 流程处理list
+     */
     private void initWorkFlow(List<WorkflowProcessesEntity> list){
         if(list.size()>0){
             order_detail_workflow_ll.removeAllViews();
@@ -289,6 +304,10 @@ public class OrderDetailActivity extends BaseActivity {
 
     }
 
+    /**
+     * 初始化工单视图
+     * @param workOrder 工单详情实体
+     */
     private void initView(OrderDetailsEntity workOrder){
         if(TextUtils.isEmpty(workOrder.getCreatorAvatarUrl())){
             Glide.with(this)
@@ -319,13 +338,56 @@ public class OrderDetailActivity extends BaseActivity {
         }
         order_detail_remark_text.setText(workOrder.getProblemDesc());
         order_detail_remark_time.setText(workOrder.getCreateTime());
+        List<ResourceEntity> picData=workOrder.getProblemResourceValue();
+        if(picData!=null&&picData.size()>0) {
+            final List<ImageViewInfo> data = new ArrayList<>();
+            for (int j = 0; j < picData.size(); j++) {
+                data.add(new ImageViewInfo(picData.get(j).getUrl()));
+            }
+            final ImagePreviewListAdapter imageAdapter=new ImagePreviewListAdapter(this,R.layout.item_workflow_image_perview_list,data);
+            final GridLayoutManager mGridLayoutManager = new GridLayoutManager(this,4);
+            order_detail_remark_rlv.setLayoutManager(mGridLayoutManager);
+            order_detail_remark_rlv.setAdapter(imageAdapter);
+            order_detail_remark_rlv.addOnItemTouchListener(new com.chad.library.adapter.base.listener.OnItemClickListener() {
+                @Override
+                public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    for (int k = mGridLayoutManager.findFirstVisibleItemPosition(); k < adapter.getItemCount(); k++) {
+                        View itemView = mGridLayoutManager.findViewByPosition(k);
+                        Rect bounds = new Rect();
+                        if (itemView != null) {
+                            ImageView imageView = itemView.findViewById(R.id.iiv_item_image_preview);
+                            imageView.getGlobalVisibleRect(bounds);
+                        }
+                        //计算返回的边界
+                        imageAdapter.getItem(k).setBounds(bounds);
+                    }
+                    PreviewBuilder.from(OrderDetailActivity.this)
+                            .setImgs(data)
+                            .setCurrentIndex(position)
+                            .setSingleFling(true)
+                            .setType(PreviewBuilder.IndicatorType.Number)
+                            .start();
+                }
+            });
+        }
+
     }
 
+    /**
+     * 初始化流程处理视图
+     * @param lastWorkflow 最新流程处理
+     */
     private void initAction(WorkflowProcessesEntity lastWorkflow){
         FragmentTransaction transaction=fragmentManager.beginTransaction();
+        List<String> departIds=SharedPreferencesManage.getUserInfo().getDepartId();
+        String departIdStr="";
+        if(departIds!=null){
+            for (int i = 0; i < departIds.size(); i++) {
+                departIdStr+=departIds.get(i)+",";
+            }
+        }
         if((lastWorkflow.getAssigneeId().equals(SharedPreferencesManage.getUserInfo().getId())
-                ||"客服中心确认工单".equals(lastWorkflow.getNodeName())
-                ||"回访".equals(lastWorkflow.getNodeName()))
+                ||departIdStr.contains(lastWorkflow.getAssigneeId()))
                 &&(lastWorkflow.getOperationInfos()!=null&&lastWorkflow.getOperationInfos().size()>0)) {
             Bundle bundle = new Bundle();
             bundle.putBoolean("permission", permission);
@@ -366,7 +428,10 @@ public class OrderDetailActivity extends BaseActivity {
         }
     }
 
-    //压缩图片
+    /**
+     * 压缩图片
+     * @param list 图片路径list
+     */
     private void compress(List<String> list){
         String _Path = FilePathUtil.createPathIfNotExist("/" + SD_APP_DIR_NAME + "/" + PHOTO_DIR_NAME);
         LogUtil.d("_Path->" + _Path);
@@ -402,9 +467,12 @@ public class OrderDetailActivity extends BaseActivity {
                 }).launch();
     }
 
-    //上传照片
+    /**
+     * 上传照片
+     * @param path 图片路径
+     */
     private void uploadPic(final String path){
-        RequestParam requestParam=new RequestParam(BASE_URL+"file-manager-ms/files-anon",HttpMethod.Upload);
+        RequestParam requestParam=new RequestParam(BASE_URL+FILE+"files-anon",HttpMethod.Upload);
         Map<String,Object> map=new HashMap<>();
         map.put("UploadFile",new File(path));
         map.put("resourceKey",resourceKey);

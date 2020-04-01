@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/body_background"
@@ -22,10 +21,10 @@
                 android:id="@+id/ll_setting_notice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_20"
+                android:paddingBottom="@dimen/dp_20"
+                android:paddingRight="@dimen/dp_10"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:background="@color/text_white">
@@ -47,16 +46,16 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="@dimen/dp_20"
                 android:background="@color/view_line"/>
             <LinearLayout
                 android:id="@+id/ll_setting_cache"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_20"
+                android:paddingBottom="@dimen/dp_20"
+                android:paddingRight="@dimen/dp_10"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:background="@color/text_white">
@@ -79,11 +78,11 @@
                 android:id="@+id/ll_setting_about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:paddingRight="10dp"
-                android:layout_marginTop="20dp"
+                android:paddingLeft="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_20"
+                android:paddingBottom="@dimen/dp_20"
+                android:paddingRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_20"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:background="@color/text_white">
@@ -105,16 +104,16 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="@dimen/dp_20"
                 android:background="@color/view_line"/>
             <LinearLayout
                 android:id="@+id/ll_setting_version"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_20"
+                android:paddingBottom="@dimen/dp_20"
+                android:paddingRight="@dimen/dp_10"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:background="@color/text_white">
@@ -139,16 +138,16 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="@dimen/dp_20"
                 android:background="@color/view_line"/>
             <LinearLayout
                 android:id="@+id/ll_setting_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_20"
+                android:paddingBottom="@dimen/dp_20"
+                android:paddingRight="@dimen/dp_10"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:background="@color/text_white">
@@ -170,15 +169,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="@dimen/dp_20"
                 android:background="@color/view_line"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_20"
+                android:paddingBottom="@dimen/dp_20"
+                android:paddingRight="@dimen/dp_10"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:background="@color/text_white">
@@ -206,8 +205,8 @@
                 android:id="@+id/ll_setting_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:layout_marginTop="20dp"
+                android:padding="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:background="@color/text_white">
@@ -231,15 +230,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/text_white"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/dp_10"
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/tv_setting_logout_change"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="15dp"
-                    android:textSize="16sp"
+                    android:padding="@dimen/dp_15"
+                    android:textSize="@dimen/sp_16"
                     android:textColor="@color/text_primary"
                     android:text="换个账号登录"/>
                 <TextView
@@ -251,8 +250,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="15dp"
-                    android:textSize="16sp"
+                    android:padding="@dimen/dp_15"
+                    android:textSize="@dimen/sp_16"
                     android:textColor="@color/text_warn"
                     android:text="退出"/>
             </LinearLayout>
@@ -261,10 +260,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="15dp"
-                android:layout_margin="10dp"
+                android:padding="@dimen/dp_15"
+                android:layout_margin="@dimen/dp_10"
                 android:background="@color/text_white"
-                android:textSize="16sp"
+                android:textSize="@dimen/sp_16"
                 android:textColor="@color/text_primary"
                 android:text="取消"/>
         </LinearLayout>

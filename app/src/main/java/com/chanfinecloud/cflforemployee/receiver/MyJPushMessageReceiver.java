@@ -3,10 +3,16 @@ package com.chanfinecloud.cflforemployee.receiver;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
-
+import android.os.Bundle;
 
 import com.chanfinecloud.cflforemployee.CFLApplication;
+import com.chanfinecloud.cflforemployee.entity.NoticePushEntity;
+import com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity;
+import com.chanfinecloud.cflforemployee.ui.NoticeDetailActivity;
+import com.chanfinecloud.cflforemployee.ui.OrderDetailActivity;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
+import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
+import com.google.gson.Gson;
 
 import cn.jpush.android.api.CmdMessage;
 import cn.jpush.android.api.CustomMessage;
@@ -31,7 +37,7 @@ public class MyJPushMessageReceiver extends JPushMessageReceiver {
     @Override
     public void onMessage(Context context, CustomMessage customMessage) {
         super.onMessage(context, customMessage);
-        //透传消息
+        //自定义消息
         LogUtils.d("onMessage:"+customMessage.toString());
     }
 
@@ -40,6 +46,33 @@ public class MyJPushMessageReceiver extends JPushMessageReceiver {
 //        super.onNotifyMessageOpened(context, notificationMessage);
         //点击推送通知
         LogUtils.d("onNotifyMessageOpened:"+notificationMessage.toString());
+        Gson gson=new Gson();
+        NoticePushEntity noticePush=gson.fromJson(notificationMessage.notificationExtras,NoticePushEntity.class);
+        if("1".equals(noticePush.getType())){
+            Intent intent=new Intent(context,NoticeDetailActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Bundle bundle=new Bundle();
+            bundle.putString("noticeId",noticePush.getBusinessId());
+            bundle.putString("title",notificationMessage.notificationTitle);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
+        }else if("2".equals(noticePush.getType())){
+            Intent intent=new Intent(context, OrderDetailActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Bundle bundle=new Bundle();
+            bundle.putString("order_id",noticePush.getBusinessId());
+            intent.putExtras(bundle);
+            context.startActivity(intent);
+        }else if("3".equals(noticePush.getType())){
+            Intent intent=new Intent(context, ComplainDetailActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Bundle bundle=new Bundle();
+            bundle.putString("complain_id",noticePush.getBusinessId());
+            intent.putExtras(bundle);
+            context.startActivity(intent);
+        }else if("4".equals(noticePush.getType())){
+
+        }
     }
 
 
@@ -48,6 +81,7 @@ public class MyJPushMessageReceiver extends JPushMessageReceiver {
         super.onNotifyMessageArrived(context, notificationMessage);
         //收到通知消息
         LogUtils.d("onNotifyMessageArrived:"+notificationMessage.toString());
+
     }
 
     @Override
@@ -116,7 +150,8 @@ public class MyJPushMessageReceiver extends JPushMessageReceiver {
     @Override
     public void onNotificationSettingsCheck(Context context, boolean b, int i) {
         super.onNotificationSettingsCheck(context, b, i);
-        //注册是否成功
+        //APP通知权限是否打开
         LogUtils.d("onNotificationSettingsCheck:"+b+","+i);
+        SharedPreferencesManage.setNotificationFlag(b);
     }
 }

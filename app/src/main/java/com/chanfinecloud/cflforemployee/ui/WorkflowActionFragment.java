@@ -61,11 +61,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.WORKORDER;
 
 /**
  * Created by Loong on 2020/2/21.
  * Version: 1.0
- * Describe:
+ * Describe: 通用流程处理界面
  */
 
 @ContentView(R.layout.workflow_action_layout)
@@ -130,12 +131,20 @@ public class WorkflowActionFragment extends BaseFragment {
         initActionView();
     }
 
-    //照片选择回填
+    /**
+     * 照片选择回填
+     * @param imageViewInfo 图片实体
+     */
     public void setPicData(ImageViewInfo imageViewInfo){
         picList.add(picList.size()-1,imageViewInfo);
         adapter.notifyDataSetChanged();
     }
-    //初始化流程表单视图-assign(人员指派)
+
+    /**
+     * 初始化流程表单视图-assign(人员指派)
+     * @param label 表单item名称
+     * @return WorkflowViewEntity
+     */
     private WorkflowViewEntity initAssignView(String label){
         View v = LayoutInflater.from(context).inflate(R.layout.workflow_action_spinner,null);
         TextView labelView=v.findViewById(R.id.action_spinner_label);
@@ -158,7 +167,12 @@ public class WorkflowActionFragment extends BaseFragment {
         workflowView.setContent(spinner);
         return workflowView;
     }
-    //初始化流程表单视图-emergencyLevel(紧急程度)
+
+    /**
+     * 初始化流程表单视图-emergencyLevel(紧急程度)
+     * @param label 表单item名称
+     * @return WorkflowViewEntity
+     */
     private WorkflowViewEntity initEmergencyLevelView(String label){
         View v = LayoutInflater.from(context).inflate(R.layout.workflow_action_spinner,null);
         TextView labelView=v.findViewById(R.id.action_spinner_label);
@@ -177,7 +191,12 @@ public class WorkflowActionFragment extends BaseFragment {
         workflowView.setContent(spinner);
         return workflowView;
     }
-    //初始化流程表单视图-date
+
+    /**
+     * 初始化流程表单视图-date
+     * @param label 表单item名称
+     * @return WorkflowViewEntity
+     */
     private WorkflowViewEntity initDateView(String label){
         View v = LayoutInflater.from(context).inflate(R.layout.workflow_action_date,null);
         TextView labelView=v.findViewById(R.id.action_date_label);
@@ -201,7 +220,12 @@ public class WorkflowActionFragment extends BaseFragment {
         workflowView.setContent(date);
         return workflowView;
     }
-    //初始化流程表单视图-photo
+
+    /**
+     * 初始化流程表单视图-photo
+     * @param label 表单item名称
+     * @return WorkflowViewEntity
+     */
     private WorkflowViewEntity initPhotoView(String label){
         View v = LayoutInflater.from(context).inflate(R.layout.workflow_action_photo,null);
         TextView labelView=v.findViewById(R.id.action_photo_label);
@@ -238,7 +262,12 @@ public class WorkflowActionFragment extends BaseFragment {
         workflowView.setContent(photo);
         return workflowView;
     }
-    //初始化流程表单视图-remark
+
+    /**
+     * 初始化流程表单视图-remark
+     * @param label 表单item名称
+     * @return WorkflowViewEntity
+     */
     private WorkflowViewEntity initRemarkView(String label){
         View v = LayoutInflater.from(context).inflate(R.layout.workflow_action_remark,null);
         TextView labelView=v.findViewById(R.id.action_remark_label);
@@ -249,7 +278,12 @@ public class WorkflowActionFragment extends BaseFragment {
         workflowView.setContent(remark);
         return workflowView;
     }
-    //初始化流程表单视图-input
+
+    /**
+     * 初始化流程表单视图-input
+     * @param label 表单item名称
+     * @return WorkflowViewEntity
+     */
     private WorkflowViewEntity initInputView(String label){
         View v = LayoutInflater.from(context).inflate(R.layout.workflow_action_input,null);
         TextView labelView=v.findViewById(R.id.action_text_label);
@@ -260,7 +294,12 @@ public class WorkflowActionFragment extends BaseFragment {
         workflowView.setContent(text);
         return workflowView;
     }
-    //初始化流程表单视图-rate
+
+    /**
+     * 初始化流程表单视图-rate
+     * @param label 表单item名称
+     * @return WorkflowViewEntity
+     */
     private WorkflowViewEntity initRateView(String label){
         View v = LayoutInflater.from(context).inflate(R.layout.workflow_action_rate,null);
         TextView labelView=v.findViewById(R.id.action_rate_label);
@@ -271,7 +310,12 @@ public class WorkflowActionFragment extends BaseFragment {
         workflowView.setContent(rateView);
         return workflowView;
     }
-    //初始化流程表单视图-submit
+
+    /**
+     * 初始化流程表单视图-rate
+     * @param btnText 提交按钮文字
+     * @return WorkflowViewEntity
+     */
     private WorkflowViewEntity initSubmitButtonView(String btnText){
         View v = LayoutInflater.from(context).inflate(R.layout.workflow_action_submit,null);
         Button submitView=v.findViewById(R.id.action_button_submit);
@@ -280,7 +324,13 @@ public class WorkflowActionFragment extends BaseFragment {
         workflowView.setSubmit(submitView);
         return workflowView;
     }
-    //初始化流程表单视图-choose
+
+    /**
+     * 初始化流程表单视图-choose
+     * @param acceptText accept按钮文字
+     * @param rejectText reject按钮文字
+     * @return WorkflowViewEntity
+     */
     private WorkflowViewEntity initChooseButtonView(String acceptText,String rejectText){
         View v = LayoutInflater.from(context).inflate(R.layout.workflow_action_button,null);
         Button acceptView=v.findViewById(R.id.action_button_accept);
@@ -293,6 +343,10 @@ public class WorkflowActionFragment extends BaseFragment {
         return workflowView;
     }
 
+    /**
+     * 解析表单
+     * @return  List<WorkflowFormContentEntity>
+     */
     private List<WorkflowFormContentEntity> initFormContent(){
         Gson gson=new Gson();
         WorkflowFormEntity formEntity=gson.fromJson(fromJson, WorkflowFormEntity.class);
@@ -306,7 +360,9 @@ public class WorkflowActionFragment extends BaseFragment {
         return formContent;
     }
 
-    //初始化流程表单
+    /**
+     * 初始化流程表单
+     */
     private void initActionView(){
         List<WorkflowFormContentEntity> formContent= initFormContent();
         for (int i = 0; i < formContent.size(); i++) {
@@ -371,6 +427,10 @@ public class WorkflowActionFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 初始化表单参数处理
+     * @param operationIndex choose index
+     */
     private void initHandleMap(int operationIndex){
         Map<String,Object> map=new HashMap<>();
         for (Map.Entry<String,WorkflowViewEntity> entry:workflowViewEntityMap.entrySet()) {
@@ -466,14 +526,21 @@ public class WorkflowActionFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 初始化流程处理请求参数
+     * @param map
+     */
     private void workflowAction(Map<String,Object> map){
-        RequestParam requestParam=new RequestParam(BASE_URL+"workflow/api/push/"+workflowType.getType(),HttpMethod.Post);
+        RequestParam requestParam=new RequestParam(BASE_URL+WORKORDER+"workflow/api/push/"+workflowType.getType(),HttpMethod.Post);
         requestParam.setRequestMap(map);
         requestParam.setParamType(ParamType.Json);
         requestParam.setCallback(myCallBack);
         sendRequest(requestParam,true);
     }
 
+    /**
+     * 请求回调
+     */
     private MyCallBack myCallBack=new MyCallBack<String>(){
         @Override
         public void onSuccess(String result) {

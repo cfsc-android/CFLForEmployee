@@ -55,7 +55,6 @@ android {
             signingConfig signingConfigs.cfl
             //正式
             buildConfigField "String", "BASE_URL", Release_Url
-
         }
     }
 

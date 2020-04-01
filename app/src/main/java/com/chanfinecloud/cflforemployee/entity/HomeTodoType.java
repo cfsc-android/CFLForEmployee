@@ -7,8 +7,7 @@ package com.chanfinecloud.cflforemployee.entity;
  */
 public enum HomeTodoType {
     待处理工单(0x001),//工单
-    待处理投诉(0x002),//投诉
-    待处理任务(0x003);//任务
+    待处理投诉(0x002);//投诉
 
     private final int type;
     HomeTodoType(int type){

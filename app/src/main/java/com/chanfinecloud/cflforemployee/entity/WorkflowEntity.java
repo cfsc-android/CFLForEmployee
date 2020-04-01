@@ -12,43 +12,48 @@ public class WorkflowEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
+
     /**
-     * id : 170c894ae6cd0e72f3fd1c248f9bfae1
-     * processId : 170cdbff1fd3ffba96c768b456abc0e9
-     * problemDesc : 工单走起
-     * problemResourceKey :
-     * liveResourceKey :
+     * id : 1712a0677eb4634e61a122748118ed43
+     * processId : null
+     * problemDesc : 春天是一个特别有意思的季节，没有寒冬的冷冽和萧条，也没有炎夏的火热和激情，但它带给人更多的美好和希望，如果问春天是什么颜色的，那春天应该是属于丰富多彩的，而春天的穿搭和这个季节有着必然的联系，在众多时尚单品中，卫衣有着更多的可能性。
+     * code : 202003300005
+     * projectId : ec93bb06f5be4c1f19522ca78180e2i9
+     * projectName : 长房时代城
+     * problemResourceKey : 1712a050b661c65ec656d24487cb86f3
+     * liveResourceKey : 1712a33dcfccd4d555da4e74924ab417
      * typeId : 4
      * typeName : 综合维修
-     * statusId : 9
-     * statusName : 员工检视工单
-     * createBy : a75d45a015c44384a04449ee80dc3503
-     * createTime : 2020-03-11 15:52:32
-     * creator : 超级管理员
-     * avatarUrl : http://img3.imgtn.bdimg.com/it/u=378824344,1185609431&fm=26&gp=0.jpg
-     * creatorMobile : 13787176775
-     * briefDesc : 工程部
-     * handlerId :
-     * nodeName : 到场拍照
-     * assignTime : 2020-03-12 15:57:54
+     * statusId : 21
+     * statusName : 回访关闭
+     * householdId : 1708ed9bd5442a637fbd1c64298858fd
+     * createTime : 2020-03-30 13:59:59
+     * householdName : 刘子帅
+     * householdMobile : 15531270511
+     * address : 8栋三单元1003
+     * assigneeId :
+     * nodeName :
+     * assignTime :
      */
 
     private String id;
-    private String processId;
+    private Object processId;
     private String problemDesc;
+    private String code;
+    private String projectId;
+    private String projectName;
     private String problemResourceKey;
     private String liveResourceKey;
     private int typeId;
     private String typeName;
     private int statusId;
     private String statusName;
-    private String createBy;
+    private String householdId;
     private String createTime;
-    private String creator;
-    private String avatarUrl;
-    private String creatorMobile;
-    private String briefDesc;
-    private String handlerId;
+    private String householdName;
+    private String householdMobile;
+    private String address;
+    private String assigneeId;
     private String nodeName;
     private String assignTime;
     private List<ResourceEntity> problemResourceValue;
@@ -63,11 +68,11 @@ public class WorkflowEntity implements Serializable {
         this.id = id;
     }
 
-    public String getProcessId() {
+    public Object getProcessId() {
         return processId;
     }
 
-    public void setProcessId(String processId) {
+    public void setProcessId(Object processId) {
         this.processId = processId;
     }
 
@@ -77,6 +82,30 @@ public class WorkflowEntity implements Serializable {
 
     public void setProblemDesc(String problemDesc) {
         this.problemDesc = problemDesc;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     public String getProblemResourceKey() {
@@ -127,12 +156,12 @@ public class WorkflowEntity implements Serializable {
         this.statusName = statusName;
     }
 
-    public String getCreateBy() {
-        return createBy;
+    public String getHouseholdId() {
+        return householdId;
     }
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
+    public void setHouseholdId(String householdId) {
+        this.householdId = householdId;
     }
 
     public String getCreateTime() {
@@ -143,44 +172,36 @@ public class WorkflowEntity implements Serializable {
         this.createTime = createTime;
     }
 
-    public String getCreator() {
-        return creator;
+    public String getHouseholdName() {
+        return householdName;
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator;
+    public void setHouseholdName(String householdName) {
+        this.householdName = householdName;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
+    public String getHouseholdMobile() {
+        return householdMobile;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setHouseholdMobile(String householdMobile) {
+        this.householdMobile = householdMobile;
     }
 
-    public String getCreatorMobile() {
-        return creatorMobile;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCreatorMobile(String creatorMobile) {
-        this.creatorMobile = creatorMobile;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getBriefDesc() {
-        return briefDesc;
+    public String getAssigneeId() {
+        return assigneeId;
     }
 
-    public void setBriefDesc(String briefDesc) {
-        this.briefDesc = briefDesc;
-    }
-
-    public String getHandlerId() {
-        return handlerId;
-    }
-
-    public void setHandlerId(String handlerId) {
-        this.handlerId = handlerId;
+    public void setAssigneeId(String assigneeId) {
+        this.assigneeId = assigneeId;
     }
 
     public String getNodeName() {

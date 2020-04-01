@@ -19,6 +19,11 @@ import java.util.List;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Created by Loong on 2020/2/21.
+ * Version: 1.0
+ * Describe: 通用流程进度界面
+ */
 @ContentView(R.layout.activity_workflow_step)
 public class WorkflowStepActivity extends BaseActivity {
     @ViewInject(R.id.toolbar_tv_title)

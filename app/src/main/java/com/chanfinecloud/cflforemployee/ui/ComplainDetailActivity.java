@@ -55,6 +55,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
@@ -66,8 +67,10 @@ import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
 import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.FILE;
 import static com.chanfinecloud.cflforemployee.config.Config.PHOTO_DIR_NAME;
 import static com.chanfinecloud.cflforemployee.config.Config.SD_APP_DIR_NAME;
+import static com.chanfinecloud.cflforemployee.config.Config.WORKORDER;
 
 @ContentView(R.layout.activity_complain_detail)
 public class ComplainDetailActivity extends BaseActivity {
@@ -90,6 +93,8 @@ public class ComplainDetailActivity extends BaseActivity {
     private TextView complain_detail_contact_tel;
     @ViewInject(R.id.complain_detail_remark_text)
     private TextView complain_detail_remark_text;
+    @ViewInject(R.id.complain_detail_remark_rlv)
+    private RecyclerView complain_detail_remark_rlv;
     @ViewInject(R.id.complain_detail_remark_time)
     private TextView complain_detail_remark_time;
 
@@ -161,9 +166,11 @@ public class ComplainDetailActivity extends BaseActivity {
     }
 
 
-    //获取投诉数据
+    /**
+     * 获取投诉详情数据
+     */
     private void getData(){
-        RequestParam requestParam=new RequestParam(BASE_URL+"/workflow/api/detail/"+complainId,HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+WORKORDER+"workflow/api/detail/"+complainId,HttpMethod.Get);
         Map<String,String> map=new HashMap<>();
         map.put("type", WorkflowType.Complain.getType());
         requestParam.setRequestMap(map);
@@ -204,7 +211,11 @@ public class ComplainDetailActivity extends BaseActivity {
         });
         sendRequest(requestParam,true);
     }
-    //初始化主视图
+
+    /**
+     * 初始化主视图
+     * @param complainEntity 投诉详情实体
+     */
     private void initView(ComplainDetailsEntity complainEntity){
         if(TextUtils.isEmpty(complainEntity.getCreatorAvatarUrl())){
             Glide.with(this)
@@ -233,8 +244,43 @@ public class ComplainDetailActivity extends BaseActivity {
         }
         complain_detail_remark_text.setText(complainEntity.getProblemDesc());
         complain_detail_remark_time.setText(complainEntity.getCreateTime());
+        List<ResourceEntity> picData=complainEntity.getProblemResourceValue();
+        if(picData!=null&&picData.size()>0) {
+            final List<ImageViewInfo> data = new ArrayList<>();
+            for (int j = 0; j < picData.size(); j++) {
+                data.add(new ImageViewInfo(picData.get(j).getUrl()));
+            }
+            final ImagePreviewListAdapter imageAdapter=new ImagePreviewListAdapter(this,R.layout.item_workflow_image_perview_list,data);
+            final GridLayoutManager mGridLayoutManager = new GridLayoutManager(this,4);
+            complain_detail_remark_rlv.setLayoutManager(mGridLayoutManager);
+            complain_detail_remark_rlv.setAdapter(imageAdapter);
+            complain_detail_remark_rlv.addOnItemTouchListener(new com.chad.library.adapter.base.listener.OnItemClickListener() {
+                @Override
+                public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    for (int k = mGridLayoutManager.findFirstVisibleItemPosition(); k < adapter.getItemCount(); k++) {
+                        View itemView = mGridLayoutManager.findViewByPosition(k);
+                        Rect bounds = new Rect();
+                        if (itemView != null) {
+                            ImageView imageView = itemView.findViewById(R.id.iiv_item_image_preview);
+                            imageView.getGlobalVisibleRect(bounds);
+                        }
+                        //计算返回的边界
+                        imageAdapter.getItem(k).setBounds(bounds);
+                    }
+                    PreviewBuilder.from(ComplainDetailActivity.this)
+                            .setImgs(data)
+                            .setCurrentIndex(position)
+                            .setSingleFling(true)
+                            .setType(PreviewBuilder.IndicatorType.Number)
+                            .start();
+                }
+            });
+        }
     }
-    //初始化流程视图
+    /**
+     * 初始化流程视图
+     * @param list 流程处理list
+     */
     private void initWorkFlow(List<WorkflowProcessesEntity> list){
         if(list.size()>0){
             complain_detail_workflow_ll.removeAllViews();
@@ -315,11 +361,21 @@ public class ComplainDetailActivity extends BaseActivity {
             complain_detail_workflow_ll.setVisibility(View.GONE);
         }
     }
-    //初始化流程处理
+    /**
+     * 初始化流程处理视图
+     * @param lastWorkflow 最新流程处理
+     */
     private void initAction(WorkflowProcessesEntity lastWorkflow){
         FragmentTransaction transaction=fragmentManager.beginTransaction();
+        List<String> departIds=SharedPreferencesManage.getUserInfo().getDepartId();
+        String departIdStr="";
+        if(departIds!=null){
+            for (int i = 0; i < departIds.size(); i++) {
+                departIdStr+=departIds.get(i)+",";
+            }
+        }
         if((lastWorkflow.getAssigneeId().equals(SharedPreferencesManage.getUserInfo().getId())
-                ||"客服沟通确认".equals(lastWorkflow.getNodeName()))
+                ||departIdStr.contains(lastWorkflow.getAssigneeId()))
                 &&(lastWorkflow.getOperationInfos()!=null&&lastWorkflow.getOperationInfos().size()>0)) {
             Bundle bundle = new Bundle();
             bundle.putBoolean("permission", permission);
@@ -360,7 +416,10 @@ public class ComplainDetailActivity extends BaseActivity {
         }
     }
 
-    //压缩图片
+    /**
+     * 压缩图片
+     * @param list 图片路径list
+     */
     private void compress(List<String> list){
         String _Path = FilePathUtil.createPathIfNotExist("/" + SD_APP_DIR_NAME + "/" + PHOTO_DIR_NAME);
         LogUtil.d("_Path->" + _Path);
@@ -396,9 +455,12 @@ public class ComplainDetailActivity extends BaseActivity {
                 }).launch();
     }
 
-    //上传照片
+    /**
+     * 上传照片
+     * @param path 图片路径
+     */
     private void uploadPic(final String path){
-        RequestParam requestParam=new RequestParam(BASE_URL+"file-manager-ms/files-anon",HttpMethod.Upload);
+        RequestParam requestParam=new RequestParam(BASE_URL+FILE+"files-anon",HttpMethod.Upload);
         Map<String,Object> map=new HashMap<>();
         map.put("UploadFile",new File(path));
         map.put("resourceKey",resourceKey);

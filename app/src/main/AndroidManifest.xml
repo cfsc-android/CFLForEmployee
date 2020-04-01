@@ -64,7 +64,6 @@
         <!--友盟-->
         <meta-data android:value="5e7c9b45dbc2ec080a6d046a" android:name="UMENG_APPKEY"/>
         <meta-data android:value="${UMENG_CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
-        <!-- 友盟 -->
         <activity
             android:name=".weidgt.weixin.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

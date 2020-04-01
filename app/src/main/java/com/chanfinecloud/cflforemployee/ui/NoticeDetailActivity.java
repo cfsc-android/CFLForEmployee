@@ -43,6 +43,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.chanfinecloud.cflforemployee.config.Config.ARTICLE;
 import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
 
 
@@ -83,9 +84,12 @@ public class NoticeDetailActivity extends BaseActivity {
         postPreview();
     }
 
+    /**
+     * 获取新闻详情数据
+     */
     private void getData(){
         startProgressDialog();
-        RequestParam requestParam=new RequestParam(BASE_URL+"smart/content/"+noticeId,HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+ARTICLE+"smart/content/"+noticeId,HttpMethod.Get);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
@@ -111,9 +115,11 @@ public class NoticeDetailActivity extends BaseActivity {
         sendRequest(requestParam,true);
     }
 
-    //预览+1
+    /**
+     * 新闻浏览+1
+     */
     private void postPreview(){
-        RequestParam requestParam=new RequestParam(BASE_URL+"smart/contentThumbup/annoucementUp",HttpMethod.Post);
+        RequestParam requestParam=new RequestParam(BASE_URL+ARTICLE+"smart/contentThumbup/annoucementUp",HttpMethod.Post);
         Map<String,Object> map=new HashMap<>();
         map.put("announcementId",noticeId);
         map.put("field","browseNum");
@@ -139,13 +145,16 @@ public class NoticeDetailActivity extends BaseActivity {
         sendRequest(requestParam,false);
     }
 
-    //点赞/取消点赞
+    /**
+     * 点赞/取消点赞
+     * @param flag 0:取消点赞，1:点赞
+     */
     private void thumbUp(final String flag){
         RequestParam requestParam;
         if("0".equals(flag)){
-            requestParam=new RequestParam(BASE_URL+"smart/contentThumbup/noLikeAnnouncement/"+noticeId,HttpMethod.Get);
+            requestParam=new RequestParam(BASE_URL+ARTICLE+"smart/contentThumbup/noLikeAnnouncement/"+noticeId,HttpMethod.Get);
         }else{
-            requestParam=new RequestParam(BASE_URL+"smart/contentThumbup/likeAnnouncement/"+noticeId,HttpMethod.Get);
+            requestParam=new RequestParam(BASE_URL+ARTICLE+"smart/contentThumbup/likeAnnouncement/"+noticeId,HttpMethod.Get);
 
         }
         requestParam.setCallback(new MyCallBack<String>(){
@@ -179,6 +188,10 @@ public class NoticeDetailActivity extends BaseActivity {
         });
         sendRequest(requestParam,false);
     }
+
+    /**
+     * 初始化webView视图
+     */
     private void init() {
 
         WebSettings settings = notice_detail_wv.getSettings();
@@ -232,9 +245,8 @@ public class NoticeDetailActivity extends BaseActivity {
     }
 
     /**
-     * @author TanYong
-     * create at 2017/6/14 15:36
-     * TODO：加载公告详情
+     * 加载详情
+     * @param url 网页地址
      */
     private void loadNoticeDetail(String url) {
         notice_detail_wv.setHorizontalScrollBarEnabled(false);//水平不显示
@@ -244,12 +256,14 @@ public class NoticeDetailActivity extends BaseActivity {
         notice_detail_wv.setWebViewClient(new webViewClient());
     }
 
-    //Web视图
+    /**
+     * 自定义Web视图
+     */
     private class webViewClient extends WebViewClient {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            imgReset();
+//            imgReset();
         }
 
         @Override
@@ -259,6 +273,9 @@ public class NoticeDetailActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 重置图片样式
+     */
     private void imgReset() {
         notice_detail_wv.loadUrl("javascript:(function(){" +
                 "var objs = document.getElementsByTagName('img'); " +
@@ -336,6 +353,10 @@ public class NoticeDetailActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 分享
+     * @param file 图片
+     */
     private void toShare(File file){
         UMImage thumb;
         if(file!=null){
@@ -353,6 +374,9 @@ public class NoticeDetailActivity extends BaseActivity {
                 .setCallback(shareListener).open();
     }
 
+    /**
+     * 友盟分享监听
+     */
     private UMShareListener shareListener = new UMShareListener() {
         /**
          * @descrption 分享开始的回调
@@ -393,8 +417,6 @@ public class NoticeDetailActivity extends BaseActivity {
 //            showShortToast("取消了");
         }
     };
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

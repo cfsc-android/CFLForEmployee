@@ -28,12 +28,15 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
+import static com.chanfinecloud.cflforemployee.config.Config.ARTICLE;
 import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
 
 /**
@@ -60,7 +63,6 @@ public class HomeFragment extends BaseFragment {
         context = getActivity();
         data.add(new HomeTodoFragment().newInstance(HomeTodoType.待处理工单));
         data.add(new HomeTodoFragment().newInstance(HomeTodoType.待处理投诉));
-        data.add(new HomeTodoFragment().newInstance(HomeTodoType.待处理任务));
         adapter=new HomeTodoPagerAdapter(getChildFragmentManager(),1,getFragmentManager(),data);
         getData();
     }
@@ -68,15 +70,19 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        home_ei_tab.setTabTitles(HomeTodoType.getPageNames());
+        String[] tabs=HomeTodoType.getPageNames();
+        tabs = Arrays.copyOf(tabs, tabs.length+2);//为了样式好看点，数组加长了2
+        home_ei_tab.setTabTitles(tabs);
         home_ei_tab.setViewPager(home_vp_tab, adapter);
         home_vp_tab.setOffscreenPageLimit(HomeTodoType.size() - 1);
         home_vp_tab.setCurrentItem(0);
     }
 
-
+    /**
+     * 获取新闻数据
+     */
     private void getData(){
-        RequestParam requestParam=new RequestParam(BASE_URL+"smart/content/pages",HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+ARTICLE+"smart/content/pages",HttpMethod.Get);
         Map<String,String> map=new HashMap<>();
         map.put("projectId","ec93bb06f5be4c1f19522ca78180e2i9");
         map.put("receiver", NoticeReceiverType.全部.getType()+","+NoticeReceiverType.员工.getType());
@@ -108,6 +114,9 @@ public class HomeFragment extends BaseFragment {
         sendRequest(requestParam,false);
     }
 
+    /**
+     * 初始化热点关注
+     */
     private void initADTextView() {
         home_ad_hot.setSpeed(2);
         home_ad_hot.setData(hotTopicList);
@@ -131,12 +140,10 @@ public class HomeFragment extends BaseFragment {
         Bundle bundle=new Bundle();
         switch (v.getId()){
             case R.id.home_tv_order:
-//                startActivity(OrderActivity.class);
                 bundle.putSerializable("workflowType", WorkflowType.Order);
                 startActivity(WorkflowListActivity.class,bundle);
                 break;
             case R.id.home_tv_complain:
-//                startActivity(ComplainActivity.class);
                 bundle.putSerializable("workflowType", WorkflowType.Complain);
                 startActivity(WorkflowListActivity.class,bundle);
                 break;

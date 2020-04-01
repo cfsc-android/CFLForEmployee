@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chanfinecloud.cflforemployee.R;
+import com.chanfinecloud.cflforemployee.entity.ResourceEntity;
 import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.entity.BaseEntity;
 import com.chanfinecloud.cflforemployee.entity.EventBusMessage;
@@ -27,6 +28,7 @@ import com.chanfinecloud.cflforemployee.http.ParamType;
 import com.chanfinecloud.cflforemployee.http.RequestParam;
 import com.chanfinecloud.cflforemployee.weidgt.photopicker.PhotoPicker;
 import com.chanfinecloud.cflforemployee.weidgt.wheelview.BirthWheelDialog;
+import com.google.gson.Gson;
 import com.zhihu.matisse.Matisse;
 
 import org.greenrobot.eventbus.EventBus;
@@ -47,8 +49,10 @@ import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
 import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.FILE;
 import static com.chanfinecloud.cflforemployee.config.Config.PHOTO_DIR_NAME;
 import static com.chanfinecloud.cflforemployee.config.Config.SD_APP_DIR_NAME;
+import static com.chanfinecloud.cflforemployee.config.Config.USER;
 
 @ContentView(R.layout.activity_person)
 public class PersonActivity extends BaseActivity {
@@ -71,9 +75,11 @@ public class PersonActivity extends BaseActivity {
     private int sex;
     private String birthday;
 
-    private UserInfoEntity userInfoEntity;
+    private UserInfoEntity userInfo;
 
     public static final int REQUEST_CODE_CHOOSE=0x001;
+
+    private FileEntity fileEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +89,15 @@ public class PersonActivity extends BaseActivity {
         initView();
     }
 
+    /**
+     * 初始化视图
+     */
     private void initView(){
-        userInfoEntity = SharedPreferencesManage.getUserInfo();
-        person_tv_name.setText(userInfoEntity.getUsername());
-        person_tv_depart.setText(userInfoEntity.getDepartment());
-        person_tv_no.setText(userInfoEntity.getWorkNo());
-        sex =userInfoEntity.getGender();
+        userInfo = SharedPreferencesManage.getUserInfo();
+        person_tv_name.setText(userInfo.getRealName());
+        person_tv_depart.setText(userInfo.getDepartName());
+        person_tv_no.setText(userInfo.getWorkNo());
+        sex = userInfo.getGender();
         if (sex == 0){
             person_tv_gender.setText("男");
         }else if (sex == 1){
@@ -96,15 +105,15 @@ public class PersonActivity extends BaseActivity {
         }else{
             person_tv_gender.setText("未知");
         }
-        birthday = userInfoEntity.getBirthday();
+        birthday = userInfo.getBirthday();
         if(!TextUtils.isEmpty(birthday)){
             person_tv_birth.setText(birthday.substring(0,10));
         }else{
             person_tv_birth.setText("请选择出生日期");
         }
-        if(!TextUtils.isEmpty(userInfoEntity.getAvatarId())){
+        if(userInfo.getAvatarResource()!=null){
             Glide.with(this)
-                    .load(userInfoEntity.getAvatarResuorce().getUrl())
+                    .load(userInfo.getAvatarResource().getUrl())
                     .circleCrop()
                     .into(person_iv_avatar);
 
@@ -132,7 +141,7 @@ public class PersonActivity extends BaseActivity {
                 });
                 wheelDialog.show();
                 if(!TextUtils.isEmpty(birthday)){
-                    wheelDialog.setBirth(userInfoEntity.getBirthday());
+                    wheelDialog.setBirth(userInfo.getBirthday());
                 }else{
                     wheelDialog.setBirth("2000-1-1");
                 }
@@ -190,11 +199,11 @@ public class PersonActivity extends BaseActivity {
 
     /**
      * 更新用户信息
-     * @param map
+     * @param map 请求参数
      */
     private void updateUser(Map<String,Object> map){
-        RequestParam requestParam=new RequestParam(BASE_URL+"/sys/user/updateUser",HttpMethod.Put);
-        map.put("id", userInfoEntity.getId());
+        RequestParam requestParam=new RequestParam(BASE_URL+USER+"/sys/user/updateUser",HttpMethod.Put);
+        map.put("id", userInfo.getId());
         requestParam.setRequestMap(map);
         requestParam.setParamType(ParamType.Json);
         requestParam.setCallback(new MyCallBack<String>(){
@@ -220,23 +229,30 @@ public class PersonActivity extends BaseActivity {
         sendRequest(requestParam,true);
     }
 
-
-    //获取用户信息
+    /**
+     * 获取用户信息
+     */
     private void getUserInfo(){
-        RequestParam requestParam=new RequestParam(BASE_URL+"sys/user/"+SharedPreferencesManage.getUserInfo().getId(),HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+USER+"sys/user/users/current",HttpMethod.Get);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
                 super.onSuccess(result);
                 LogUtils.d("result",result);
-                BaseEntity<UserInfoEntity> baseEntity=JsonParse.parse(result,UserInfoEntity.class);
-                if(baseEntity.isSuccess()){
-                    SharedPreferencesManage.setUserInfo(baseEntity.getResult());
-                    initView();
-                    EventBus.getDefault().post(new EventBusMessage<>("refresh"));
-                }else{
-                    showToast(baseEntity.getMessage());
+                Gson gson = new Gson();
+                UserInfoEntity userInfo=gson.fromJson(result, UserInfoEntity.class);
+                if(fileEntity!=null){
+                    ResourceEntity resourceEntity=new ResourceEntity();
+                    resourceEntity.setId(fileEntity.getId());
+                    resourceEntity.setContentType(fileEntity.getContentType());
+                    resourceEntity.setCreateTime(fileEntity.getCreateTime());
+                    resourceEntity.setName(fileEntity.getName());
+                    resourceEntity.setUrl(fileEntity.getDomain()+fileEntity.getUrl());
+                    userInfo.setAvatarResource(resourceEntity);
                 }
+                SharedPreferencesManage.setUserInfo(userInfo);//缓存用户信息
+                initView();
+                EventBus.getDefault().post(new EventBusMessage<>("refresh"));
             }
 
             @Override
@@ -249,6 +265,40 @@ public class PersonActivity extends BaseActivity {
             public void onFinished() {
                 super.onFinished();
                 stopProgressDialog();
+            }
+        });
+        sendRequest(requestParam,false);
+    }
+    /**
+     * 缓存用户头像信息
+     */
+    private void initAvatarResource(){
+        final UserInfoEntity userInfo=SharedPreferencesManage.getUserInfo();
+        RequestParam requestParam=new RequestParam(BASE_URL+FILE+"files/byid/"+userInfo.getAvatarId(), HttpMethod.Get);
+        requestParam.setCallback(new MyCallBack<String>(){
+            @Override
+            public void onSuccess(String result) {
+                super.onSuccess(result);
+                LogUtils.d("result",result);
+                BaseEntity<FileEntity> baseEntity= JsonParse.parse(result,FileEntity.class);
+                if(baseEntity.isSuccess()){
+                    ResourceEntity resourceEntity=new ResourceEntity();
+                    resourceEntity.setId(baseEntity.getResult().getId());
+                    resourceEntity.setContentType(baseEntity.getResult().getContentType());
+                    resourceEntity.setCreateTime(baseEntity.getResult().getCreateTime());
+                    resourceEntity.setName(baseEntity.getResult().getName());
+                    resourceEntity.setUrl(baseEntity.getResult().getDomain()+baseEntity.getResult().getUrl());
+                    userInfo.setAvatarResource(resourceEntity);
+                    SharedPreferencesManage.setUserInfo(userInfo);//缓存用户信息
+                }else{
+                    showToast(baseEntity.getMessage());
+                }
+            }
+
+            @Override
+            public void onFinished() {
+                super.onFinished();
+                startActivity(MainActivity.class);
             }
         });
         sendRequest(requestParam,false);
@@ -273,7 +323,10 @@ public class PersonActivity extends BaseActivity {
         }
     }
 
-    //压缩图片
+    /**
+     * 压缩图片
+     * @param list 图片路径list
+     */
     private void compress(List<String> list){
         String _Path = FilePathUtil.createPathIfNotExist("/" + SD_APP_DIR_NAME + "/" + PHOTO_DIR_NAME);
         LogUtil.d("_Path->" + _Path);
@@ -309,9 +362,12 @@ public class PersonActivity extends BaseActivity {
                 }).launch();
     }
 
-    //上传照片
+    /**
+     * 上传照片
+     * @param path 图片路径
+     */
     private void uploadPic(final String path){
-        RequestParam requestParam=new RequestParam(BASE_URL+"file-manager-ms/files-anon",HttpMethod.Upload);
+        RequestParam requestParam=new RequestParam(BASE_URL+FILE+"files-anon",HttpMethod.Upload);
         Map<String,Object> map=new HashMap<>();
         map.put("UploadFile",new File(path));
         requestParam.setRequestMap(map);
@@ -322,6 +378,7 @@ public class PersonActivity extends BaseActivity {
                 LogUtils.d(result);
                 BaseEntity<FileEntity> baseEntity= JsonParse.parse(result,FileEntity.class);
                 if(baseEntity.isSuccess()){
+                    fileEntity=baseEntity.getResult();
                     Map<String,Object> map=new HashMap<>();
                     map.put("avatarId",baseEntity.getResult().getId());
                     updateUser(map);

@@ -123,11 +123,13 @@
                                 <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/complain_detail_remark_rlv"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dp_10"/>
                                 <TextView
                                     android:id="@+id/complain_detail_remark_time"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dp_10"
                                     android:gravity="right"
                                     android:textSize="@dimen/sp_12"
                                     android:textColor="@color/text_primary"/>

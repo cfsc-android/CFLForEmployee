@@ -5,24 +5,26 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.entity.BaseEntity;
-import com.chanfinecloud.cflforemployee.entity.OrderStatusEntity;
-import com.chanfinecloud.cflforemployee.entity.OrderTypeListEntity;
+import com.chanfinecloud.cflforemployee.entity.FileEntity;
+import com.chanfinecloud.cflforemployee.entity.ResourceEntity;
 import com.chanfinecloud.cflforemployee.entity.TokenEntity;
-import com.chanfinecloud.cflforemployee.entity.UserListEntity;
-import com.chanfinecloud.cflforemployee.util.LogUtils;
-import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
-import com.chanfinecloud.cflforemployee.util.Utils;
+import com.chanfinecloud.cflforemployee.entity.UserInfoEntity;
 import com.chanfinecloud.cflforemployee.http.HttpMethod;
 import com.chanfinecloud.cflforemployee.http.JsonParse;
 import com.chanfinecloud.cflforemployee.http.MyCallBack;
 import com.chanfinecloud.cflforemployee.http.RequestParam;
-import com.google.gson.reflect.TypeToken;
+import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
+import com.chanfinecloud.cflforemployee.util.LogUtils;
+import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
+import com.chanfinecloud.cflforemployee.util.Utils;
+import com.google.gson.Gson;
 import com.pgyersdk.update.DownloadFileListener;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
@@ -32,16 +34,13 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
 import java.io.File;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import androidx.annotation.Nullable;
 
 import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.FILE;
+import static com.chanfinecloud.cflforemployee.config.Config.USER;
 
 
 /**
@@ -186,16 +185,12 @@ public class LaunchActivity extends BaseActivity {
      * 检查是否自动登录
      */
     private void checkAutoLogin(){
-//        startActivity(MainActivity.class);
-//        finish();
-//        initData();
-        //清空项目过滤的值
         TokenEntity token= SharedPreferencesManage.getToken();
         if(token!=null){
             LogUtils.d(token.getAccess_token());
             long time=new Date().getTime()/1000 - token.getInit_time();
             if(token.getExpires_in()-time>3){
-                initData();
+                getUserInfo();
             }else{
                 startActivity(LoginActivity.class);
                 finish();
@@ -205,175 +200,66 @@ public class LaunchActivity extends BaseActivity {
             finish();
         }
     }
+    /**
+     * 获取用户信息
+     */
+    private void getUserInfo(){
+        RequestParam requestParam=new RequestParam(BASE_URL+USER+"sys/user/users/current",HttpMethod.Get);
+        requestParam.setCallback(new MyCallBack<String>(){
+            @Override
+            public void onSuccess(String result) {
+                super.onSuccess(result);
+                LogUtils.d("result",result);
+                Gson gson = new Gson();
+                UserInfoEntity userInfo=gson.fromJson(result, UserInfoEntity.class);
+                SharedPreferencesManage.setUserInfo(userInfo);//缓存用户信息
+                if(!TextUtils.isEmpty(userInfo.getAvatarId())){
+                    initAvatarResource();
+                }else{
+                    startActivity(MainActivity.class);
+                }
+            }
 
-    private List<Integer> initStatus=new ArrayList<>();
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                super.onError(ex, isOnCallback);
+                showToast(ex.getMessage());
+                startActivity(LoginActivity.class);
+            }
+        });
+        sendRequest(requestParam,false);
+    }
 
-    private void checkInitStatus(int status){
-        initStatus.add(status);
-        if(initStatus.indexOf(0)!=-1){
-            startActivity(LoginActivity.class);
-            finish();
-        }else{
-            if(initStatus.size()==5){
+    /**
+     * 缓存用户头像信息
+     */
+    private void initAvatarResource(){
+        final UserInfoEntity userInfo=SharedPreferencesManage.getUserInfo();
+        RequestParam requestParam=new RequestParam(BASE_URL+FILE+"files/byid/"+userInfo.getAvatarId(), HttpMethod.Get);
+        requestParam.setCallback(new MyCallBack<String>(){
+            @Override
+            public void onSuccess(String result) {
+                super.onSuccess(result);
+                LogUtils.d("result",result);
+                BaseEntity<FileEntity> baseEntity= JsonParse.parse(result,FileEntity.class);
+                if(baseEntity.isSuccess()){
+                    ResourceEntity resourceEntity=new ResourceEntity();
+                    resourceEntity.setId(baseEntity.getResult().getId());
+                    resourceEntity.setContentType(baseEntity.getResult().getContentType());
+                    resourceEntity.setCreateTime(baseEntity.getResult().getCreateTime());
+                    resourceEntity.setName(baseEntity.getResult().getName());
+                    resourceEntity.setUrl(baseEntity.getResult().getDomain()+baseEntity.getResult().getUrl());
+                    userInfo.setAvatarResource(resourceEntity);
+                    SharedPreferencesManage.setUserInfo(userInfo);//缓存用户信息
+                }else{
+                    showToast(baseEntity.getMessage());
+                }
+            }
+
+            @Override
+            public void onFinished() {
+                super.onFinished();
                 startActivity(MainActivity.class);
-                finish();
-            }
-        }
-    }
-
-    private void initData(){
-        initOrderType();
-        initOrderStatus();
-        initComplainType();
-        initComplainStatus();
-        initUserData();
-    }
-
-    //初始化工单类型
-    private void initOrderType(){
-        RequestParam requestParam=new RequestParam(BASE_URL+"work/orderType/pageByCondition",HttpMethod.Get);
-        Map<String,String> map=new HashMap<>();
-        map.put("pageNo","1");
-        map.put("pageSize","100");
-        requestParam.setRequestMap(map);
-        requestParam.setCallback(new MyCallBack<String>(){
-            @Override
-            public void onSuccess(String result) {
-                super.onSuccess(result);
-                LogUtils.d("result",result);
-                BaseEntity<OrderTypeListEntity> baseEntity= JsonParse.parse(result,OrderTypeListEntity.class);
-                if(baseEntity.isSuccess()){
-                    SharedPreferencesManage.setOrderType(baseEntity.getResult().getData());
-                    checkInitStatus(1);
-                }else{
-                    showToast(baseEntity.getMessage());
-                    checkInitStatus(0);
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                super.onError(ex, isOnCallback);
-                showToast(ex.getMessage());
-                checkInitStatus(0);
-            }
-        });
-        sendRequest(requestParam,false);
-    }
-    //初始化工单状态
-    private void initOrderStatus(){
-        RequestParam requestParam=new RequestParam(BASE_URL+"work/orderStatus/selectWorkorderStatus",HttpMethod.Get);
-        requestParam.setCallback(new MyCallBack<String>(){
-            @Override
-            public void onSuccess(String result) {
-                super.onSuccess(result);
-                LogUtils.d("result",result);
-                Type type = new TypeToken<List<OrderStatusEntity>>() {}.getType();
-                BaseEntity<List<OrderStatusEntity>> baseEntity=JsonParse.parse(result,type);
-                if(baseEntity.isSuccess()){
-                    SharedPreferencesManage.setOrderStatus(baseEntity.getResult());
-                    checkInitStatus(1);
-                }else{
-                    showToast(baseEntity.getMessage());
-                    checkInitStatus(0);
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                super.onError(ex, isOnCallback);
-                showToast(ex.getMessage());
-                checkInitStatus(0);
-            }
-        });
-        sendRequest(requestParam,false);
-    }
-    //初始化投诉类型
-    private void initComplainType(){
-        RequestParam requestParam=new RequestParam(BASE_URL+"work/complaintType/pageByCondition",HttpMethod.Get);
-        Map<String,String> map=new HashMap<>();
-        map.put("pageNo","1");
-        map.put("pageSize","100");
-        requestParam.setRequestMap(map);
-        requestParam.setCallback(new MyCallBack<String>(){
-            @Override
-            public void onSuccess(String result) {
-                super.onSuccess(result);
-                LogUtils.d("result",result);
-                BaseEntity<OrderTypeListEntity> baseEntity= JsonParse.parse(result,OrderTypeListEntity.class);
-                if(baseEntity.isSuccess()){
-                    SharedPreferencesManage.setComplainType(baseEntity.getResult().getData());
-                    checkInitStatus(1);
-                }else{
-                    showToast(baseEntity.getMessage());
-                    checkInitStatus(0);
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                super.onError(ex, isOnCallback);
-                showToast(ex.getMessage());
-                checkInitStatus(0);
-            }
-        });
-        sendRequest(requestParam,false);
-    }
-    //初始化投诉状态
-    private void initComplainStatus(){
-        RequestParam requestParam=new RequestParam(BASE_URL+"work/complaintStatus/complaintStatusList",HttpMethod.Get);
-        requestParam.setCallback(new MyCallBack<String>(){
-            @Override
-            public void onSuccess(String result) {
-                super.onSuccess(result);
-                LogUtils.d("result",result);
-                Type type = new TypeToken<List<OrderStatusEntity>>() {}.getType();
-                BaseEntity<List<OrderStatusEntity>> baseEntity=JsonParse.parse(result,type);
-                if(baseEntity.isSuccess()){
-                    SharedPreferencesManage.setComplainStatus(baseEntity.getResult());
-                    checkInitStatus(1);
-                }else{
-                    showToast(baseEntity.getMessage());
-                    checkInitStatus(0);
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                super.onError(ex, isOnCallback);
-                showToast(ex.getMessage());
-                checkInitStatus(0);
-            }
-        });
-        sendRequest(requestParam,false);
-    }
-    //初始化员工
-    private void initUserData(){
-        RequestParam requestParam=new RequestParam(BASE_URL+"sys/user/list",HttpMethod.Get);
-        Map<String,String> requestMap=new HashMap<>();
-        requestMap.put("pageNo","1");
-        requestMap.put("pageSize","100");
-        requestParam.setRequestMap(requestMap);
-        requestParam.setCallback(new MyCallBack<String>(){
-            @Override
-            public void onSuccess(String result) {
-                super.onSuccess(result);
-                LogUtils.d("result",result);
-                BaseEntity<UserListEntity> baseEntity= JsonParse.parse(result,UserListEntity.class);
-                if(baseEntity.isSuccess()){
-                    SharedPreferencesManage.setUserList(baseEntity.getResult().getData());
-                    checkInitStatus(1);
-                }else{
-                    showToast(baseEntity.getMessage());
-                    checkInitStatus(0);
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                super.onError(ex, isOnCallback);
-                showToast(ex.getMessage());
-                checkInitStatus(0);
             }
         });
         sendRequest(requestParam,false);

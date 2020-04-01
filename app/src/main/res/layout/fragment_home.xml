@@ -94,8 +94,8 @@
             android:paddingTop="@dimen/dp_18"
             android:text="@string/txt_inspect"
             android:textColor="@color/text_primary"
-            android:visibility="gone"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"/>
         <TextView
             android:id="@+id/home_tv_task"
             android:layout_width="0dp"
@@ -108,7 +108,8 @@
             android:paddingTop="@dimen/dp_18"
             android:text="@string/txt_task"
             android:textColor="@color/text_primary"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_14"
+            android:visibility="invisible"/>
     </LinearLayout>
 
     <com.chanfinecloud.cflforemployee.weidgt.easyindicator.EasyIndicator

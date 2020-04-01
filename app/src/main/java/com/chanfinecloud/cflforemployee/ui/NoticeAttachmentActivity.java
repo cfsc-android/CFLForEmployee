@@ -48,6 +48,7 @@ public class NoticeAttachmentActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        toolbar_title.setText("附件");
         data= (List<ResourceEntity>) getIntent().getExtras().getSerializable("resourceList");
         adapter=new AttachmentListAdapter(data);
         notice_attachment_rlv.setLayoutManager(new LinearLayoutManager(this));
@@ -61,6 +62,12 @@ public class NoticeAttachmentActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 下载附件
+     * @param url 文件地址
+     * @param path 文件下载保存路径
+     * @param type 文件的类型
+     */
     private void downloadAttachment(String url, String path, final String type){
         String _Path = FilePathUtil.createPathIfNotExist("/" + SD_APP_DIR_NAME + "/" + File_DIR_NAME);
         final File file = new File(_Path+"/"+path);
@@ -93,7 +100,11 @@ public class NoticeAttachmentActivity extends BaseActivity {
 
     }
 
-
+    /**
+     * 打开文件
+     * @param file 文件
+     * @param type 文件类型
+     */
     private void openFile(File file,String type){
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//设置标记

@@ -24,6 +24,8 @@ import com.chanfinecloud.cflforemployee.http.RequestParam;
 import com.chanfinecloud.cflforemployee.weidgt.RecyclerViewDivider;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -40,6 +42,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.WORKORDER;
 
 /**
  * Created by Loong on 2020/2/12.
@@ -99,6 +102,8 @@ public class HomeTodoFragment extends BaseFragment {
             }
         });
 
+        home_todo_srl.setPrimaryColorsId(R.color.view_background,R.color.text_primary);
+        home_todo_srl.setRefreshHeader(new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate));
         home_todo_srl.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
@@ -118,8 +123,11 @@ public class HomeTodoFragment extends BaseFragment {
         getData();
     }
 
+    /**
+     * 获取待办数据
+     */
     private void getData(){
-        RequestParam requestParam=new RequestParam(BASE_URL+"workflow/api/todo",HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+WORKORDER+"workflow/api/todo",HttpMethod.Get);
         Map<String,String> map=new HashMap<>();
         map.put("pageNo","1");
         map.put("pageSize","20");

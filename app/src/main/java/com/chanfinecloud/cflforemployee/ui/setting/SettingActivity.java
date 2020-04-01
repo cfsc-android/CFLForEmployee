@@ -36,8 +36,13 @@ import java.util.Map;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+
+import cn.jpush.android.api.JPushInterface;
+
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.chanfinecloud.cflforemployee.config.Config.CLEAR_JPUSH_TAGS_SEQUENCE;
+import static com.chanfinecloud.cflforemployee.config.Config.DELETE_JPUSH_ALIAS_SEQUENCE;
 
 @ContentView(R.layout.activity_settting)
 public class SettingActivity extends BaseActivity {
@@ -111,10 +116,6 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.ll_setting_about:
                 startActivity(SettingAboutActivity.class);
-//                Bundle a_bundle=new Bundle();
-//                a_bundle.putString("title","关于长房里");
-//                a_bundle.putString("url",Constants.BASEHOST+"upload/notice_html/html/20190509/194402.html");
-//                openActivity(NewsInfoActivity.class,a_bundle);
                 break;
         }
     }
@@ -168,6 +169,10 @@ public class SettingActivity extends BaseActivity {
 
     }
 
+    /**
+     * 第三方绑定
+     * @param shareMedia SHARE_MEDIA
+     */
     private void thirdUnBind(SHARE_MEDIA shareMedia){
         UMShareAPI.get(SettingActivity.this).deleteOauth(SettingActivity.this, shareMedia, new UMAuthListener() {
             @Override
@@ -194,6 +199,9 @@ public class SettingActivity extends BaseActivity {
     }
 
 
+    /**
+     * 退出登录
+     */
     private void loginOut(){
 //        FileManagement.setLoginType("");
 //        FileManagement.setWXLogin(new WeiXinLoginEntity());
@@ -205,6 +213,8 @@ public class SettingActivity extends BaseActivity {
 //        FileManagement.saveJpushTags("");
 //        JPushInterface.setAliasAndTags(getApplicationContext(), "", null, null);
         //暂时隐藏---------------------------------------------------------
+        JPushInterface.deleteAlias(this,DELETE_JPUSH_ALIAS_SEQUENCE);
+        JPushInterface.cleanTags(this,CLEAR_JPUSH_TAGS_SEQUENCE);
         TokenEntity tokenEntity= SharedPreferencesManage.getToken();
         tokenEntity.setExpires_in(0);
         SharedPreferencesManage.setToken(tokenEntity);
@@ -329,7 +339,7 @@ public class SettingActivity extends BaseActivity {
     }
     /**
      * 下载最新版进度
-     * @param progress
+     * @param progress int 下载进度
      */
     private void initProgressDialog(int progress){
         if(progressDialog==null){
@@ -349,6 +359,10 @@ public class SettingActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 退出动画
+     * @return AlphaAnimation
+     */
     private AlphaAnimation alphaAnimation(){
         AlphaAnimation animation=new AlphaAnimation(0,1);
         animation.setDuration(300);
