@@ -80,6 +80,7 @@ public class LoginActivity extends BaseActivity {
         params.put("client_secret","webApp");
         params.put("grant_type","password");
         params.put("validCode","b2bd");
+
         requestParam.setRequestMap(params);
         requestParam.setAuthorization(false);
         requestParam.setCallback(new MyCallBack<String>(){
@@ -130,6 +131,7 @@ public class LoginActivity extends BaseActivity {
             public void onError(Throwable ex, boolean isOnCallback) {
                 super.onError(ex, isOnCallback);
                 showToast(ex.getMessage());
+                stopProgressDialog();
                 startActivity(LoginActivity.class);
             }
         });
@@ -165,6 +167,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onFinished() {
                 super.onFinished();
+                stopProgressDialog();
                 startActivity(MainActivity.class);
             }
         });

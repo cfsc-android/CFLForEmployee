@@ -70,6 +70,8 @@ public class PersonActivity extends BaseActivity {
     private TextView person_tv_birth;
     @ViewInject(R.id.person_iv_avatar)
     private ImageView person_iv_avatar;
+    @ViewInject(R.id.person_tv_tel)
+    private TextView person_tv_tel;
     private BirthWheelDialog wheelDialog;
 
     private int sex;
@@ -97,6 +99,7 @@ public class PersonActivity extends BaseActivity {
         person_tv_name.setText(userInfo.getRealName());
         person_tv_depart.setText(userInfo.getDepartName());
         person_tv_no.setText(userInfo.getWorkNo());
+        person_tv_tel.setText(userInfo.getPhone());
         sex = userInfo.getGender();
         if (sex == 0){
             person_tv_gender.setText("男");
@@ -120,7 +123,7 @@ public class PersonActivity extends BaseActivity {
         }
     }
 
-    @Event({R.id.toolbar_btn_back,R.id.person_ll_gender,R.id.person_ll_birth,R.id.person_iv_avatar})
+    @Event({R.id.toolbar_btn_back,R.id.person_ll_gender,R.id.person_ll_birth,R.id.person_iv_avatar,R.id.person_ll_tel})
     private void onClickEvent(View v){
         switch (v.getId()){
             case R.id.toolbar_btn_back:
@@ -152,6 +155,9 @@ public class PersonActivity extends BaseActivity {
                 }else{
                     showToast("相机或读写手机存储的权限被禁止！");
                 }
+                break;
+            case R.id.person_ll_tel:
+                startActivity(PersonPhoneActivity.class);
                 break;
         }
     }
@@ -265,40 +271,6 @@ public class PersonActivity extends BaseActivity {
             public void onFinished() {
                 super.onFinished();
                 stopProgressDialog();
-            }
-        });
-        sendRequest(requestParam,false);
-    }
-    /**
-     * 缓存用户头像信息
-     */
-    private void initAvatarResource(){
-        final UserInfoEntity userInfo=SharedPreferencesManage.getUserInfo();
-        RequestParam requestParam=new RequestParam(BASE_URL+FILE+"files/byid/"+userInfo.getAvatarId(), HttpMethod.Get);
-        requestParam.setCallback(new MyCallBack<String>(){
-            @Override
-            public void onSuccess(String result) {
-                super.onSuccess(result);
-                LogUtils.d("result",result);
-                BaseEntity<FileEntity> baseEntity= JsonParse.parse(result,FileEntity.class);
-                if(baseEntity.isSuccess()){
-                    ResourceEntity resourceEntity=new ResourceEntity();
-                    resourceEntity.setId(baseEntity.getResult().getId());
-                    resourceEntity.setContentType(baseEntity.getResult().getContentType());
-                    resourceEntity.setCreateTime(baseEntity.getResult().getCreateTime());
-                    resourceEntity.setName(baseEntity.getResult().getName());
-                    resourceEntity.setUrl(baseEntity.getResult().getDomain()+baseEntity.getResult().getUrl());
-                    userInfo.setAvatarResource(resourceEntity);
-                    SharedPreferencesManage.setUserInfo(userInfo);//缓存用户信息
-                }else{
-                    showToast(baseEntity.getMessage());
-                }
-            }
-
-            @Override
-            public void onFinished() {
-                super.onFinished();
-                startActivity(MainActivity.class);
             }
         });
         sendRequest(requestParam,false);

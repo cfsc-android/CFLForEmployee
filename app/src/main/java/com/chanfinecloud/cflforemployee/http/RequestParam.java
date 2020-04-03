@@ -24,6 +24,7 @@ public class RequestParam<T> implements Serializable {
     private HttpMethod method;
     private ParamType paramType;
     private Map<String, Object> requestMap;
+    private Map<String,String> paramHeader;
     private boolean authorization;
     private String filepath;
     private Callback.CommonCallback<T> callback;
@@ -93,5 +94,13 @@ public class RequestParam<T> implements Serializable {
 
     public void setCallback(Callback.CommonCallback<T> callback) {
         this.callback = callback;
+    }
+
+    public Map<String, String> getParamHeader() {
+        return paramHeader;
+    }
+
+    public void setParamHeader(Map<String, String> paramHeader) {
+        this.paramHeader = paramHeader;
     }
 }
