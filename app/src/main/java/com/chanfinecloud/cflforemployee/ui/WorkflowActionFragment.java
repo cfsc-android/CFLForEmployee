@@ -525,6 +525,12 @@ public class WorkflowActionFragment extends BaseFragment {
                             super.onAnimationStart(animation, isReverse);
                             AnimationUtil.startRotateAnimation(workflow_action_toggle_icon,180,0,200);
                         }
+
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+                            super.onAnimationStart(animation);
+                            AnimationUtil.startRotateAnimation(workflow_action_toggle_icon,180,0,200);
+                        }
                     });
                 }else{
                     AnimationUtil.startTransYAnimation(workflow_action_content,0,workflow_action_content.getMeasuredHeight(),200,new AnimationUtil.AnimationListener(){
@@ -536,8 +542,20 @@ public class WorkflowActionFragment extends BaseFragment {
                         }
 
                         @Override
+                        public void onAnimationStart(Animator animation) {
+                            super.onAnimationStart(animation);
+                            AnimationUtil.startRotateAnimation(workflow_action_toggle_icon,0,180,200);
+                        }
+
+                        @Override
                         public void onAnimationEnd(Animator animation, boolean isReverse) {
                             super.onAnimationEnd(animation, isReverse);
+                            workflow_action_content.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
                             workflow_action_content.setVisibility(View.GONE);
                         }
                     });
