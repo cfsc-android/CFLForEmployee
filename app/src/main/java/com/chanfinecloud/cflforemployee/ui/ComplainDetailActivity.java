@@ -182,9 +182,9 @@ public class ComplainDetailActivity extends BaseActivity {
                 BaseEntity<ComplainDetailsEntity> baseEntity= JsonParse.parse(result,ComplainDetailsEntity.class);
                 if(baseEntity.isSuccess()){
                     initView(baseEntity.getResult());
+                    initAction(baseEntity.getResult());
                     List<WorkflowProcessesEntity> workflowList=baseEntity.getResult().getProcesses();
                     WorkflowProcessesEntity lastWorkflow=workflowList.get(workflowList.size()-1);
-                    initAction(lastWorkflow);
                     if(lastWorkflow.getOperationInfos()!=null&&lastWorkflow.getOperationInfos().size()>0){
                         workflowList.remove(workflowList.size()-1);
                     }
@@ -363,9 +363,11 @@ public class ComplainDetailActivity extends BaseActivity {
     }
     /**
      * 初始化流程处理视图
-     * @param lastWorkflow 最新流程处理
+     * @param complainDetailsEntity ComplainDetailsEntity流程实体
      */
-    private void initAction(WorkflowProcessesEntity lastWorkflow){
+    private void initAction(ComplainDetailsEntity complainDetailsEntity){
+        List<WorkflowProcessesEntity> workflowList=complainDetailsEntity.getProcesses();
+        WorkflowProcessesEntity lastWorkflow=workflowList.get(workflowList.size()-1);
         FragmentTransaction transaction=fragmentManager.beginTransaction();
         List<String> departIds=SharedPreferencesManage.getUserInfo().getDepartId();
         String departIdStr="";
@@ -382,7 +384,8 @@ public class ComplainDetailActivity extends BaseActivity {
             bundle.putString("businessId", complainId);
             bundle.putString("action", lastWorkflow.getNodeName());
             bundle.putSerializable("workflowType", WorkflowType.Complain);
-            bundle.putSerializable("operationInfos", (Serializable) lastWorkflow.getOperationInfos());
+            bundle.putSerializable("workflowProcesses", lastWorkflow);
+            bundle.putSerializable("complainDetail", complainDetailsEntity);
             if(workflowActionFragment !=null){
                 workflowActionFragment =new WorkflowActionFragment().newInstance(bundle);
                 transaction.replace(R.id.complain_detail_workflow_action_fl, workflowActionFragment).commit();

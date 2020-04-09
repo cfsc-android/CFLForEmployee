@@ -72,12 +72,20 @@ public class SharedPreferencesManage {
         return (UserInfoEntity) SharedPreferencesUtil.getInstance().getObject(CFLApplication.getAppContext(),"cfl","UserInfo");
     }
 
-    public static void setUserList(List<UserEntity> userList){
-        SharedPreferencesUtil.getInstance().saveObject(CFLApplication.getAppContext(),"cfl","UserList",userList);
+    public static void setDirectorList(List<UserEntity> userList){
+        SharedPreferencesUtil.getInstance().saveObject(CFLApplication.getAppContext(),"cfl","Director",userList);
     }
-    public static List<UserEntity> getUserList(){
-        return (List<UserEntity>) SharedPreferencesUtil.getInstance().getObject(CFLApplication.getAppContext(),"cfl","UserList");
+    public static List<UserEntity> getDirectorList(){
+        return (List<UserEntity>) SharedPreferencesUtil.getInstance().getObject(CFLApplication.getAppContext(),"cfl","Director");
     }
+
+    public static void setEmployeeList(List<UserEntity> userList){
+        SharedPreferencesUtil.getInstance().saveObject(CFLApplication.getAppContext(),"cfl","Employee",userList);
+    }
+    public static List<UserEntity> getEmployeeList(){
+        return (List<UserEntity>) SharedPreferencesUtil.getInstance().getObject(CFLApplication.getAppContext(),"cfl","Employee");
+    }
+
 
     public static void setPushFlag(boolean flag){
         SharedPreferencesUtil.getInstance().saveBooleanValue(CFLApplication.getAppContext(),"cfl","PushFlag",flag);

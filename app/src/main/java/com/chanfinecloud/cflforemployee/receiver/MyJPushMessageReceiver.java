@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.chanfinecloud.cflforemployee.CFLApplication;
+import com.chanfinecloud.cflforemployee.entity.EventBusMessage;
 import com.chanfinecloud.cflforemployee.entity.NoticePushEntity;
 import com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity;
 import com.chanfinecloud.cflforemployee.ui.NoticeDetailActivity;
@@ -14,12 +15,16 @@ import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
 import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
+
 import cn.jpush.android.api.CmdMessage;
 import cn.jpush.android.api.CustomMessage;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.JPushMessage;
 import cn.jpush.android.api.NotificationMessage;
 import cn.jpush.android.service.JPushMessageReceiver;
+
+import static com.chanfinecloud.cflforemployee.config.Config.CLEAR_JPUSH_TAGS_SEQUENCE;
 
 /**
  * Created by Loong on 2020/3/26.
@@ -70,8 +75,6 @@ public class MyJPushMessageReceiver extends JPushMessageReceiver {
             bundle.putString("complain_id",noticePush.getBusinessId());
             intent.putExtras(bundle);
             context.startActivity(intent);
-        }else if("4".equals(noticePush.getType())){
-
         }
     }
 
@@ -120,6 +123,7 @@ public class MyJPushMessageReceiver extends JPushMessageReceiver {
         super.onTagOperatorResult(context, jPushMessage);
         //设置标签回调
         LogUtils.d("onTagOperatorResult:"+jPushMessage.toString());
+        //设置不成功就继续设置
         if(jPushMessage.getErrorCode()!=0){
             JPushInterface.setTags(CFLApplication.getAppContext(),jPushMessage.getSequence(),jPushMessage.getTags());
         }

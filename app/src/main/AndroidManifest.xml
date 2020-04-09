@@ -32,10 +32,10 @@
         <activity android:name=".ui.WorkflowListActivity" />
         <activity android:name=".ui.NoticeAttachmentActivity" />
         <activity android:name=".ui.NoticeDetailActivity" />
-        <activity android:name=".ui.ComplainDetailActivity" />
+        <activity android:name=".ui.ComplainDetailActivity" android:launchMode="singleTask"/>
         <activity android:name=".ui.WorkflowStepActivity" />
         <activity android:name=".ui.AddOrderActivity" />
-        <activity android:name=".ui.OrderDetailActivity" />
+        <activity android:name=".ui.OrderDetailActivity" android:launchMode="singleTask"/>
         <activity android:name=".ui.NoticeActivity" />
         <activity android:name=".ui.AttendanceActivity" />
         <activity android:name=".ui.PersonActivity" />

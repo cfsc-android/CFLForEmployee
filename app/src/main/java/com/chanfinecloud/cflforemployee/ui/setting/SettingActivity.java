@@ -218,8 +218,12 @@ public class SettingActivity extends BaseActivity {
         TokenEntity tokenEntity= SharedPreferencesManage.getToken();
         tokenEntity.setExpires_in(0);
         SharedPreferencesManage.setToken(tokenEntity);
-        LynActivityManager.getInstance().removeAllActivity();
-        startActivity(LoginActivity.class);
+        if(LynActivityManager.getInstance().getActivityByClass(LoginActivity.class)!=null){
+            LynActivityManager.getInstance().popAllActivityExceptOne(LoginActivity.class);
+        }else{
+            LynActivityManager.getInstance().removeAllActivity();
+            startActivity(LoginActivity.class);
+        }
     }
 
     /**

@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_20"
         android:textSize="@dimen/sp_14"
-        android:textColor="@color/text_primary"
-        android:background="@drawable/bg_box_desc_shape"/>
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textColor="@color/text_primary"/>
 
 </LinearLayout>

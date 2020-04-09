@@ -188,9 +188,9 @@ public class OrderDetailActivity extends BaseActivity {
                 BaseEntity<OrderDetailsEntity> baseEntity= JsonParse.parse(result,OrderDetailsEntity.class);
                 if(baseEntity.isSuccess()){
                     initView(baseEntity.getResult());
+                    initAction(baseEntity.getResult());
                     List<WorkflowProcessesEntity> workflowList=baseEntity.getResult().getProcesses();
                     WorkflowProcessesEntity lastWorkflow=workflowList.get(workflowList.size()-1);
-                    initAction(lastWorkflow);
                     if(lastWorkflow.getOperationInfos()!=null&&lastWorkflow.getOperationInfos().size()>0){
                         workflowList.remove(workflowList.size()-1);
                     }
@@ -375,9 +375,11 @@ public class OrderDetailActivity extends BaseActivity {
 
     /**
      * 初始化流程处理视图
-     * @param lastWorkflow 最新流程处理
+     * @param orderDetailsEntity OrderDetailsEntity流程实体
      */
-    private void initAction(WorkflowProcessesEntity lastWorkflow){
+    private void initAction(OrderDetailsEntity orderDetailsEntity){
+        List<WorkflowProcessesEntity> workflowList=orderDetailsEntity.getProcesses();
+        WorkflowProcessesEntity lastWorkflow=workflowList.get(workflowList.size()-1);
         FragmentTransaction transaction=fragmentManager.beginTransaction();
         List<String> departIds=SharedPreferencesManage.getUserInfo().getDepartId();
         String departIdStr="";
@@ -394,7 +396,8 @@ public class OrderDetailActivity extends BaseActivity {
             bundle.putString("businessId", orderId);
             bundle.putString("action", lastWorkflow.getNodeName());
             bundle.putSerializable("workflowType", WorkflowType.Order);
-            bundle.putSerializable("operationInfos", (Serializable) lastWorkflow.getOperationInfos());
+            bundle.putSerializable("workflowProcesses", lastWorkflow);
+            bundle.putSerializable("orderDetail", orderDetailsEntity);
             if(workflowActionFragment !=null){
                 workflowActionFragment =new WorkflowActionFragment().newInstance(bundle);
                 transaction.replace(R.id.order_detail_workflow_action_fl, workflowActionFragment).commit();

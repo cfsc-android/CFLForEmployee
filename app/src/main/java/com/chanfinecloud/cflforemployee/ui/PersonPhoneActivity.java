@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.chanfinecloud.cflforemployee.R;
 import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
-import com.chanfinecloud.cflforemployee.weidgt.photopicker.PhotoPicker;
-import com.chanfinecloud.cflforemployee.weidgt.wheelview.BirthWheelDialog;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;

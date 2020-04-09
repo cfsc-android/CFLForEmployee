@@ -16,6 +16,7 @@ import com.chanfinecloud.cflforemployee.R;
 import com.chanfinecloud.cflforemployee.entity.BaseEntity;
 import com.chanfinecloud.cflforemployee.entity.OrderStatusEntity;
 import com.chanfinecloud.cflforemployee.entity.OrderTypeListEntity;
+import com.chanfinecloud.cflforemployee.entity.UserEntity;
 import com.chanfinecloud.cflforemployee.entity.UserListEntity;
 import com.chanfinecloud.cflforemployee.http.HttpMethod;
 import com.chanfinecloud.cflforemployee.http.JsonParse;
@@ -38,6 +39,7 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.HashMap;
@@ -55,6 +57,7 @@ import cn.jpush.android.api.JPushInterface;
 import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
 import static com.chanfinecloud.cflforemployee.config.Config.SET_JPUSH_ALIAS_SEQUENCE;
 import static com.chanfinecloud.cflforemployee.config.Config.SET_JPUSH_TAGS_SEQUENCE;
+import static com.chanfinecloud.cflforemployee.config.Config.USER;
 import static com.chanfinecloud.cflforemployee.config.Config.WORKORDER;
 import static com.chanfinecloud.cflforemployee.util.SharedPreferencesManage.getUserInfo;
 
@@ -99,7 +102,8 @@ public class MainActivity extends BaseActivity {
         initOrderStatus();
         initComplainType();
         initComplainStatus();
-        initUserData();
+        initEmployeeData();
+        initDirectorData();
     }
     /**
      * 初始化工单类型
@@ -219,22 +223,19 @@ public class MainActivity extends BaseActivity {
         sendRequest(requestParam,false);
     }
     /**
-     * 初始化员工
+     * 初始化主管
      */
-    private void initUserData(){
-        RequestParam requestParam=new RequestParam(BASE_URL+WORKORDER+"sys/user/list",HttpMethod.Get);
-        Map<String,String> requestMap=new HashMap<>();
-        requestMap.put("pageNo","1");
-        requestMap.put("pageSize","100");
-        requestParam.setRequestMap(requestMap);
+    private void initDirectorData(){
+        RequestParam requestParam=new RequestParam(BASE_URL+USER+"sys/user/departSupervisor",HttpMethod.Get);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {
                 super.onSuccess(result);
                 LogUtils.d("result",result);
-                BaseEntity<UserListEntity> baseEntity= JsonParse.parse(result,UserListEntity.class);
+                Type type = new TypeToken<List<UserEntity>>() {}.getType();
+                BaseEntity<List<UserEntity>> baseEntity=JsonParse.parse(result,type);
                 if(baseEntity.isSuccess()){
-                    SharedPreferencesManage.setUserList(baseEntity.getResult().getData());
+                    SharedPreferencesManage.setDirectorList(baseEntity.getResult());
                 }else{
                     showToast(baseEntity.getMessage());
                 }
@@ -250,27 +251,49 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
+     * 初始化员工
+     */
+    private void initEmployeeData(){
+        RequestParam requestParam=new RequestParam(BASE_URL+USER+"sys/user/departStaff",HttpMethod.Get);
+        Map<String,Object> map=new HashMap<>();
+        StringBuilder departIds=new StringBuilder();
+        List<String> list =SharedPreferencesManage.getUserInfo().getDepartId();
+        for (int i = 0; i < list.size(); i++) {
+            if(i!=0){
+                departIds.append(",");
+            }
+            departIds.append(list.get(i));
+        }
+        map.put("departIds",departIds.toString());
+        requestParam.setRequestMap(map);
+        requestParam.setCallback(new MyCallBack<String>(){
+            @Override
+            public void onSuccess(String result) {
+                super.onSuccess(result);
+                LogUtils.d("result",result);
+                Type type = new TypeToken<List<UserEntity>>() {}.getType();
+                BaseEntity<List<UserEntity>> baseEntity=JsonParse.parse(result,type);
+                if(baseEntity.isSuccess()){
+                    SharedPreferencesManage.setDirectorList(baseEntity.getResult());
+                }else{
+                    showToast(baseEntity.getMessage());
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                super.onError(ex, isOnCallback);
+                showToast(ex.getMessage());
+            }
+        });
+        sendRequest(requestParam,false);
+    }
+
+
+    /**
      * 设置极光推送的alias（别名）和tag(标签)
      */
     private void setAliasAndTag(){
-        if(!SharedPreferencesManage.getNotificationFlag()){
-            new AlertDialog.Builder(MainActivity.this)
-                    .setTitle("通知权限")
-                    .setMessage("应用通知权限关闭，去开启")
-                    .setCancelable(false)
-                    .setNegativeButton("去开启",new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            JPushInterface.goToAppNotificationSettings(CFLApplication.getAppContext());
-                        }
-                    }).
-                    setNeutralButton("下次再说", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).show();
-        }
         if(SharedPreferencesManage.getPushFlag()){
             JPushInterface.setAlias(this,SET_JPUSH_ALIAS_SEQUENCE, getUserInfo().getId());
             Set<String> tagSet = new LinkedHashSet<>();

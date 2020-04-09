@@ -9,7 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.chanfinecloud.cflforemployee.CFLApplication;
 import com.chanfinecloud.cflforemployee.R;
+import com.chanfinecloud.cflforemployee.ui.MainActivity;
 import com.chanfinecloud.cflforemployee.ui.base.BaseActivity;
 import com.chanfinecloud.cflforemployee.util.DataCleanManager;
 import com.chanfinecloud.cflforemployee.util.FileSizeUtil;
@@ -43,6 +45,24 @@ public class SettingDetailActivity extends BaseActivity {
         String type=getIntent().getExtras().getString("type");
         if("0".equals(type)){
             ll_setting_detail_notice.setVisibility(VISIBLE);
+            if(!SharedPreferencesManage.getNotificationFlag()){
+                new AlertDialog.Builder(SettingDetailActivity.this)
+                        .setTitle("通知权限")
+                        .setMessage("应用通知权限关闭，去开启")
+                        .setCancelable(false)
+                        .setNegativeButton("去开启",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                JPushInterface.goToAppNotificationSettings(CFLApplication.getAppContext());
+                            }
+                        }).
+                        setNeutralButton("下次再说", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).show();
+            }
         }else if("1".equals(type)){
             ll_setting_detail_cache.setVisibility(VISIBLE);
         }
