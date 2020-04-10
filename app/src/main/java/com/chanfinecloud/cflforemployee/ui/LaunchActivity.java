@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.chanfinecloud.cflforemployee.R;
 import com.chanfinecloud.cflforemployee.entity.BaseEntity;
 import com.chanfinecloud.cflforemployee.entity.FileEntity;
+import com.chanfinecloud.cflforemployee.entity.LoginEntity;
 import com.chanfinecloud.cflforemployee.entity.ResourceEntity;
 import com.chanfinecloud.cflforemployee.entity.TokenEntity;
 import com.chanfinecloud.cflforemployee.entity.UserInfoEntity;
@@ -35,9 +36,12 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.io.File;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.Nullable;
 
+import static com.chanfinecloud.cflforemployee.config.Config.AUTH;
 import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
 import static com.chanfinecloud.cflforemployee.config.Config.FILE;
 import static com.chanfinecloud.cflforemployee.config.Config.USER;
@@ -190,7 +194,7 @@ public class LaunchActivity extends BaseActivity {
             LogUtils.d(token.getAccess_token());
             long time=new Date().getTime()/1000 - token.getInit_time();
             if(token.getExpires_in()-time>3){
-                getUserInfo();
+                refreshToken();
             }else{
                 startActivity(LoginActivity.class);
                 finish();
@@ -200,6 +204,33 @@ public class LaunchActivity extends BaseActivity {
             finish();
         }
     }
+
+    private void refreshToken(){
+        RequestParam requestParam=new RequestParam(BASE_URL+AUTH+"oauth/refresh/token",HttpMethod.Post);
+        Map<String,Object> map=new HashMap<>();
+        map.put("access_token",SharedPreferencesManage.getToken().getAccess_token());
+        requestParam.setRequestMap(map);
+        requestParam.setCallback(new MyCallBack<String>(){
+            @Override
+            public void onSuccess(String result) {
+                super.onSuccess(result);
+                LogUtils.d("result",result);
+                Gson gson = new Gson();
+                TokenEntity token=gson.fromJson(result,TokenEntity.class);
+                token.setInit_time(new Date().getTime()/1000);
+                SharedPreferencesManage.setToken(token);
+                getUserInfo();
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                super.onError(ex, isOnCallback);
+                startActivity(LoginActivity.class);
+            }
+        });
+        sendRequest(requestParam,false);
+    }
+
     /**
      * 获取用户信息
      */
@@ -223,7 +254,6 @@ public class LaunchActivity extends BaseActivity {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 super.onError(ex, isOnCallback);
-                showToast(ex.getMessage());
                 startActivity(LoginActivity.class);
             }
         });

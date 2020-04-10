@@ -160,29 +160,35 @@ public class WorkflowActionFragment extends BaseFragment {
         MaterialSpinner spinner=v.findViewById(R.id.action_spinner_spinner);
         List<String> adapterData=new ArrayList<>();
         if(type.equals("director")){
-            for (int i = 0; i < directorList.size(); i++) {
-                adapterData.add(directorList.get(i).getRealName());
-            }
-            spinner.setItems(adapterData);
-            spinner.setTag(directorList.get(0).getId());
-            spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                    view.setTag(directorList.get(position).getId());
+            if(directorList!=null&&directorList.size()>0){
+                for (int i = 0; i < directorList.size(); i++) {
+                    adapterData.add(directorList.get(i).getRealName());
                 }
-            });
+                spinner.setItems(adapterData);
+                spinner.setTag(directorList.get(0).getId());
+                spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                        view.setTag(directorList.get(position).getId());
+                    }
+                });
+            }
+
         }else if(type.equals("employee")){
-            for (int i = 0; i < employeeList.size(); i++) {
-                adapterData.add(employeeList.get(i).getRealName());
-            }
-            spinner.setItems(adapterData);
-            spinner.setTag(employeeList.get(0).getId());
-            spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                    view.setTag(employeeList.get(position).getId());
+            if(employeeList!=null&&employeeList.size()>0){
+                for (int i = 0; i < employeeList.size(); i++) {
+                    adapterData.add(employeeList.get(i).getRealName());
                 }
-            });
+                spinner.setItems(adapterData);
+                spinner.setTag(employeeList.get(0).getId());
+                spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                        view.setTag(employeeList.get(position).getId());
+                    }
+                });
+            }
+
         }else if(type.equals("emergency")){
             spinner.setItems(EmergencyLevelType.getEmergencyLevelTypeList());
             spinner.setTag(EmergencyLevelType.getEmergencyLevelTypeValue(0));

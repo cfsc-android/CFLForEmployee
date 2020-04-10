@@ -146,7 +146,7 @@ public class ComplainDetailActivity extends BaseActivity {
                 break;
             case R.id.toolbar_tv_action:
                 Bundle bundle=new Bundle();
-                bundle.putSerializable("complainWorkflowList", (Serializable) data);
+                bundle.putSerializable("workflowProcessesList", (Serializable) data);
                 startActivity(WorkflowStepActivity.class,bundle);
                 break;
         }
