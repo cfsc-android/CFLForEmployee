@@ -90,10 +90,6 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!-- 蒲公英APPKEY 必填 -->
-        <provider
-            android:name="com.pgyersdk.PgyerProvider"
-            android:authorities="${applicationId}.com.pgyer.provider"
-            android:exported="false"/>
         <meta-data
             android:name="PGYER_APPID"
             android:value="5ad70520da60c15641b86ce88cbe221c" />
@@ -126,7 +122,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.chanfinecloud.cflforemployee.fileprovider"
+            android:authorities="com.chanfinecloud.cflforemployee.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:authorities">

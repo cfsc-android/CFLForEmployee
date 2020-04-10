@@ -28,7 +28,7 @@ public class Config {
     public static final String WORKORDER=ENV.equals("debug")?"":"smart-workorder-ms/";//流程
     public static final String BASIC=ENV.equals("debug")?"":"smart-basic-ms/";//小区信息
 
-    public static final String PROVIDER_AUTHORITY="com.chanfinecloud.cflforemployee.fileprovider";//清单文件中provider的authorities属性的值
+    public static final String PROVIDER_AUTHORITY="com.chanfinecloud.cflforemployee.fileProvider";//清单文件中provider的authorities属性的值
     public static final String SD_APP_DIR_NAME = "CFL"; //存储程序在外部SD卡上的根目录的名字
     public static final String PHOTO_DIR_NAME = "photo";    //存储照片在根目录下的文件夹名字
     public static final String File_DIR_NAME = "file";    //存储文件在根目录下的文件夹名字

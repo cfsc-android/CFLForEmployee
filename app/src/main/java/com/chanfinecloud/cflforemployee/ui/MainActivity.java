@@ -258,35 +258,38 @@ public class MainActivity extends BaseActivity {
         Map<String,Object> map=new HashMap<>();
         StringBuilder departIds=new StringBuilder();
         List<String> list =SharedPreferencesManage.getUserInfo().getDepartId();
-        for (int i = 0; i < list.size(); i++) {
-            if(i!=0){
-                departIds.append(",");
-            }
-            departIds.append(list.get(i));
-        }
-        map.put("departIds",departIds.toString());
-        requestParam.setRequestMap(map);
-        requestParam.setCallback(new MyCallBack<String>(){
-            @Override
-            public void onSuccess(String result) {
-                super.onSuccess(result);
-                LogUtils.d("result",result);
-                Type type = new TypeToken<List<UserEntity>>() {}.getType();
-                BaseEntity<List<UserEntity>> baseEntity=JsonParse.parse(result,type);
-                if(baseEntity.isSuccess()){
-                    SharedPreferencesManage.setEmployeeList(baseEntity.getResult());
-                }else{
-                    showToast(baseEntity.getMessage());
+        if(list!=null&&list.size()>0){
+            for (int i = 0; i < list.size(); i++) {
+                if(i!=0){
+                    departIds.append(",");
                 }
+                departIds.append(list.get(i));
             }
+            map.put("departIds",departIds.toString());
+            requestParam.setRequestMap(map);
+            requestParam.setCallback(new MyCallBack<String>(){
+                @Override
+                public void onSuccess(String result) {
+                    super.onSuccess(result);
+                    LogUtils.d("result",result);
+                    Type type = new TypeToken<List<UserEntity>>() {}.getType();
+                    BaseEntity<List<UserEntity>> baseEntity=JsonParse.parse(result,type);
+                    if(baseEntity.isSuccess()){
+                        SharedPreferencesManage.setEmployeeList(baseEntity.getResult());
+                    }else{
+                        showToast(baseEntity.getMessage());
+                    }
+                }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                super.onError(ex, isOnCallback);
-                showToast(ex.getMessage());
-            }
-        });
-        sendRequest(requestParam,false);
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    super.onError(ex, isOnCallback);
+                    showToast(ex.getMessage());
+                }
+            });
+            sendRequest(requestParam,false);
+        }
+
     }
 
 
