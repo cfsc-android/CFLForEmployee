@@ -55,7 +55,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
@@ -150,6 +149,22 @@ public class ComplainDetailActivity extends BaseActivity {
                 startActivity(WorkflowStepActivity.class,bundle);
                 break;
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        LogUtils.d("onNewIntent:"+intent.getExtras().getString("complain_id"));
+        complainId=intent.getExtras().getString("complain_id");
+        getData();
+        resourceKey= UUID.randomUUID().toString().replaceAll("-","");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LogUtils.d("onStart");
+        getData();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

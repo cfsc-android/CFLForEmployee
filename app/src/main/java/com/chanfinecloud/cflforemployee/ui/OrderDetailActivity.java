@@ -127,7 +127,6 @@ public class OrderDetailActivity extends BaseActivity {
         toolbar_tv_action.setVisibility(View.VISIBLE);
         fragmentManager=getSupportFragmentManager();
         orderId=getIntent().getExtras().getString("order_id");
-        getData();
         mNoUnderlineSpan = new NoUnderlineSpan();
         EventBus.getDefault().register(this);
         resourceKey= UUID.randomUUID().toString().replaceAll("-","");
@@ -138,11 +137,6 @@ public class OrderDetailActivity extends BaseActivity {
                 getData();
             }
         });
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
     }
 
     @Event({R.id.toolbar_btn_back,R.id.toolbar_tv_action})
@@ -157,6 +151,22 @@ public class OrderDetailActivity extends BaseActivity {
                 startActivity(WorkflowStepActivity.class,bundle);
                 break;
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        LogUtils.d("onNewIntent:"+intent.getExtras().getString("order_id"));
+        orderId=intent.getExtras().getString("order_id");
+        getData();
+        resourceKey= UUID.randomUUID().toString().replaceAll("-","");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LogUtils.d("onStart");
+        getData();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
