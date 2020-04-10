@@ -97,8 +97,14 @@ public class HomeTodoFragment extends BaseFragment {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle=new Bundle();
-                bundle.putString("order_id",data.get(position).getId());
-                startActivity(OrderDetailActivity.class,bundle);
+                if(todoType==HomeTodoType.待处理工单.getType()){
+                    bundle.putString("order_id",data.get(position).getId());
+                    startActivity(OrderDetailActivity.class,bundle);
+                }else if(todoType==HomeTodoType.待处理投诉.getType()){
+                    bundle.putString("complain_id",data.get(position).getId());
+                    startActivity(ComplainDetailActivity.class,bundle);
+                }
+
             }
         });
 

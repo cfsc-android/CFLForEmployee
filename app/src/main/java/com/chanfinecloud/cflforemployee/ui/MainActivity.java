@@ -274,7 +274,7 @@ public class MainActivity extends BaseActivity {
                 Type type = new TypeToken<List<UserEntity>>() {}.getType();
                 BaseEntity<List<UserEntity>> baseEntity=JsonParse.parse(result,type);
                 if(baseEntity.isSuccess()){
-                    SharedPreferencesManage.setDirectorList(baseEntity.getResult());
+                    SharedPreferencesManage.setEmployeeList(baseEntity.getResult());
                 }else{
                     showToast(baseEntity.getMessage());
                 }
