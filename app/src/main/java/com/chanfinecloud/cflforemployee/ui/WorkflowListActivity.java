@@ -40,6 +40,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.WORKORDER;
 
 @ContentView(R.layout.activity_workflow_list)
 public class WorkflowListActivity extends BaseActivity {
@@ -114,13 +115,14 @@ public class WorkflowListActivity extends BaseActivity {
      * 获取列表数据
      */
     private void getData(){
-        RequestParam requestParam=new RequestParam(BASE_URL+"workflow/api/page",HttpMethod.Get);
+        RequestParam requestParam=new RequestParam(BASE_URL+WORKORDER+"workflow/api/page",HttpMethod.Get);
         Map<String,String> map=new HashMap<>();
         map.put("pageNo",page+"");
         map.put("pageSize",pageSize+"");
 //        map.put("isFinish", FinishStatusType.UnFinish.getType());
 //        map.put("projectId","");
         map.put("type",workflowType.getType());
+//        map.put("userType", UserType.Employee.getType()+"");
         requestParam.setRequestMap(map);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
