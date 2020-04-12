@@ -210,6 +210,7 @@ public class LaunchActivity extends BaseActivity {
         Map<String,Object> map=new HashMap<>();
         map.put("access_token",SharedPreferencesManage.getToken().getAccess_token());
         requestParam.setRequestMap(map);
+        requestParam.setAuthorization(false);
         requestParam.setCallback(new MyCallBack<String>(){
             @Override
             public void onSuccess(String result) {

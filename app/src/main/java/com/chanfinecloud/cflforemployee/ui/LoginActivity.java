@@ -124,6 +124,9 @@ public class LoginActivity extends BaseActivity {
                     initAvatarResource();
                 }else{
                     startActivity(MainActivity.class);
+                    stopProgressDialog();
+                    login_et_name.setText("");
+                    login_et_password.setText("");
                 }
             }
 
