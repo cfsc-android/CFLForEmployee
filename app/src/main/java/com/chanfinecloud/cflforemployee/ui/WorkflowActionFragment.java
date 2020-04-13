@@ -40,6 +40,7 @@ import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImageViewInfo;
 import com.chanfinecloud.cflforemployee.weidgt.photopicker.PhotoPicker;
+import com.chanfinecloud.cflforemployee.weidgt.wheelview.BirthWheelDialog;
 import com.chanfinecloud.cflforemployee.weidgt.wheelview.WheelDialog;
 import com.google.gson.Gson;
 import com.idlestar.ratingstar.RatingStarView;
@@ -109,7 +110,7 @@ public class WorkflowActionFragment extends BaseFragment {
     private List<WorkflowViewTagEntity> workflowViewTagList =new ArrayList<>();
 
 
-    private WheelDialog wheeldialog;
+    private BirthWheelDialog wheeldialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -218,7 +219,7 @@ public class WorkflowActionFragment extends BaseFragment {
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wheeldialog = new WheelDialog(context, R.style.Dialog_Floating, new WheelDialog.OnDateTimeConfirm() {
+                wheeldialog = new BirthWheelDialog(context, R.style.Dialog_Floating, new BirthWheelDialog.OnDateTimeConfirm() {
                     @Override
                     public void returnData(String dateText, String dateValue) {
                         wheeldialog.cancel();
@@ -493,7 +494,7 @@ public class WorkflowActionFragment extends BaseFragment {
                 map.put(workflowViewTag.getFormKey(),assignId.getTag().toString());
             }else if("pick_date".equals(workflowViewTag.getFormType())){
                 TextView date= (TextView) workflowViewTag.getWorkflowView().getContent();
-                map.put(workflowViewTag.getFormKey(),date.getTag().toString());
+                map.put(workflowViewTag.getFormKey(),date.getText().toString());
             }else if("rate".equals(workflowViewTag.getFormType())){
                 RatingStarView rate= (RatingStarView) workflowViewTag.getWorkflowView().getContent();
                 map.put(workflowViewTag.getFormKey(),rate.getRating());

@@ -112,6 +112,9 @@ public class ComplainDetailActivity extends BaseActivity {
     public static final int REQUEST_CODE_CHOOSE=0x002;
     public String resourceKey;
 
+    private List<ImageViewInfo> contentImageData = new ArrayList<>();
+    private ImagePreviewListAdapter contentImageAdapter;
+    private GridLayoutManager contentGridLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,16 +126,41 @@ public class ComplainDetailActivity extends BaseActivity {
         toolbar_tv_action.setVisibility(View.VISIBLE);
         fragmentManager=getSupportFragmentManager();
         complainId=getIntent().getExtras().getString("complain_id");
-        getData();
         mNoUnderlineSpan = new NoUnderlineSpan();
         EventBus.getDefault().register(this);
-
+        getData();
         resourceKey= UUID.randomUUID().toString().replaceAll("-","");
 
         complain_detail__srl.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
                 getData();
+            }
+        });
+
+        contentImageAdapter=new ImagePreviewListAdapter(this,R.layout.item_workflow_image_perview_list,contentImageData);
+        contentGridLayoutManager=new GridLayoutManager(this,4);
+        complain_detail_remark_rlv.setLayoutManager(contentGridLayoutManager);
+        complain_detail_remark_rlv.setAdapter(contentImageAdapter);
+        complain_detail_remark_rlv.addOnItemTouchListener(new com.chad.library.adapter.base.listener.OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                for (int k = contentGridLayoutManager.findFirstVisibleItemPosition(); k < adapter.getItemCount(); k++) {
+                    View itemView = contentGridLayoutManager.findViewByPosition(k);
+                    Rect bounds = new Rect();
+                    if (itemView != null) {
+                        ImageView imageView = itemView.findViewById(R.id.iiv_item_image_preview);
+                        imageView.getGlobalVisibleRect(bounds);
+                    }
+                    //计算返回的边界
+                    contentImageAdapter.getItem(k).setBounds(bounds);
+                }
+                PreviewBuilder.from(ComplainDetailActivity.this)
+                        .setImgs(contentImageData)
+                        .setCurrentIndex(position)
+                        .setSingleFling(true)
+                        .setType(PreviewBuilder.IndicatorType.Number)
+                        .start();
             }
         });
     }
@@ -164,7 +192,7 @@ public class ComplainDetailActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         LogUtils.d("onStart");
-        getData();
+//        getData();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -260,36 +288,12 @@ public class ComplainDetailActivity extends BaseActivity {
         complain_detail_remark_text.setText(complainEntity.getProblemDesc());
         complain_detail_remark_time.setText(complainEntity.getCreateTime());
         List<ResourceEntity> picData=complainEntity.getProblemResourceValue();
+        contentImageData.clear();
         if(picData!=null&&picData.size()>0) {
-            final List<ImageViewInfo> data = new ArrayList<>();
             for (int j = 0; j < picData.size(); j++) {
-                data.add(new ImageViewInfo(picData.get(j).getUrl()));
+                contentImageData.add(new ImageViewInfo(picData.get(j).getUrl()));
             }
-            final ImagePreviewListAdapter imageAdapter=new ImagePreviewListAdapter(this,R.layout.item_workflow_image_perview_list,data);
-            final GridLayoutManager mGridLayoutManager = new GridLayoutManager(this,4);
-            complain_detail_remark_rlv.setLayoutManager(mGridLayoutManager);
-            complain_detail_remark_rlv.setAdapter(imageAdapter);
-            complain_detail_remark_rlv.addOnItemTouchListener(new com.chad.library.adapter.base.listener.OnItemClickListener() {
-                @Override
-                public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    for (int k = mGridLayoutManager.findFirstVisibleItemPosition(); k < adapter.getItemCount(); k++) {
-                        View itemView = mGridLayoutManager.findViewByPosition(k);
-                        Rect bounds = new Rect();
-                        if (itemView != null) {
-                            ImageView imageView = itemView.findViewById(R.id.iiv_item_image_preview);
-                            imageView.getGlobalVisibleRect(bounds);
-                        }
-                        //计算返回的边界
-                        imageAdapter.getItem(k).setBounds(bounds);
-                    }
-                    PreviewBuilder.from(ComplainDetailActivity.this)
-                            .setImgs(data)
-                            .setCurrentIndex(position)
-                            .setSingleFling(true)
-                            .setType(PreviewBuilder.IndicatorType.Number)
-                            .start();
-                }
-            });
+            contentImageAdapter.notifyDataSetChanged();
         }
     }
     /**
@@ -337,7 +341,7 @@ public class ComplainDetailActivity extends BaseActivity {
                 item_workflow_content.setText(item.getRemark());
                 item_workflow_node.setText(item.getNodeName());
                 item_workflow_time.setText(item.getCreateTime());
-                List<ResourceEntity> picData=item.getResourceValues();
+                List<ResourceEntity> picData=item.getResourceValue();
                 if(picData!=null&&picData.size()>0){
                     final List<ImageViewInfo> data=new ArrayList<>();
                     for (int j = 0; j < picData.size(); j++) {

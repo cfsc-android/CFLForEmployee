@@ -117,6 +117,11 @@ public class OrderDetailActivity extends BaseActivity {
 
     public static final int REQUEST_CODE_CHOOSE=0x001;
     public String resourceKey;
+
+    private List<ImageViewInfo> contentImageData = new ArrayList<>();
+    private ImagePreviewListAdapter contentImageAdapter;
+    private GridLayoutManager contentGridLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         checkAppPermission();
@@ -135,6 +140,34 @@ public class OrderDetailActivity extends BaseActivity {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
                 getData();
+            }
+        });
+
+        getData();
+
+        contentImageAdapter=new ImagePreviewListAdapter(this,R.layout.item_workflow_image_perview_list,contentImageData);
+        contentGridLayoutManager=new GridLayoutManager(this,4);
+        order_detail_remark_rlv.setLayoutManager(contentGridLayoutManager);
+        order_detail_remark_rlv.setAdapter(contentImageAdapter);
+        order_detail_remark_rlv.addOnItemTouchListener(new com.chad.library.adapter.base.listener.OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                for (int k = contentGridLayoutManager.findFirstVisibleItemPosition(); k < adapter.getItemCount(); k++) {
+                    View itemView = contentGridLayoutManager.findViewByPosition(k);
+                    Rect bounds = new Rect();
+                    if (itemView != null) {
+                        ImageView imageView = itemView.findViewById(R.id.iiv_item_image_preview);
+                        imageView.getGlobalVisibleRect(bounds);
+                    }
+                    //计算返回的边界
+                    contentImageAdapter.getItem(k).setBounds(bounds);
+                }
+                PreviewBuilder.from(OrderDetailActivity.this)
+                        .setImgs(contentImageData)
+                        .setCurrentIndex(position)
+                        .setSingleFling(true)
+                        .setType(PreviewBuilder.IndicatorType.Number)
+                        .start();
             }
         });
     }
@@ -166,7 +199,7 @@ public class OrderDetailActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         LogUtils.d("onStart");
-        getData();
+//        getData();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -273,7 +306,7 @@ public class OrderDetailActivity extends BaseActivity {
                 item_workflow_content.setText(item.getRemark());
                 item_workflow_node.setText(item.getNodeName());
                 item_workflow_time.setText(item.getCreateTime());
-                List<ResourceEntity> picData=item.getResourceValues();
+                List<ResourceEntity> picData=item.getResourceValue();
                 if(picData!=null&&picData.size()>0){
                     final List<ImageViewInfo> data=new ArrayList<>();
                     for (int j = 0; j < picData.size(); j++) {
@@ -349,36 +382,12 @@ public class OrderDetailActivity extends BaseActivity {
         order_detail_remark_text.setText(workOrder.getProblemDesc());
         order_detail_remark_time.setText(workOrder.getCreateTime());
         List<ResourceEntity> picData=workOrder.getProblemResourceValue();
+        contentImageData.clear();
         if(picData!=null&&picData.size()>0) {
-            final List<ImageViewInfo> data = new ArrayList<>();
             for (int j = 0; j < picData.size(); j++) {
-                data.add(new ImageViewInfo(picData.get(j).getUrl()));
+                contentImageData.add(new ImageViewInfo(picData.get(j).getUrl()));
             }
-            final ImagePreviewListAdapter imageAdapter=new ImagePreviewListAdapter(this,R.layout.item_workflow_image_perview_list,data);
-            final GridLayoutManager mGridLayoutManager = new GridLayoutManager(this,4);
-            order_detail_remark_rlv.setLayoutManager(mGridLayoutManager);
-            order_detail_remark_rlv.setAdapter(imageAdapter);
-            order_detail_remark_rlv.addOnItemTouchListener(new com.chad.library.adapter.base.listener.OnItemClickListener() {
-                @Override
-                public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    for (int k = mGridLayoutManager.findFirstVisibleItemPosition(); k < adapter.getItemCount(); k++) {
-                        View itemView = mGridLayoutManager.findViewByPosition(k);
-                        Rect bounds = new Rect();
-                        if (itemView != null) {
-                            ImageView imageView = itemView.findViewById(R.id.iiv_item_image_preview);
-                            imageView.getGlobalVisibleRect(bounds);
-                        }
-                        //计算返回的边界
-                        imageAdapter.getItem(k).setBounds(bounds);
-                    }
-                    PreviewBuilder.from(OrderDetailActivity.this)
-                            .setImgs(data)
-                            .setCurrentIndex(position)
-                            .setSingleFling(true)
-                            .setType(PreviewBuilder.IndicatorType.Number)
-                            .start();
-                }
-            });
+            contentImageAdapter.notifyDataSetChanged();
         }
 
     }

@@ -50,8 +50,10 @@ import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
 import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
+import static com.chanfinecloud.cflforemployee.config.Config.FILE;
 import static com.chanfinecloud.cflforemployee.config.Config.PHOTO_DIR_NAME;
 import static com.chanfinecloud.cflforemployee.config.Config.SD_APP_DIR_NAME;
+import static com.chanfinecloud.cflforemployee.config.Config.WORKORDER;
 
 @ContentView(R.layout.activity_add_order)
 public class AddOrderActivity extends BaseActivity {
@@ -101,7 +103,7 @@ public class AddOrderActivity extends BaseActivity {
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if(position==dataList.size()-1){
                     if(permission){
-                        PhotoPicker.pick(AddOrderActivity.this,10,true,REQUEST_CODE_CHOOSE);
+                        PhotoPicker.pick(AddOrderActivity.this,1,true,REQUEST_CODE_CHOOSE);
                     }else{
                         showToast("相机或读写手机存储的权限被禁止！");
                     }
@@ -216,7 +218,7 @@ public class AddOrderActivity extends BaseActivity {
             showToast("请输入问题描述");
             return;
         }
-        RequestParam requestParam=new RequestParam(BASE_URL+"work/order/api/user/addOrder",HttpMethod.Post);
+        RequestParam requestParam=new RequestParam(BASE_URL+WORKORDER+"work/order/api/user/addOrder",HttpMethod.Post);
         Map<String,Object> map=new HashMap<>();
         map.put("address",add_order_et_address.getText().toString());
         map.put("typeId",projectValue);
@@ -310,7 +312,7 @@ public class AddOrderActivity extends BaseActivity {
 
     //上传照片
     private void uploadPic(final String path){
-        RequestParam requestParam=new RequestParam(BASE_URL+"file-manager-ms/files-anon",HttpMethod.Upload);
+        RequestParam requestParam=new RequestParam(BASE_URL+FILE+"files-anon",HttpMethod.Upload);
         Map<String,Object> map=new HashMap<>();
         map.put("UploadFile",new File(path));
         map.put("resourceKey",resourceKey);

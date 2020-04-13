@@ -16,8 +16,7 @@ import java.io.File;
 public class Config {
 
     public static final String BASE_URL= BuildConfig.BASE_URL;//后台服务地址
-
-    public static final String ENV= BuildConfig.BUILD_TYPE;//当前运行环境
+    public static final String ENV= BuildConfig.ENV;//当前运行环境
 
     public static final String AUTH=ENV.equals("debug")?"":"api-auth/";//鉴权
     public static final String SMS=ENV.equals("debug")?"":"sms-manager-ms/";//验证
