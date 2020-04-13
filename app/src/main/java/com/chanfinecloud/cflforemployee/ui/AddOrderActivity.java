@@ -103,7 +103,7 @@ public class AddOrderActivity extends BaseActivity {
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if(position==dataList.size()-1){
                     if(permission){
-                        PhotoPicker.pick(AddOrderActivity.this,10,true,REQUEST_CODE_CHOOSE);
+                        PhotoPicker.pick(AddOrderActivity.this,1,true,REQUEST_CODE_CHOOSE);
                     }else{
                         showToast("相机或读写手机存储的权限被禁止！");
                     }
