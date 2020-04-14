@@ -245,20 +245,25 @@ public class PersonActivity extends BaseActivity {
             public void onSuccess(String result) {
                 super.onSuccess(result);
                 LogUtils.d("result",result);
-                Gson gson = new Gson();
-                UserInfoEntity userInfo=gson.fromJson(result, UserInfoEntity.class);
-                if(fileEntity!=null){
-                    ResourceEntity resourceEntity=new ResourceEntity();
-                    resourceEntity.setId(fileEntity.getId());
-                    resourceEntity.setContentType(fileEntity.getContentType());
-                    resourceEntity.setCreateTime(fileEntity.getCreateTime());
-                    resourceEntity.setName(fileEntity.getName());
-                    resourceEntity.setUrl(fileEntity.getDomain()+fileEntity.getUrl());
-                    userInfo.setAvatarResource(resourceEntity);
+                BaseEntity<UserInfoEntity> baseEntity= JsonParse.parse(result,UserInfoEntity.class);
+                if(baseEntity.isSuccess()){
+                    UserInfoEntity userInfo=baseEntity.getResult();
+                    if(fileEntity!=null){
+                        ResourceEntity resourceEntity=new ResourceEntity();
+                        resourceEntity.setId(fileEntity.getId());
+                        resourceEntity.setContentType(fileEntity.getContentType());
+                        resourceEntity.setCreateTime(fileEntity.getCreateTime());
+                        resourceEntity.setName(fileEntity.getName());
+                        resourceEntity.setUrl(fileEntity.getDomain()+fileEntity.getUrl());
+                        userInfo.setAvatarResource(resourceEntity);
+                    }
+                    SharedPreferencesManage.setUserInfo(userInfo);//缓存用户信息
+                    initView();
+                    EventBus.getDefault().post(new EventBusMessage<>("refresh"));
+                }else{
+                    showToast(baseEntity.getMessage());
                 }
-                SharedPreferencesManage.setUserInfo(userInfo);//缓存用户信息
-                initView();
-                EventBus.getDefault().post(new EventBusMessage<>("refresh"));
+
             }
 
             @Override

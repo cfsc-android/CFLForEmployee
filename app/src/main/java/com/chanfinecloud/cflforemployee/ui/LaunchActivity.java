@@ -242,19 +242,25 @@ public class LaunchActivity extends BaseActivity {
             public void onSuccess(String result) {
                 super.onSuccess(result);
                 LogUtils.d("result",result);
-                Gson gson = new Gson();
-                UserInfoEntity userInfo=gson.fromJson(result, UserInfoEntity.class);
-                SharedPreferencesManage.setUserInfo(userInfo);//缓存用户信息
-                if(!TextUtils.isEmpty(userInfo.getAvatarId())){
-                    initAvatarResource();
+                BaseEntity<UserInfoEntity> baseEntity= JsonParse.parse(result,UserInfoEntity.class);
+                if(baseEntity.isSuccess()){
+                    SharedPreferencesManage.setUserInfo(baseEntity.getResult());//缓存用户信息
+                    if(!TextUtils.isEmpty(baseEntity.getResult().getAvatarId())){
+                        initAvatarResource();
+                    }else{
+                        startActivity(MainActivity.class);
+                    }
                 }else{
-                    startActivity(MainActivity.class);
+                    showToast(baseEntity.getMessage());
+                    stopProgressDialog();
+                    startActivity(LoginActivity.class);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 super.onError(ex, isOnCallback);
+                stopProgressDialog();
                 startActivity(LoginActivity.class);
             }
         });
