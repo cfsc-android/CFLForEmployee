@@ -117,16 +117,20 @@ public class LoginActivity extends BaseActivity {
             public void onSuccess(String result) {
                 super.onSuccess(result);
                 LogUtils.d("result",result);
-                Gson gson = new Gson();
-                UserInfoEntity userInfo=gson.fromJson(result, UserInfoEntity.class);
-                SharedPreferencesManage.setUserInfo(userInfo);//缓存用户信息
-                if(!TextUtils.isEmpty(userInfo.getAvatarId())){
-                    initAvatarResource();
-                }else{
-                    startActivity(MainActivity.class);
-                    stopProgressDialog();
+                BaseEntity<UserInfoEntity> baseEntity= JsonParse.parse(result,UserInfoEntity.class);
+                if(baseEntity.isSuccess()){
                     login_et_name.setText("");
                     login_et_password.setText("");
+                    SharedPreferencesManage.setUserInfo(baseEntity.getResult());//缓存用户信息
+                    if(!TextUtils.isEmpty(baseEntity.getResult().getAvatarId())){
+                        initAvatarResource();
+                    }else{
+                        stopProgressDialog();
+                        startActivity(MainActivity.class);
+                    }
+                }else{
+                    showToast(baseEntity.getMessage());
+                    stopProgressDialog();
                 }
             }
 
@@ -135,7 +139,6 @@ public class LoginActivity extends BaseActivity {
                 super.onError(ex, isOnCallback);
                 showToast(ex.getMessage());
                 stopProgressDialog();
-                startActivity(LoginActivity.class);
             }
         });
         sendRequest(requestParam,false);
