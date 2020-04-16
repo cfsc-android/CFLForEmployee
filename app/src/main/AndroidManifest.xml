@@ -121,6 +121,7 @@
             </intent-filter>
         </receiver>
 
+        <!--注意大小写-->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.chanfinecloud.cflforemployee.fileProvider"

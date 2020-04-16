@@ -21,6 +21,26 @@
 #-renamesourcefileattribute SourceFile
 
 
+#-libraryjars libs/commons-codec-1.4.jar
+
+#XUtils3
+-keepattributes Signature,*Annotation*
+-keep public class org.xutils.** {
+    public protected *;
+}
+-keep public interface org.xutils.** {
+    public protected *;
+}
+-keepclassmembers class * extends org.xutils.** {
+    public protected *;
+}
+-keepclassmembers @org.xutils.db.annotation.* class * {*;}
+-keepclassmembers @org.xutils.http.annotation.* class * {*;}
+-keepclassmembers class * {
+    @org.xutils.view.annotation.Event <methods>;
+}
+
+
 -keep class com.google.android.material.** {*;}
 -keep class androidx.** {*;}
 -keep public class * extends androidx.**
@@ -29,7 +49,7 @@
 -dontnote com.google.android.material.**
 -dontwarn androidx.**
 
-#eventbus
+
 -keepattributes *Annotation*
 -keepclassmembers class * {
     @org.greenrobot.eventbus.Subscribe <methods>;
@@ -55,6 +75,7 @@
    public <init> (org.json.JSONObject);
 }
 -dontwarn com.tencent.weibo.sdk.**
+
 
 
 
@@ -218,16 +239,16 @@
 -keep class com.google.gson.stream.** { *; }
 
 #butterknife
--keep class butterknife.** { *; }
--dontwarn butterknife.internal.**
--keep class **$$ViewBinder { *; }
--keepclasseswithmembernames class * {
-    @butterknife.* <fields>;
-}
+#-keep class butterknife.** { *; }
+#-dontwarn butterknife.internal.**
+#-keep class **$$ViewBinder { *; }
+#-keepclasseswithmembernames class * {
+#    @butterknife.* <fields>;
+#}
 
--keepclasseswithmembernames class * {
-    @butterknife.* <methods>;
-}
+#-keepclasseswithmembernames class * {
+#    @butterknife.* <methods>;
+#}
 
 # 如果使用了Gson之类的工具要使被它解析的JavaBean类即实体类不被混淆。
 -keep class com.matrix.app.entity.json.** { *; }
@@ -276,9 +297,9 @@
 
 
 # If you do not use SQLCipher:
--dontwarn org.greenrobot.greendao.database.**
+#-dontwarn org.greenrobot.greendao.database.**
 # If you do not use RxJava:
--dontwarn rx.**
+#-dontwarn rx.**
 
 
 # Retrolambda

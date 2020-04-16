@@ -219,7 +219,7 @@ public class WorkflowActionFragment extends BaseFragment {
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wheeldialog = new BirthWheelDialog(context, R.style.Dialog_Floating, new BirthWheelDialog.OnDateTimeConfirm() {
+                wheeldialog = new BirthWheelDialog(context, R.style.Dialog_Floating, 1,new BirthWheelDialog.OnDateTimeConfirm() {
                     @Override
                     public void returnData(String dateText, String dateValue) {
                         wheeldialog.cancel();

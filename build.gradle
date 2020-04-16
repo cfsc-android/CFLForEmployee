@@ -3,8 +3,8 @@
 buildscript {
     repositories {
         google()
-        jcenter()
         maven { url 'https://dl.bintray.com/umsdk/release' }
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.2'
@@ -17,7 +17,6 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
         maven { url 'https://dl.bintray.com/umsdk/release' }
         maven {
             url "https://raw.githubusercontent.com/Pgyer/mvn_repo_pgyer/master"
@@ -28,6 +27,7 @@ allprojects {
         maven {
             url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/"
         }
+        jcenter()
     }
 }
 

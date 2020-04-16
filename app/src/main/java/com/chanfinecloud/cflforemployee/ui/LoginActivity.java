@@ -202,6 +202,7 @@ public class LoginActivity extends BaseActivity {
     private void onClickEvent(View v){
         switch (v.getId()){
             case R.id.login_btn_login:
+               // showToast("登录点击了");
                 login();
                 break;
             case R.id.login_tv_forget_password:
