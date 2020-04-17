@@ -2,8 +2,9 @@ apply plugin: 'com.android.application'
 
 
 //def Release_Url = "\"http://10.222.1.25:9200/\""
-def Release_Url = "\"http://10.88.0.58:9200/\""
+//def Release_Url = "\"http://10.88.0.58:9200/\""
 //def Debug_Url = "\"http://10.222.5.45:8888/\""
+def Release_Url = "\"http://222.240.190.70:9200/\""
 def Debug_Url = "\"http://10.222.5.49:8888/\""
 
 android {
@@ -12,7 +13,7 @@ android {
         applicationId "com.chanfinecloud.cflforemployee"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 3
+        versionCode 5
         versionName "1.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         flavorDimensions "versionCode"
@@ -39,9 +40,9 @@ android {
     buildTypes {
         debug {
             debuggable true
-            minifyEnabled false
-            zipAlignEnabled false
-            shrinkResources false
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.cfl
             //测试
@@ -52,9 +53,9 @@ android {
         }
         release {
             debuggable true
-            minifyEnabled false
-            zipAlignEnabled false
-            shrinkResources false
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.cfl
             //正式
@@ -84,6 +85,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation files('libs/commons-codec-1.4.jar')
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
     //状态栏设置为透明
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     //XUtils 3.0

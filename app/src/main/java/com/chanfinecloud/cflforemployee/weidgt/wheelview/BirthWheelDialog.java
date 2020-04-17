@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.chanfinecloud.cflforemployee.R;
@@ -46,6 +47,8 @@ public class BirthWheelDialog extends Dialog implements View.OnClickListener {
     private BirthWheelDialog.Click click;
     private BirthWheelDialog.OnDateTimeConfirm onDateTimeConfirm;
     private String dateValue;
+
+    private int disYear = 100;
     /**
      * 用于判断选择时间初始化位明天的时间
      */
@@ -67,12 +70,14 @@ public class BirthWheelDialog extends Dialog implements View.OnClickListener {
         super(context, theme);
         this.context = context;
         this.click = click;
+        this.disYear = 100;
     }
 
     public BirthWheelDialog(Context context,int theme,BirthWheelDialog.OnDateTimeConfirm onDateTimeConfirm){
         super(context,theme);
         this.context=context;
         this.onDateTimeConfirm=onDateTimeConfirm;
+        this.disYear = 100;
     }
 
     public BirthWheelDialog(Context context, int theme, BirthWheelDialog.Click click, boolean isTomorrow) {
@@ -80,6 +85,19 @@ public class BirthWheelDialog extends Dialog implements View.OnClickListener {
         this.context = context;
         this.click = click;
         this.isTomorrow = isTomorrow;
+        this.disYear = 100;
+    }
+
+    public BirthWheelDialog(Context context,int theme,int isLarger,BirthWheelDialog.OnDateTimeConfirm onDateTimeConfirm){
+        super(context,theme);
+        this.context=context;
+        this.onDateTimeConfirm=onDateTimeConfirm;
+        if (isLarger == 1){
+            this.disYear = -20;
+        }else{
+            this.disYear = 100;
+        }
+
     }
 
     @Override
@@ -96,7 +114,12 @@ public class BirthWheelDialog extends Dialog implements View.OnClickListener {
         date = (TextView) findViewById(R.id.date);
         button = (Button) findViewById(R.id.button);
         button.setOnClickListener(this);
-        ll.addView(getDataPick());
+        if (disYear > 0){
+            ll.addView(getDataPick());
+        }else{
+            ll.addView(getLargerDataPick());
+        }
+
 
     }
 
@@ -320,15 +343,173 @@ public class BirthWheelDialog extends Dialog implements View.OnClickListener {
         }
     };
 
+    /**
+     * @return
+     * @Title: getLargerDataPick
+     * @Description: TODO
+     * @return: View
+     */
+
+    private View getLargerDataPick() {
+        Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+08:00"));
+        int norYear = c.get(Calendar.YEAR);
+        int curMonth = c.get(Calendar.MONTH) + 1;// 通过Calendar算出的月数要+1
+        int curDate = c.get(Calendar.DAY_OF_MONTH);
+//        int curHour = c.get(Calendar.HOUR_OF_DAY);
+//        int curMin = c.get(Calendar.MINUTE);
+//        Log.e("DateTime",norYear+"-"+curMonth+"-"+curDate+" "+curHour+":"+curMin);
+        int curYear = norYear;
+        // int curMonth = mMonth + 1;
+        // int curDate = mDay;
+        view = inflater.inflate(R.layout.wheel_date_picker, null);
+
+        year = (WheelView) view.findViewById(R.id.year);
+        NumericWheelAdapter numericWheelAdapter1 = new NumericWheelAdapter(context, norYear, norYear + 20);
+        numericWheelAdapter1.setLabel("");
+        year.setViewAdapter(numericWheelAdapter1);
+        year.setCyclic(true);// 是否可循环滑动
+        year.addScrollingListener(scrollLargerListener);
+
+        month = (WheelView) view.findViewById(R.id.month);
+        NumericWheelAdapter numericWheelAdapter2 = new NumericWheelAdapter(context, 1, 12, "%02d");
+        numericWheelAdapter2.setLabel("");
+        month.setViewAdapter(numericWheelAdapter2);
+        month.setCyclic(true);
+        month.addScrollingListener(scrollLargerListener);
+
+        day = (WheelView) view.findViewById(R.id.day);
+        initDay(curYear, curMonth);
+        day.setCyclic(true);
+        day.addScrollingListener(scrollLargerListener);
+        // time= (WheelView) view.findViewById(R.id.time);
+        // String[] times = {"上午","下午"} ;
+        // ArrayWheelAdapter<String> arrayWheelAdapter=new
+        // ArrayWheelAdapter<String>(MainActivity.this,times );
+        // time.setViewAdapter(arrayWheelAdapter);
+        // time.setCyclic(false);
+        // time.addScrollingListener(scrollListener);
+
+        min = (WheelView) view.findViewById(R.id.min);
+        min.setVisibility(View.GONE);
+//        NumericWheelAdapter numericWheelAdapter3 = new NumericWheelAdapter(context, 1, 24, "%02d", true);
+//        numericWheelAdapter3.setLabel("");
+//        min.setViewAdapter(numericWheelAdapter3);
+//        min.setCyclic(true);
+//        min.addScrollingListener(scrollListener);
+//
+        sec = (WheelView) view.findViewById(R.id.sec);
+        sec.setVisibility(View.GONE);
+//        NumericWheelAdapter numericWheelAdapter4 = new NumericWheelAdapter(context, 1, 60, "%02d");
+//        numericWheelAdapter4.setLabel("");
+//        sec.setViewAdapter(numericWheelAdapter4);
+//        sec.setCyclic(true);
+//        sec.addScrollingListener(scrollListener);
+//        sec.setCurrentItem(curMin);
+
+        year.setVisibleItems(7);// 设置显示行数
+        month.setVisibleItems(7);
+        day.setVisibleItems(7);
+        // time.setVisibleItems(7);
+//        min.setVisibleItems(7);
+//        sec.setVisibleItems(7);
+
+        year.setCurrentItem(0);
+        month.setCurrentItem(curMonth-1);
+        day.setCurrentItem(curDate);
+//        min.setCurrentItem(curHour-1);
+//        sec.setCurrentItem(curMin-1);
+        date.setText(norYear
+                + "-"
+                + ((month.getCurrentItem() + 1 < 10 ? "0" + (month.getCurrentItem() + 1) : month
+                .getCurrentItem() + 1))
+                + "-"
+                + ((day.getCurrentItem() + 1 < 10 ? "0" + (day.getCurrentItem() + 1) : day.getCurrentItem() + 1))
+        );
+        return view;
+    }
+
+    OnWheelScrollListener scrollLargerListener = new OnWheelScrollListener() {
+        @Override
+        public void onScrollingStarted(WheelView wheel) {
+
+        }
+
+        @Override
+        public void onScrollingFinished(WheelView wheel) {
+            Calendar c = Calendar.getInstance();
+            int norYear = c.get(Calendar.YEAR);
+            int n_year = year.getCurrentItem() + norYear - 100;// 年
+            int n_month = month.getCurrentItem() + 1;// 月
+            int nowDay = getDay(n_year, n_month);
+            initDay(n_year, n_month);
+            int endYear = norYear + 20;
+            Log.e("lastday", lastday + "");
+            Log.e("lastitem", lastitem + "");
+            String birthday = new StringBuilder()
+                    .append((year.getCurrentItem() + norYear))
+                    .append("-")
+                    .append((month.getCurrentItem() + 1) < 10 ? "0" + (month.getCurrentItem() + 1) : (month
+                            .getCurrentItem() + 1))
+                    .append("-")
+                    .append(nowDay < lastday && lastday == (lastitem + 1) ? "0" + (lastday - nowDay) : ((day
+                            .getCurrentItem() + 1) < 10) ? "0" + (day.getCurrentItem() + 1)
+                            : (day.getCurrentItem() + 1)).toString();
+//            int hour = min.getCurrentItem();
+//            int hour = 0;
+//            if (min.getCurrentItem() + 1 != 24)
+//                hour = min.getCurrentItem() + 1;
+////            int minute = sec.getCurrentItem();
+//            int minute = 0;
+//            if (sec.getCurrentItem() + 1 != 60)
+//                minute = sec.getCurrentItem() + 1;
+//            birthday = birthday
+//                    + new StringBuilder().append(" ").append(hour < 10 ? "0" + hour : hour).append(":")
+//                    .append(minute < 10 ? "0" + minute : minute).toString();
+
+            date.setText(birthday);
+            lastday = nowDay;
+            lastitem = day.getCurrentItem();
+            // tv1.setText("年龄             " + calculateDatePoor(birthday) +
+            // "岁");
+            // tv2.setText("星座             " + getAstro(month.getCurrentItem() +
+            // 1, day.getCurrentItem() + 1));
+
+        }
+    };
+
+
+
     @Override
     public void onClick(View v) {
 
         if(click!=null){
             click.getvaue(date.getText().toString());
         }
-        if(onDateTimeConfirm!=null){
-            onDateTimeConfirm.returnData(date.getText().toString(),dateValue);
+        if (disYear < 0){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date selectDate =  sdf.parse(date.getText().toString());
+                Date curDate = new Date();
+                Log.e("打印日期", "onClick: "+selectDate.getTime() + "curDate:" + curDate.getTime() );
+                if (selectDate.getTime() < curDate.getTime() - 24*60*60*1000){
+                    Toast.makeText(context, "请选择不小于当前的日期",Toast.LENGTH_SHORT).show();
+                    return;
+                }else{
+                    if(onDateTimeConfirm!=null){
+                        onDateTimeConfirm.returnData(date.getText().toString(),dateValue);
+                    }
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+                Toast.makeText(context, "日期解析错误",Toast.LENGTH_SHORT).show();
+
+            }
+
+        }else{
+
         }
+
         this.dismiss();
 
     }

@@ -121,6 +121,7 @@
             </intent-filter>
         </receiver>
 
+        <!--注意大小写-->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.chanfinecloud.cflforemployee.fileProvider"
@@ -132,6 +133,17 @@
                 android:resource="@xml/file_paths"
                 tools:replace="android:resource" />
         </provider>
+
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" /> <!-- 适配 全面屏 -->
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.4" />
+
     </application>
 
 </manifest>
