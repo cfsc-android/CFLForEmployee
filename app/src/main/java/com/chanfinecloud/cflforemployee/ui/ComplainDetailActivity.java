@@ -54,6 +54,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import androidx.annotation.Nullable;
@@ -115,6 +116,8 @@ public class ComplainDetailActivity extends BaseActivity {
     private List<ImageViewInfo> contentImageData = new ArrayList<>();
     private ImagePreviewListAdapter contentImageAdapter;
     private GridLayoutManager contentGridLayoutManager;
+    private List<WorkflowProcessesEntity> progressData=new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,7 +176,7 @@ public class ComplainDetailActivity extends BaseActivity {
                 break;
             case R.id.toolbar_tv_action:
                 Bundle bundle=new Bundle();
-                bundle.putSerializable("workflowProcessesList", (Serializable) data);
+                bundle.putSerializable("workflowProcessesList", (Serializable) progressData);
                 startActivity(WorkflowStepActivity.class,bundle);
                 break;
         }
@@ -228,6 +231,8 @@ public class ComplainDetailActivity extends BaseActivity {
                     initAction(baseEntity.getResult());
                     List<WorkflowProcessesEntity> workflowList=baseEntity.getResult().getProcesses();
                     WorkflowProcessesEntity lastWorkflow=workflowList.get(workflowList.size()-1);
+                    progressData.clear();
+                    progressData.addAll(workflowList);
                     if(lastWorkflow.getOperationInfos()!=null&&lastWorkflow.getOperationInfos().size()>0){
                         workflowList.remove(workflowList.size()-1);
                     }

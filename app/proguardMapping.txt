@@ -1,7 +1,7 @@
 # compiler: R8
 # compiler_version: 1.5.68
 # min_api: 19
-# pg_map_id: 15688a2
+# pg_map_id: ba37b2e
 android.support.v4.app.INotificationSideChannel -> a.a.a.a.a:
 android.support.v4.app.INotificationSideChannel$Stub -> a.a.a.a.a$a:
     20:22:void <init>() -> <init>
@@ -20967,8 +20967,8 @@ com.chanfinecloud.cflforemployee.CFLApplication$2 -> com.chanfinecloud.cflforemp
     82:82:void <init>() -> <init>
     86:86:com.scwang.smartrefresh.layout.api.RefreshFooter createRefreshFooter(android.content.Context,com.scwang.smartrefresh.layout.api.RefreshLayout) -> a
 com.chanfinecloud.cflforemployee.R$styleable -> c.b.a.b:
-    10168:28919:void <clinit>() -> <clinit>
-    10142:10142:void <init>() -> <init>
+    10169:28920:void <clinit>() -> <clinit>
+    10143:10143:void <init>() -> <init>
 com.chanfinecloud.cflforemployee.adapter.AttachmentListAdapter -> com.chanfinecloud.cflforemployee.adapter.AttachmentListAdapter:
     20:21:void <init>(java.util.List) -> <init>
     25:26:void convert(com.chad.library.adapter.base.BaseViewHolder,com.chanfinecloud.cflforemployee.entity.ResourceEntity) -> a
@@ -20992,7 +20992,7 @@ com.chanfinecloud.cflforemployee.adapter.WorkflowListAdapter -> com.chanfineclou
 com.chanfinecloud.cflforemployee.adapter.WorkflowStepAdapter -> com.chanfinecloud.cflforemployee.adapter.WorkflowStepAdapter:
     android.content.Context context -> a
     26:28:void <init>(android.content.Context,java.util.List) -> <init>
-    32:47:void convert(com.chad.library.adapter.base.BaseViewHolder,com.chanfinecloud.cflforemployee.entity.WorkflowProcessesEntity) -> a
+    32:56:void convert(com.chad.library.adapter.base.BaseViewHolder,com.chanfinecloud.cflforemployee.entity.WorkflowProcessesEntity) -> a
     23:23:void convert(com.chad.library.adapter.base.BaseViewHolder,java.lang.Object) -> convert
 com.chanfinecloud.cflforemployee.config.Config -> c.b.a.c.a:
     java.lang.String LOCAL_PATH -> f
@@ -21893,6 +21893,7 @@ com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity -> com.chanfinecloud.
     java.util.List contentImageData -> A
     com.chanfinecloud.cflforemployee.weidgt.NoUnderlineSpan mNoUnderlineSpan -> v
     java.lang.String resourceKey -> z
+    java.util.List progressData -> D
     android.widget.ImageView complain_detail_user_avatar -> k
     android.widget.TextView toolbar_tv_action -> i
     android.widget.TextView toolbar_title -> h
@@ -21902,73 +21903,74 @@ com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity -> com.chanfinecloud.
     android.widget.TextView complain_detail_user_room -> m
     android.widget.TextView complain_detail_user_name -> l
     android.widget.LinearLayout complain_detail_workflow_ll -> s
-    75:115:void <init>() -> <init>
-    200:203:void Event(com.chanfinecloud.cflforemployee.entity.EventBusMessage) -> Event
-    75:75:void access$000(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> a
-    75:75:void access$1200(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,java.lang.String) -> a
-    75:75:void access$400(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,com.chanfinecloud.cflforemployee.entity.ComplainDetailsEntity) -> a
-    75:75:void access$600(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,java.util.List) -> a
-    388:420:void initAction(com.chanfinecloud.cflforemployee.entity.ComplainDetailsEntity) -> a
-    446:478:void compress(java.util.List) -> a
-    75:75:androidx.recyclerview.widget.GridLayoutManager access$100(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> b
-    75:75:void access$1400(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,java.lang.String) -> b
-    75:75:void access$500(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,com.chanfinecloud.cflforemployee.entity.ComplainDetailsEntity) -> b
-    263:298:void initView(com.chanfinecloud.cflforemployee.entity.ComplainDetailsEntity) -> b
-    304:382:void initWorkFlow(java.util.List) -> b
-    485:505:void uploadPic(java.lang.String) -> b
-    75:75:void access$1000(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> c
-    75:75:void access$800(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,java.lang.String) -> c
-    75:75:com.scwang.smartrefresh.layout.SmartRefreshLayout access$1100(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> d
-    75:75:void access$900(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,java.lang.String) -> d
-    75:75:com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment access$1300(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> e
-    75:75:com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter access$200(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> f
-    75:75:java.util.List access$300(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> g
-    75:75:java.util.List access$700(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> h
-    216:256:void getData() -> l
-    425:439:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    170:180:void onClickEvent(android.view.View) -> onClickEvent
-    121:166:void onCreate(android.os.Bundle) -> onCreate
-    207:209:void onDestroy() -> onDestroy
-    184:189:void onNewIntent(android.content.Intent) -> onNewIntent
-    193:196:void onStart() -> onStart
+    76:119:void <init>() -> <init>
+    203:206:void Event(com.chanfinecloud.cflforemployee.entity.EventBusMessage) -> Event
+    76:76:void access$000(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> a
+    76:76:void access$1000(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,java.lang.String) -> a
+    76:76:void access$400(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,com.chanfinecloud.cflforemployee.entity.ComplainDetailsEntity) -> a
+    76:76:void access$700(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,java.util.List) -> a
+    393:425:void initAction(com.chanfinecloud.cflforemployee.entity.ComplainDetailsEntity) -> a
+    451:483:void compress(java.util.List) -> a
+    76:76:androidx.recyclerview.widget.GridLayoutManager access$100(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> b
+    76:76:void access$1300(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,java.lang.String) -> b
+    76:76:void access$500(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,com.chanfinecloud.cflforemployee.entity.ComplainDetailsEntity) -> b
+    268:303:void initView(com.chanfinecloud.cflforemployee.entity.ComplainDetailsEntity) -> b
+    309:387:void initWorkFlow(java.util.List) -> b
+    490:510:void uploadPic(java.lang.String) -> b
+    76:76:void access$1100(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> c
+    76:76:void access$1500(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,java.lang.String) -> c
+    76:76:com.scwang.smartrefresh.layout.SmartRefreshLayout access$1200(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> d
+    76:76:void access$900(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,java.lang.String) -> d
+    76:76:com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment access$1400(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> e
+    76:76:com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter access$200(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> f
+    76:76:java.util.List access$300(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> g
+    76:76:java.util.List access$600(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> h
+    76:76:java.util.List access$800(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> i
+    219:261:void getData() -> l
+    430:444:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    173:183:void onClickEvent(android.view.View) -> onClickEvent
+    124:169:void onCreate(android.os.Bundle) -> onCreate
+    210:212:void onDestroy() -> onDestroy
+    187:192:void onNewIntent(android.content.Intent) -> onNewIntent
+    196:199:void onStart() -> onStart
 com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity$1 -> com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity$a:
     com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity this$0 -> a
-    134:134:void <init>(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> <init>
-    137:138:void onRefresh(com.scwang.smartrefresh.layout.api.RefreshLayout) -> a
+    137:137:void <init>(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> <init>
+    140:141:void onRefresh(com.scwang.smartrefresh.layout.api.RefreshLayout) -> a
 com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity$2 -> com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity$b:
     com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity this$0 -> a
-    145:145:void <init>(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> <init>
-    148:164:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
+    148:148:void <init>(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> <init>
+    151:167:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
 com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity$3 -> com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity$c:
     com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity this$0 -> a
-    220:220:void <init>(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> <init>
-    244:246:void onError(java.lang.Throwable,boolean) -> onError
-    250:253:void onFinished() -> onFinished
-    220:220:void onSuccess(java.lang.Object) -> onSuccess
-    223:240:void onSuccess(java.lang.String) -> onSuccess
+    223:223:void <init>(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> <init>
+    249:251:void onError(java.lang.Throwable,boolean) -> onError
+    255:258:void onFinished() -> onFinished
+    223:223:void onSuccess(java.lang.Object) -> onSuccess
+    226:245:void onSuccess(java.lang.String) -> onSuccess
 com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity$4 -> com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity$d:
     com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity this$0 -> d
     java.util.List val$data -> c
     androidx.recyclerview.widget.GridLayoutManager val$mGridLayoutManager -> a
     com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter val$imageAdapter -> b
-    354:354:void <init>(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,androidx.recyclerview.widget.GridLayoutManager,com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter,java.util.List) -> <init>
-    357:373:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
+    359:359:void <init>(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,androidx.recyclerview.widget.GridLayoutManager,com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter,java.util.List) -> <init>
+    362:378:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
 com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity$5 -> com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity$e:
     com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity this$0 -> a
-    458:458:void <init>(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> <init>
-    466:471:void onSuccess(java.io.File) -> a
-    475:476:void onError(java.lang.Throwable) -> a
-    461:462:void onStart() -> onStart
+    463:463:void <init>(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> <init>
+    471:476:void onSuccess(java.io.File) -> a
+    480:481:void onError(java.lang.Throwable) -> a
+    466:467:void onStart() -> onStart
 com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity$6 -> com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity$f:
-    452:452:void <init>(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> <init>
-    455:455:boolean apply(java.lang.String) -> a
+    457:457:void <init>(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity) -> <init>
+    460:460:boolean apply(java.lang.String) -> a
 com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity$7 -> com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity$g:
     com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity this$0 -> b
     java.lang.String val$path -> a
-    490:490:void <init>(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,java.lang.String) -> <init>
-    500:502:void onError(java.lang.Throwable,boolean) -> onError
-    490:490:void onSuccess(java.lang.Object) -> onSuccess
-    493:496:void onSuccess(java.lang.String) -> onSuccess
+    495:495:void <init>(com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity,java.lang.String) -> <init>
+    505:507:void onError(java.lang.Throwable,boolean) -> onError
+    495:495:void onSuccess(java.lang.Object) -> onSuccess
+    498:501:void onSuccess(java.lang.String) -> onSuccess
 com.chanfinecloud.cflforemployee.ui.HomeFragment -> com.chanfinecloud.cflforemployee.ui.HomeFragment:
     com.chanfinecloud.cflforemployee.weidgt.easyindicator.EasyIndicator home_ei_tab -> e
     androidx.viewpager.widget.ViewPager home_vp_tab -> f
@@ -21997,6 +21999,7 @@ com.chanfinecloud.cflforemployee.ui.HomeFragment$2 -> com.chanfinecloud.cflforem
     124:124:void <init>(com.chanfinecloud.cflforemployee.ui.HomeFragment) -> <init>
     127:133:void OnAdConetentClickListener(int,com.chanfinecloud.cflforemployee.entity.NoticeEntity) -> a
 com.chanfinecloud.cflforemployee.ui.HomeTodoFragment -> com.chanfinecloud.cflforemployee.ui.HomeTodoFragment:
+    int isFirstIn -> n
     androidx.recyclerview.widget.RecyclerView home_todo_rlv -> f
     int todoType -> m
     int page -> j
@@ -22009,7 +22012,7 @@ com.chanfinecloud.cflforemployee.ui.HomeTodoFragment -> com.chanfinecloud.cflfor
     56:57:void <init>() -> <init>
     54:54:int access$000(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> a
     54:54:int access$202(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment,int) -> a
-    54:54:com.chanfinecloud.cflforemployee.entity.ListLoadingType access$402(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment,com.chanfinecloud.cflforemployee.entity.ListLoadingType) -> a
+    54:54:com.chanfinecloud.cflforemployee.entity.ListLoadingType access$302(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment,com.chanfinecloud.cflforemployee.entity.ListLoadingType) -> a
     54:54:void access$800(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment,java.lang.String) -> a
     60:64:com.chanfinecloud.cflforemployee.ui.HomeTodoFragment newInstance(com.chanfinecloud.cflforemployee.entity.HomeTodoType) -> a
     54:54:java.util.List access$100(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> b
@@ -22017,32 +22020,33 @@ com.chanfinecloud.cflforemployee.ui.HomeTodoFragment -> com.chanfinecloud.cflfor
     54:54:int access$200(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> c
     54:54:int access$208(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> d
     54:54:int access$210(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> e
-    136:195:void getData() -> e
-    54:54:void access$300(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> f
-    54:54:com.chanfinecloud.cflforemployee.entity.ListLoadingType access$400(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> g
+    155:214:void getData() -> e
+    54:54:com.chanfinecloud.cflforemployee.entity.ListLoadingType access$300(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> f
+    54:54:void access$400(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> g
     54:54:com.chanfinecloud.cflforemployee.adapter.WorkflowListAdapter access$500(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> h
     54:54:com.scwang.smartrefresh.layout.SmartRefreshLayout access$600(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> i
     54:54:int access$700(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> j
-    82:85:void onCreate(android.os.Bundle) -> onCreate
-    89:130:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
+    83:87:void onCreate(android.os.Bundle) -> onCreate
+    91:99:void onResume() -> onResume
+    103:147:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
 com.chanfinecloud.cflforemployee.ui.HomeTodoFragment$1 -> com.chanfinecloud.cflforemployee.ui.HomeTodoFragment$a:
     com.chanfinecloud.cflforemployee.ui.HomeTodoFragment this$0 -> a
-    96:96:void <init>(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> <init>
-    99:108:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
+    110:110:void <init>(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> <init>
+    113:122:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
 com.chanfinecloud.cflforemployee.ui.HomeTodoFragment$2 -> com.chanfinecloud.cflforemployee.ui.HomeTodoFragment$b:
     com.chanfinecloud.cflforemployee.ui.HomeTodoFragment this$0 -> a
-    113:113:void <init>(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> <init>
-    116:119:void onRefresh(com.scwang.smartrefresh.layout.api.RefreshLayout) -> a
+    127:127:void <init>(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> <init>
+    130:133:void onRefresh(com.scwang.smartrefresh.layout.api.RefreshLayout) -> a
 com.chanfinecloud.cflforemployee.ui.HomeTodoFragment$3 -> com.chanfinecloud.cflforemployee.ui.HomeTodoFragment$c:
     com.chanfinecloud.cflforemployee.ui.HomeTodoFragment this$0 -> a
-    121:121:void <init>(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> <init>
-    124:127:void onLoadMore(com.scwang.smartrefresh.layout.api.RefreshLayout) -> b
+    135:135:void <init>(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> <init>
+    138:142:void onLoadMore(com.scwang.smartrefresh.layout.api.RefreshLayout) -> b
 com.chanfinecloud.cflforemployee.ui.HomeTodoFragment$4 -> com.chanfinecloud.cflforemployee.ui.HomeTodoFragment$d:
     com.chanfinecloud.cflforemployee.ui.HomeTodoFragment this$0 -> a
-    146:146:void <init>(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> <init>
-    184:192:void onError(java.lang.Throwable,boolean) -> onError
-    146:146:void onSuccess(java.lang.Object) -> onSuccess
-    149:180:void onSuccess(java.lang.String) -> onSuccess
+    165:165:void <init>(com.chanfinecloud.cflforemployee.ui.HomeTodoFragment) -> <init>
+    203:211:void onError(java.lang.Throwable,boolean) -> onError
+    165:165:void onSuccess(java.lang.Object) -> onSuccess
+    168:199:void onSuccess(java.lang.String) -> onSuccess
 com.chanfinecloud.cflforemployee.ui.LaunchActivity -> com.chanfinecloud.cflforemployee.ui.LaunchActivity:
     android.app.ProgressDialog progressDialog -> i
     android.widget.TextView tv_loading_version -> h
@@ -22399,97 +22403,99 @@ com.chanfinecloud.cflforemployee.ui.NoticeDetailActivity$webViewClient -> com.ch
     265:267:void onPageFinished(android.webkit.WebView,java.lang.String) -> onPageFinished
     271:272:boolean shouldOverrideUrlLoading(android.webkit.WebView,java.lang.String) -> shouldOverrideUrlLoading
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity:
-    android.widget.TextView order_detail_address -> o
     android.widget.TextView order_detail_order_type -> n
-    android.widget.TextView order_detail_contact_tel -> q
     android.widget.TextView order_detail_contact -> p
-    androidx.recyclerview.widget.RecyclerView order_detail_remark_rlv -> s
+    androidx.fragment.app.FragmentManager fragmentManager -> A
     android.widget.TextView order_detail_remark_text -> r
     android.widget.TextView order_detail_remark_time -> t
-    androidx.fragment.app.FragmentManager fragmentManager -> z
-    androidx.recyclerview.widget.GridLayoutManager contentGridLayoutManager -> E
+    androidx.recyclerview.widget.GridLayoutManager contentGridLayoutManager -> F
     java.util.List data -> x
-    com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment workflowActionFragment -> A
-    java.lang.String orderId -> w
-    com.chanfinecloud.cflforemployee.weidgt.NoUnderlineSpan mNoUnderlineSpan -> y
+    com.chanfinecloud.cflforemployee.weidgt.NoUnderlineSpan mNoUnderlineSpan -> z
+    com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment workflowActionFragment -> B
     android.widget.ImageView order_detail_user_avatar -> k
-    java.util.List contentImageData -> C
-    android.widget.TextView toolbar_tv_action -> i
     android.widget.TextView toolbar_title -> h
     android.widget.ImageButton toolbar_btn_action -> j
     android.widget.LinearLayout order_detail_workflow_ll -> u
-    java.lang.String resourceKey -> B
-    android.widget.TextView order_detail_user_room -> m
-    com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter contentImageAdapter -> D
     android.widget.TextView order_detail_user_name -> l
     com.scwang.smartrefresh.layout.SmartRefreshLayout order_detail__srl -> v
-    76:121:void <init>() -> <init>
-    207:210:void Event(com.chanfinecloud.cflforemployee.entity.EventBusMessage) -> Event
+    com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter contentImageAdapter -> E
+    android.widget.TextView order_detail_address -> o
+    android.widget.TextView order_detail_contact_tel -> q
+    androidx.recyclerview.widget.RecyclerView order_detail_remark_rlv -> s
+    java.util.List progressData -> y
+    java.lang.String orderId -> w
+    java.util.List contentImageData -> D
+    android.widget.TextView toolbar_tv_action -> i
+    java.lang.String resourceKey -> C
+    android.widget.TextView order_detail_user_room -> m
+    76:122:void <init>() -> <init>
+    208:211:void Event(com.chanfinecloud.cflforemployee.entity.EventBusMessage) -> Event
     76:76:void access$000(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> a
-    76:76:void access$1200(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> a
+    76:76:void access$1000(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> a
     76:76:void access$400(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> a
-    76:76:void access$600(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.util.List) -> a
-    400:432:void initAction(com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> a
-    458:490:void compress(java.util.List) -> a
+    76:76:void access$700(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.util.List) -> a
+    403:435:void initAction(com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> a
+    461:493:void compress(java.util.List) -> a
     76:76:androidx.recyclerview.widget.GridLayoutManager access$100(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> b
-    76:76:void access$1400(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> b
+    76:76:void access$1300(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> b
     76:76:void access$500(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> b
-    269:348:void initWorkFlow(java.util.List) -> b
-    355:393:void initView(com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> b
-    497:517:void uploadPic(java.lang.String) -> b
-    76:76:void access$1000(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> c
-    76:76:void access$800(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> c
-    76:76:com.scwang.smartrefresh.layout.SmartRefreshLayout access$1100(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> d
+    272:351:void initWorkFlow(java.util.List) -> b
+    358:396:void initView(com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> b
+    500:520:void uploadPic(java.lang.String) -> b
+    76:76:void access$1100(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> c
+    76:76:void access$1500(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> c
+    76:76:com.scwang.smartrefresh.layout.SmartRefreshLayout access$1200(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> d
     76:76:void access$900(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> d
-    76:76:com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment access$1300(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> e
+    76:76:com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment access$1400(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> e
     76:76:com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter access$200(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> f
     76:76:java.util.List access$300(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> g
-    76:76:java.util.List access$700(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> h
-    222:262:void getData() -> l
-    437:451:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    177:187:void onClickEvent(android.view.View) -> onClickEvent
-    127:173:void onCreate(android.os.Bundle) -> onCreate
-    214:216:void onDestroy() -> onDestroy
-    191:196:void onNewIntent(android.content.Intent) -> onNewIntent
-    200:203:void onStart() -> onStart
+    76:76:java.util.List access$600(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> h
+    76:76:java.util.List access$800(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> i
+    223:265:void getData() -> l
+    440:454:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    178:188:void onClickEvent(android.view.View) -> onClickEvent
+    128:174:void onCreate(android.os.Bundle) -> onCreate
+    215:217:void onDestroy() -> onDestroy
+    192:197:void onNewIntent(android.content.Intent) -> onNewIntent
+    201:204:void onStart() -> onStart
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$1 -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$a:
     com.chanfinecloud.cflforemployee.ui.OrderDetailActivity this$0 -> a
-    139:139:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
-    142:143:void onRefresh(com.scwang.smartrefresh.layout.api.RefreshLayout) -> a
+    140:140:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
+    143:144:void onRefresh(com.scwang.smartrefresh.layout.api.RefreshLayout) -> a
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$2 -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$b:
     com.chanfinecloud.cflforemployee.ui.OrderDetailActivity this$0 -> a
-    152:152:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
-    155:171:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
+    153:153:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
+    156:172:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$3 -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$c:
     com.chanfinecloud.cflforemployee.ui.OrderDetailActivity this$0 -> a
-    226:226:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
-    250:252:void onError(java.lang.Throwable,boolean) -> onError
-    256:259:void onFinished() -> onFinished
-    226:226:void onSuccess(java.lang.Object) -> onSuccess
-    229:246:void onSuccess(java.lang.String) -> onSuccess
+    227:227:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
+    253:255:void onError(java.lang.Throwable,boolean) -> onError
+    259:262:void onFinished() -> onFinished
+    227:227:void onSuccess(java.lang.Object) -> onSuccess
+    230:249:void onSuccess(java.lang.String) -> onSuccess
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$4 -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$d:
     com.chanfinecloud.cflforemployee.ui.OrderDetailActivity this$0 -> d
     java.util.List val$data -> c
     androidx.recyclerview.widget.GridLayoutManager val$mGridLayoutManager -> a
     com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter val$imageAdapter -> b
-    319:319:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,androidx.recyclerview.widget.GridLayoutManager,com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter,java.util.List) -> <init>
-    322:338:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
+    322:322:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,androidx.recyclerview.widget.GridLayoutManager,com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter,java.util.List) -> <init>
+    325:341:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$5 -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$e:
     com.chanfinecloud.cflforemployee.ui.OrderDetailActivity this$0 -> a
-    470:470:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
-    478:483:void onSuccess(java.io.File) -> a
-    487:488:void onError(java.lang.Throwable) -> a
-    473:474:void onStart() -> onStart
+    473:473:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
+    481:486:void onSuccess(java.io.File) -> a
+    490:491:void onError(java.lang.Throwable) -> a
+    476:477:void onStart() -> onStart
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$6 -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$f:
-    464:464:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
-    467:467:boolean apply(java.lang.String) -> a
+    467:467:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
+    470:470:boolean apply(java.lang.String) -> a
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$7 -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$g:
     java.lang.String val$path -> a
     com.chanfinecloud.cflforemployee.ui.OrderDetailActivity this$0 -> b
-    502:502:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> <init>
-    512:514:void onError(java.lang.Throwable,boolean) -> onError
-    502:502:void onSuccess(java.lang.Object) -> onSuccess
-    505:508:void onSuccess(java.lang.String) -> onSuccess
+    505:505:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> <init>
+    515:517:void onError(java.lang.Throwable,boolean) -> onError
+    505:505:void onSuccess(java.lang.Object) -> onSuccess
+    508:511:void onSuccess(java.lang.String) -> onSuccess
 com.chanfinecloud.cflforemployee.ui.PersonActivity -> com.chanfinecloud.cflforemployee.ui.PersonActivity:
     android.widget.TextView person_tv_tel -> o
     com.chanfinecloud.cflforemployee.weidgt.wheelview.BirthWheelDialog wheelDialog -> p

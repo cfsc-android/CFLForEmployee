@@ -77,11 +77,25 @@ public class HomeTodoFragment extends BaseFragment {
 
     private Context context;
     private int todoType;
+    private int isFirstIn = 0;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getActivity();
         todoType = getArguments().getInt(ARG);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isFirstIn == 0){
+            isFirstIn = 1;
+        }else{
+            page=1;
+            loadType=ListLoadingType.Refresh;
+            getData();
+        }
     }
 
     @Override
@@ -114,20 +128,25 @@ public class HomeTodoFragment extends BaseFragment {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
                 page=1;
-                getData();
                 loadType=ListLoadingType.Refresh;
+                getData();
             }
         });
         home_todo_srl.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
                 page++;
-                getData();
                 loadType=ListLoadingType.LoadMore;
+                getData();
+
             }
         });
+
+        isFirstIn = 0;
         getData();
     }
+
+
 
     /**
      * 获取待办数据
