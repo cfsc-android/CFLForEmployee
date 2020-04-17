@@ -368,7 +368,13 @@ public class OrderDetailActivity extends BaseActivity {
         order_detail_user_name.setText(workOrder.getCreateName());
         order_detail_user_room.setText(workOrder.getBriefDesc());
         order_detail_order_type.setText(workOrder.getWorkTypeName());
-        order_detail_address.setText(getString(R.string.address_value,workOrder.getProjectName(),workOrder.getPhaseName(),workOrder.getBriefDesc()));
+        String address;
+        if(TextUtils.isEmpty(workOrder.getAddress())){
+            address=getString(R.string.address_value,workOrder.getProjectName(),workOrder.getPhaseName(),workOrder.getBriefDesc());
+        }else{
+            address=workOrder.getAddress();
+        }
+        order_detail_address.setText(address);
         order_detail_contact.setText(workOrder.getHouseholdName());
         if (!TextUtils.isEmpty(workOrder.getHouseholdMobile())) {
             order_detail_contact_tel.setText(workOrder.getHouseholdMobile());
