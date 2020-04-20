@@ -229,6 +229,7 @@ public class OrderDetailActivity extends BaseActivity {
             public void onSuccess(String result) {
                 super.onSuccess(result);
                 LogUtils.d("result",result);
+                System.out.println("获取工单详情数据result"+result);
                 BaseEntity<OrderDetailsEntity> baseEntity= JsonParse.parse(result,OrderDetailsEntity.class);
                 if(baseEntity.isSuccess()){
                     initView(baseEntity.getResult());
