@@ -208,7 +208,7 @@ public class PersonActivity extends BaseActivity {
      * @param map 请求参数
      */
     private void updateUser(Map<String,Object> map){
-        RequestParam requestParam=new RequestParam(BASE_URL+USER+"/sys/user/updateUser",HttpMethod.Put);
+        RequestParam requestParam=new RequestParam(BASE_URL+USER+"sys/user/updateUser",HttpMethod.Put);
         map.put("id", userInfo.getId());
         requestParam.setRequestMap(map);
         requestParam.setParamType(ParamType.Json);
