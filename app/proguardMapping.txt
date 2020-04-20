@@ -1,7 +1,7 @@
 # compiler: R8
 # compiler_version: 1.5.68
 # min_api: 19
-# pg_map_id: ba37b2e
+# pg_map_id: cc7188f
 android.support.v4.app.INotificationSideChannel -> a.a.a.a.a:
 android.support.v4.app.INotificationSideChannel$Stub -> a.a.a.a.a$a:
     20:22:void <init>() -> <init>
@@ -20992,7 +20992,7 @@ com.chanfinecloud.cflforemployee.adapter.WorkflowListAdapter -> com.chanfineclou
 com.chanfinecloud.cflforemployee.adapter.WorkflowStepAdapter -> com.chanfinecloud.cflforemployee.adapter.WorkflowStepAdapter:
     android.content.Context context -> a
     26:28:void <init>(android.content.Context,java.util.List) -> <init>
-    32:56:void convert(com.chad.library.adapter.base.BaseViewHolder,com.chanfinecloud.cflforemployee.entity.WorkflowProcessesEntity) -> a
+    32:61:void convert(com.chad.library.adapter.base.BaseViewHolder,com.chanfinecloud.cflforemployee.entity.WorkflowProcessesEntity) -> a
     23:23:void convert(com.chad.library.adapter.base.BaseViewHolder,java.lang.Object) -> convert
 com.chanfinecloud.cflforemployee.config.Config -> c.b.a.c.a:
     java.lang.String LOCAL_PATH -> f
@@ -21632,42 +21632,44 @@ com.chanfinecloud.cflforemployee.entity.WorkflowListEntity -> com.chanfinecloud.
     30:31:void setData(java.util.List) -> setData
 com.chanfinecloud.cflforemployee.entity.WorkflowProcessesEntity -> com.chanfinecloud.cflforemployee.entity.WorkflowProcessesEntity:
     11:11:void <init>() -> <init>
-    100:100:java.lang.String getAssigneeId() -> getAssigneeId
-    108:108:java.lang.String getAvatarUrl() -> getAvatarUrl
-    172:172:java.lang.String getBriefDesc() -> getBriefDesc
-    180:180:java.lang.String getCreateTime() -> getCreateTime
-    52:52:java.util.List getFormContent() -> getFormContent
-    84:84:java.lang.String getHandlerId() -> getHandlerId
-    124:124:java.lang.String getHandlerMobile() -> getHandlerMobile
-    92:92:java.lang.String getHandlerName() -> getHandlerName
-    116:116:java.lang.String getHandlerType() -> getHandlerType
-    76:76:java.lang.String getId() -> getId
-    132:132:java.lang.String getNodeName() -> getNodeName
-    156:156:java.lang.String getNotAcceptable() -> getNotAcceptable
-    140:140:java.lang.String getOperation() -> getOperation
-    68:68:java.util.List getOperationInfos() -> getOperationInfos
-    188:188:java.lang.String getProcessResult() -> getProcessResult
-    164:164:java.lang.String getRemark() -> getRemark
-    148:148:java.lang.String getResourceKey() -> getResourceKey
-    60:60:java.util.List getResourceValue() -> getResourceValue
-    104:105:void setAssigneeId(java.lang.String) -> setAssigneeId
-    112:113:void setAvatarUrl(java.lang.String) -> setAvatarUrl
-    176:177:void setBriefDesc(java.lang.String) -> setBriefDesc
-    184:185:void setCreateTime(java.lang.String) -> setCreateTime
-    56:57:void setFormContent(java.util.List) -> setFormContent
-    88:89:void setHandlerId(java.lang.String) -> setHandlerId
-    128:129:void setHandlerMobile(java.lang.String) -> setHandlerMobile
-    96:97:void setHandlerName(java.lang.String) -> setHandlerName
-    120:121:void setHandlerType(java.lang.String) -> setHandlerType
-    80:81:void setId(java.lang.String) -> setId
-    136:137:void setNodeName(java.lang.String) -> setNodeName
-    160:161:void setNotAcceptable(java.lang.String) -> setNotAcceptable
-    144:145:void setOperation(java.lang.String) -> setOperation
-    72:73:void setOperationInfos(java.util.List) -> setOperationInfos
-    192:193:void setProcessResult(java.lang.String) -> setProcessResult
-    168:169:void setRemark(java.lang.String) -> setRemark
-    152:153:void setResourceKey(java.lang.String) -> setResourceKey
-    64:65:void setResourceValue(java.util.List) -> setResourceValue
+    102:102:java.lang.String getAssigneeId() -> getAssigneeId
+    110:110:java.lang.String getAvatarUrl() -> getAvatarUrl
+    174:174:java.lang.String getBriefDesc() -> getBriefDesc
+    182:182:java.lang.String getCreateTime() -> getCreateTime
+    54:54:java.util.List getFormContent() -> getFormContent
+    86:86:java.lang.String getHandlerId() -> getHandlerId
+    126:126:java.lang.String getHandlerMobile() -> getHandlerMobile
+    94:94:java.lang.String getHandlerName() -> getHandlerName
+    118:118:java.lang.String getHandlerType() -> getHandlerType
+    78:78:java.lang.String getId() -> getId
+    134:134:java.lang.String getNodeName() -> getNodeName
+    158:158:java.lang.String getNotAcceptable() -> getNotAcceptable
+    142:142:java.lang.String getOperation() -> getOperation
+    70:70:java.util.List getOperationInfos() -> getOperationInfos
+    198:198:java.lang.String getProcessResult() -> getProcessResult
+    166:166:java.lang.String getRemark() -> getRemark
+    150:150:java.lang.String getResourceKey() -> getResourceKey
+    62:62:java.util.List getResourceValue() -> getResourceValue
+    190:190:java.lang.String getUpdateTime() -> getUpdateTime
+    106:107:void setAssigneeId(java.lang.String) -> setAssigneeId
+    114:115:void setAvatarUrl(java.lang.String) -> setAvatarUrl
+    178:179:void setBriefDesc(java.lang.String) -> setBriefDesc
+    186:187:void setCreateTime(java.lang.String) -> setCreateTime
+    58:59:void setFormContent(java.util.List) -> setFormContent
+    90:91:void setHandlerId(java.lang.String) -> setHandlerId
+    130:131:void setHandlerMobile(java.lang.String) -> setHandlerMobile
+    98:99:void setHandlerName(java.lang.String) -> setHandlerName
+    122:123:void setHandlerType(java.lang.String) -> setHandlerType
+    82:83:void setId(java.lang.String) -> setId
+    138:139:void setNodeName(java.lang.String) -> setNodeName
+    162:163:void setNotAcceptable(java.lang.String) -> setNotAcceptable
+    146:147:void setOperation(java.lang.String) -> setOperation
+    74:75:void setOperationInfos(java.util.List) -> setOperationInfos
+    202:203:void setProcessResult(java.lang.String) -> setProcessResult
+    170:171:void setRemark(java.lang.String) -> setRemark
+    154:155:void setResourceKey(java.lang.String) -> setResourceKey
+    66:67:void setResourceValue(java.util.List) -> setResourceValue
+    194:195:void setUpdateTime(java.lang.String) -> setUpdateTime
 com.chanfinecloud.cflforemployee.entity.WorkflowType -> com.chanfinecloud.cflforemployee.entity.WorkflowType:
     com.chanfinecloud.cflforemployee.entity.WorkflowType[] $VALUES -> a
     9:8:void <clinit>() -> <clinit>
@@ -22434,14 +22436,14 @@ com.chanfinecloud.cflforemployee.ui.OrderDetailActivity -> com.chanfinecloud.cfl
     76:76:void access$1000(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> a
     76:76:void access$400(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> a
     76:76:void access$700(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.util.List) -> a
-    403:435:void initAction(com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> a
-    461:493:void compress(java.util.List) -> a
+    413:445:void initAction(com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> a
+    471:503:void compress(java.util.List) -> a
     76:76:androidx.recyclerview.widget.GridLayoutManager access$100(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> b
     76:76:void access$1300(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> b
     76:76:void access$500(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> b
-    272:351:void initWorkFlow(java.util.List) -> b
-    358:396:void initView(com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> b
-    500:520:void uploadPic(java.lang.String) -> b
+    272:355:void initWorkFlow(java.util.List) -> b
+    362:406:void initView(com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> b
+    510:530:void uploadPic(java.lang.String) -> b
     76:76:void access$1100(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> c
     76:76:void access$1500(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> c
     76:76:com.scwang.smartrefresh.layout.SmartRefreshLayout access$1200(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> d
@@ -22452,7 +22454,7 @@ com.chanfinecloud.cflforemployee.ui.OrderDetailActivity -> com.chanfinecloud.cfl
     76:76:java.util.List access$600(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> h
     76:76:java.util.List access$800(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> i
     223:265:void getData() -> l
-    440:454:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    450:464:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
     178:188:void onClickEvent(android.view.View) -> onClickEvent
     128:174:void onCreate(android.os.Bundle) -> onCreate
     215:217:void onDestroy() -> onDestroy
@@ -22478,24 +22480,24 @@ com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$4 -> com.chanfinecloud.c
     java.util.List val$data -> c
     androidx.recyclerview.widget.GridLayoutManager val$mGridLayoutManager -> a
     com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter val$imageAdapter -> b
-    322:322:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,androidx.recyclerview.widget.GridLayoutManager,com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter,java.util.List) -> <init>
-    325:341:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
+    326:326:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,androidx.recyclerview.widget.GridLayoutManager,com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter,java.util.List) -> <init>
+    329:345:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$5 -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$e:
     com.chanfinecloud.cflforemployee.ui.OrderDetailActivity this$0 -> a
-    473:473:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
-    481:486:void onSuccess(java.io.File) -> a
-    490:491:void onError(java.lang.Throwable) -> a
-    476:477:void onStart() -> onStart
+    483:483:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
+    491:496:void onSuccess(java.io.File) -> a
+    500:501:void onError(java.lang.Throwable) -> a
+    486:487:void onStart() -> onStart
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$6 -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$f:
-    467:467:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
-    470:470:boolean apply(java.lang.String) -> a
+    477:477:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
+    480:480:boolean apply(java.lang.String) -> a
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$7 -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$g:
     java.lang.String val$path -> a
     com.chanfinecloud.cflforemployee.ui.OrderDetailActivity this$0 -> b
-    505:505:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> <init>
-    515:517:void onError(java.lang.Throwable,boolean) -> onError
-    505:505:void onSuccess(java.lang.Object) -> onSuccess
-    508:511:void onSuccess(java.lang.String) -> onSuccess
+    515:515:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> <init>
+    525:527:void onError(java.lang.Throwable,boolean) -> onError
+    515:515:void onSuccess(java.lang.Object) -> onSuccess
+    518:521:void onSuccess(java.lang.String) -> onSuccess
 com.chanfinecloud.cflforemployee.ui.PersonActivity -> com.chanfinecloud.cflforemployee.ui.PersonActivity:
     android.widget.TextView person_tv_tel -> o
     com.chanfinecloud.cflforemployee.weidgt.wheelview.BirthWheelDialog wheelDialog -> p

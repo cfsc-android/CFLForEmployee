@@ -46,10 +46,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.cfl
             //测试
-//            buildConfigField "String", "BASE_URL", Debug_Url
-//            buildConfigField "String", "ENV", "\"debug\""
-            buildConfigField "String", "BASE_URL", Release_Url
-            buildConfigField "String", "ENV", "\"release\""
+            buildConfigField "String", "BASE_URL", Debug_Url
+            buildConfigField "String", "ENV", "\"debug\""
+//            buildConfigField "String", "BASE_URL", Release_Url
+//            buildConfigField "String", "ENV", "\"release\""
         }
         release {
             debuggable true
