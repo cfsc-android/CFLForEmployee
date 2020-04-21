@@ -229,6 +229,7 @@ public class OrderDetailActivity extends BaseActivity {
             public void onSuccess(String result) {
                 super.onSuccess(result);
                 LogUtils.d("result",result);
+                System.out.println("获取工单详情数据result"+result);
                 BaseEntity<OrderDetailsEntity> baseEntity= JsonParse.parse(result,OrderDetailsEntity.class);
                 if(baseEntity.isSuccess()){
                     initView(baseEntity.getResult());
@@ -311,7 +312,7 @@ public class OrderDetailActivity extends BaseActivity {
                 if(item.getUpdateTime()==null){
                     item_workflow_time.setText("正在处理");
                 }else{
-                    item_workflow_time.setText(item.getCreateTime());
+                    item_workflow_time.setText(item.getUpdateTime());
                 }
                 List<ResourceEntity> picData=item.getResourceValue();
                 if(picData!=null&&picData.size()>0){
