@@ -27,4 +27,7 @@
     <color name="indicator_bottom_line_color">#333333</color>
 
     <color name="province_line_border">#D0D0D0</color>
+    <color name="backgroud_color">#FFFDEF</color>
+    <color name="dialog_bg">#33000000</color>
+    <color name="car_lock_theme">#13AD57</color>
 </resources>

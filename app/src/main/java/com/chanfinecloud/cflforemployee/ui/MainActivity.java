@@ -1,15 +1,21 @@
 package com.chanfinecloud.cflforemployee.ui;
 
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chanfinecloud.cflforemployee.CFLApplication;
 import com.chanfinecloud.cflforemployee.R;
@@ -31,6 +37,10 @@ import com.chanfinecloud.cflforemployee.util.LynActivityManager;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
 import com.google.gson.reflect.TypeToken;
 import com.pgyersdk.update.PgyUpdateManager;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Rationale;
+import com.yanzhenjie.permission.RequestExecutor;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -48,12 +58,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import cn.jpush.android.api.JPushInterface;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
+import static android.provider.Settings.EXTRA_APP_PACKAGE;
+import static android.provider.Settings.EXTRA_CHANNEL_ID;
 import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
 import static com.chanfinecloud.cflforemployee.config.Config.SET_JPUSH_ALIAS_SEQUENCE;
 import static com.chanfinecloud.cflforemployee.config.Config.SET_JPUSH_TAGS_SEQUENCE;
@@ -81,6 +95,8 @@ public class MainActivity extends BaseActivity {
     private FragmentManager fragmentManager;
     private Fragment home, mine;
     private long time=0;
+    private int isFirstIn = 0;
+    private boolean permissionFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +114,9 @@ public class MainActivity extends BaseActivity {
      * 初始化基础配置数据
      */
     private void initData(){
+
+        isFirstIn = 0;
+        permissionFlag = false;
         initOrderType();
         initOrderStatus();
         initComplainType();
@@ -429,6 +448,235 @@ public class MainActivity extends BaseActivity {
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ShortcutBadger.removeCount(getApplicationContext()); //for 1.1.4+
+        if ( isFirstIn == 0){
+            isFirstIn = 1;
+        }else{
+
+            if (!permissionFlag){
+                //悬浮窗权限不强求吧
+                //requestAndOverlay();
+                requestAndNotificationListener();
+            }
+
+        }
+    }
+
+    public void requestAndOverlay(){
+        AndPermission.with(this)
+                .overlay()
+                .rationale(new Rationale<Void>() {
+                    @Override
+                    public void showRationale(Context context, Void data, final RequestExecutor executor) {
+
+                        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context, R.style.dialog);
+                        View view = LayoutInflater.from(context).inflate(R.layout.dialog_runtime_before_request, null);
+                        TextView tvTitle = view.findViewById(R.id.tv_dialog_permission_title);
+                        TextView tvDescription = view.findViewById(R.id.tv_dialog_permission_description);
+                        TextView tvNext = view.findViewById(R.id.tv_dialog_permission_next);
+                        TextView tvClose = view.findViewById(R.id.tv_dialog_permission_close);
+
+                        tvNext.setText("去打开");
+                        tvTitle.setText("悬浮窗显示");
+                        tvDescription.setText("我们将开始请求悬浮窗显示权限");
+                        // 设置我们自己定义的布局文件作为弹出框的Content
+                        alertDialogBuilder.setView(view);
+                        //按对话框以外的地方不起作用,按返回键也不起作用,防止点击外面对话框消失
+                        alertDialogBuilder.setCancelable(false);
+                        //这个位置十分重要，只有位于这个位置逻辑才是正确的
+                        final androidx.appcompat.app.AlertDialog dialog = alertDialogBuilder.show();
+                        tvNext.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                executor.execute();
+                                dialog.dismiss();
+                            }
+                        });
+
+                        tvClose.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                executor.cancel();
+                                dialog.dismiss();
+                            }
+                        });
+
+                    }
+                })
+                .onGranted(new Action<Void>() {
+                    @Override
+                    public void onAction(Void permissions) {
+                        // Storage permission are allowed.
+                        requestAndNotificationListener();
+                    }
+                })
+                .onDenied(new Action<Void>() {
+                    @Override
+                    public void onAction(Void permissions) {
+                        // Storage permission are not allowed.
+                        Toast.makeText(MainActivity.this, "悬浮窗权限获取失败", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .start();
+
+    }
+
+    private void requestAndNotificationListener() {
+        AndPermission.with(this)
+                .notification()
+                .listener()
+                .rationale(new Rationale<Void>() {
+                    @Override
+                    public void showRationale(Context context, Void data, final RequestExecutor executor) {
+                        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context, R.style.dialog);
+                        View view = LayoutInflater.from(context).inflate(R.layout.dialog_runtime_before_request, null);
+                        TextView tvTitle = view.findViewById(R.id.tv_dialog_permission_title);
+                        TextView tvDescription = view.findViewById(R.id.tv_dialog_permission_description);
+                        TextView tvNext = view.findViewById(R.id.tv_dialog_permission_next);
+                        TextView tvClose = view.findViewById(R.id.tv_dialog_permission_close);
+
+                        tvNext.setText("去打开");
+                        tvTitle.setText("管理通知");
+                        tvDescription.setText("我们将开始请求通知管理权限");
+                        // 设置我们自己定义的布局文件作为弹出框的Content
+                        alertDialogBuilder.setView(view);
+                        //按对话框以外的地方不起作用,按返回键也不起作用,防止点击外面对话框消失
+                        alertDialogBuilder.setCancelable(false);
+                        //这个位置十分重要，只有位于这个位置逻辑才是正确的
+                        final androidx.appcompat.app.AlertDialog dialog = alertDialogBuilder.show();
+                        tvNext.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                executor.execute();
+                                dialog.dismiss();
+                            }
+                        });
+
+                        tvClose.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                executor.cancel();
+                                dialog.dismiss();
+                            }
+                        });
+
+                    }
+                })
+                .onGranted(new Action<Void>() {
+                    @Override
+                    public void onAction(Void permissions) {
+                        // Storage permission are allowed.
+                        //permissionFlag = true;
+                        requestAndNotificationShow();
+
+                    }
+                })
+                .onDenied(new Action<Void>() {
+                    @Override
+                    public void onAction(Void permissions) {
+                        // Storage permission are not allowed.
+                        Toast.makeText(MainActivity.this, "通知管理权限获取失败", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .start();
+
+    }
+
+
+    private void requestAndNotificationShow() {
+        AndPermission.with(this)
+                .notification()
+                .permission()
+                .rationale(new Rationale<Void>() {
+                    @Override
+                    public void showRationale(Context context, Void data, final RequestExecutor executor) {
+
+                        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context, R.style.dialog);
+                        View view = LayoutInflater.from(context).inflate(R.layout.dialog_runtime_before_request, null);
+                        TextView tvTitle = view.findViewById(R.id.tv_dialog_permission_title);
+                        TextView tvDescription = view.findViewById(R.id.tv_dialog_permission_description);
+                        TextView tvNext = view.findViewById(R.id.tv_dialog_permission_next);
+                        TextView tvClose = view.findViewById(R.id.tv_dialog_permission_close);
+
+                        tvNext.setText("去打开");
+                        tvTitle.setText("接收通知");
+                        tvDescription.setText("我们将开始请求通知显示权限");
+                        // 设置我们自己定义的布局文件作为弹出框的Content
+                        alertDialogBuilder.setView(view);
+                        //按对话框以外的地方不起作用,按返回键也不起作用,防止点击外面对话框消失
+                        alertDialogBuilder.setCancelable(false);
+                        //这个位置十分重要，只有位于这个位置逻辑才是正确的
+                        final AlertDialog dialog = alertDialogBuilder.show();
+                        tvNext.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    toOpenNotificationAccessManually();
+                                }else{
+                                    executor.execute();
+                                }
+                                dialog.dismiss();
+                            }
+                        });
+
+                        tvClose.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                executor.cancel();
+                                dialog.dismiss();
+                            }
+                        });
+
+                    }
+                })
+                .onGranted(new Action<Void>() {
+                    @Override
+                    public void onAction(Void permissions) {
+                        // Storage permission are allowed.
+                        //requestAndNotificationListener();
+                        permissionFlag = true;
+                    }
+                })
+                .onDenied(new Action<Void>() {
+                    @Override
+                    public void onAction(Void permissions) {
+                        // Storage permission are not allowed.
+                        Toast.makeText(MainActivity.this, "显示通知权限获取失败", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .start();
+    }
+
+    /**
+     * 去设置里手动打开Notification权限
+     *
+     */
+    public void toOpenNotificationAccessManually() {
+        try {
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+            //这种方案适用于 API 26, 即8.0（含8.0）以上可以用
+            intent.putExtra(EXTRA_APP_PACKAGE, getPackageName());
+            intent.putExtra(EXTRA_CHANNEL_ID, getApplicationInfo().uid);
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 出现异常则跳转到应用设置界面：锤子坚果3——OC105 API25
+            Intent intent = new Intent();
+            //下面这种方案是直接跳转到当前应用的设置界面。
+            //https://blog.csdn.net/ysy950803/article/details/71910806
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", getPackageName(), null);
+            intent.setData(uri);
+            startActivity(intent);
+        }
     }
 
 }

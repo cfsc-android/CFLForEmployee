@@ -23,6 +23,7 @@ import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.JPushMessage;
 import cn.jpush.android.api.NotificationMessage;
 import cn.jpush.android.service.JPushMessageReceiver;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static com.chanfinecloud.cflforemployee.config.Config.CLEAR_JPUSH_TAGS_SEQUENCE;
 
@@ -84,6 +85,22 @@ public class MyJPushMessageReceiver extends JPushMessageReceiver {
         super.onNotifyMessageArrived(context, notificationMessage);
         //收到通知消息
         LogUtils.d("onNotifyMessageArrived:"+notificationMessage.toString());
+        // TODO: 2020/4/20  可能需要分类型添加小红标
+        int badgeCount = 1;
+        ShortcutBadger.applyCount(context, badgeCount); //for 1.1.4+
+
+        Gson gson=new Gson();
+        NoticePushEntity noticePush=gson.fromJson(notificationMessage.notificationExtras,NoticePushEntity.class);
+
+        if("1".equals(noticePush.getType())){
+            EventBus.getDefault().post(new EventBusMessage<>("NoticeRefresh"));
+        }else if("2".equals(noticePush.getType())){
+
+            EventBus.getDefault().post(new EventBusMessage<>("OrderNotice"));
+        }else if("3".equals(noticePush.getType())){
+
+            EventBus.getDefault().post(new EventBusMessage<>("ComplaintNotice"));
+        }
 
     }
 

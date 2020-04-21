@@ -3,26 +3,36 @@ package com.chanfinecloud.cflforemployee.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
-import com.chanfinecloud.cflforemployee.adapter.HomeTodoPagerAdapter;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
+
 import com.chanfinecloud.cflforemployee.R;
-import com.chanfinecloud.cflforemployee.ui.base.BaseFragment;
+import com.chanfinecloud.cflforemployee.adapter.HomeTodoPagerAdapter;
 import com.chanfinecloud.cflforemployee.entity.BaseEntity;
+import com.chanfinecloud.cflforemployee.entity.EventBusMessage;
 import com.chanfinecloud.cflforemployee.entity.HomeTodoType;
 import com.chanfinecloud.cflforemployee.entity.NoticeEntity;
 import com.chanfinecloud.cflforemployee.entity.NoticeListEntity;
 import com.chanfinecloud.cflforemployee.entity.NoticeReceiverType;
 import com.chanfinecloud.cflforemployee.entity.NoticeType;
 import com.chanfinecloud.cflforemployee.entity.WorkflowType;
-import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.http.HttpMethod;
 import com.chanfinecloud.cflforemployee.http.JsonParse;
 import com.chanfinecloud.cflforemployee.http.MyCallBack;
 import com.chanfinecloud.cflforemployee.http.RequestParam;
+import com.chanfinecloud.cflforemployee.ui.base.BaseFragment;
+import com.chanfinecloud.cflforemployee.util.LogUtils;
+import com.chanfinecloud.cflforemployee.util.Utils;
+import com.chanfinecloud.cflforemployee.weidgt.BadgeView;
 import com.chanfinecloud.cflforemployee.weidgt.adtext.ADTextView;
 import com.chanfinecloud.cflforemployee.weidgt.adtext.OnAdConetentClickListener;
 import com.chanfinecloud.cflforemployee.weidgt.easyindicator.EasyIndicator;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -30,11 +40,7 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import androidx.annotation.Nullable;
-import androidx.viewpager.widget.ViewPager;
 
 import static com.chanfinecloud.cflforemployee.config.Config.ARTICLE;
 import static com.chanfinecloud.cflforemployee.config.Config.BASE_URL;
@@ -52,11 +58,18 @@ public class HomeFragment extends BaseFragment {
     private ViewPager home_vp_tab;
     @ViewInject(R.id.home_ad_hot)
     private ADTextView home_ad_hot;
+    @ViewInject(R.id.home_tv_order)
+    private TextView home_tv_order;
+    @ViewInject(R.id.home_tv_complain)
+    private TextView home_tv_complain;
 
     private Context context;
     private HomeTodoPagerAdapter adapter;
     private ArrayList<HomeTodoFragment> data=new ArrayList<>();
     private ArrayList<NoticeEntity> hotTopicList = new ArrayList<>();
+    private BadgeView orderBadgeTextView = null;
+    private BadgeView complaintBadgeTextView = null;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +89,20 @@ public class HomeFragment extends BaseFragment {
         home_ei_tab.setViewPager(home_vp_tab, adapter);
         home_vp_tab.setOffscreenPageLimit(HomeTodoType.size() - 1);
         home_vp_tab.setCurrentItem(0);
+
+        EventBus.getDefault().register(this);
+
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(EventBusMessage message) {
+        LogUtils.d(message.getMessage());
+        if("OrderNotice".equals(message.getMessage())){
+            orderBadgeTextView = Utils.toShowBadgeView(getActivity(), home_tv_order ,1, orderBadgeTextView, 1);
+        }else if("ComplaintNotice".equals(message.getMessage())){
+            complaintBadgeTextView = Utils.toShowBadgeView(getActivity(), home_tv_complain,1, complaintBadgeTextView, 1);
+        }
     }
 
     /**
@@ -140,10 +167,12 @@ public class HomeFragment extends BaseFragment {
         Bundle bundle=new Bundle();
         switch (v.getId()){
             case R.id.home_tv_order:
+                Utils.toHideBadgeView(orderBadgeTextView);
                 bundle.putSerializable("workflowType", WorkflowType.Order);
                 startActivity(WorkflowListActivity.class,bundle);
                 break;
             case R.id.home_tv_complain:
+                Utils.toHideBadgeView(complaintBadgeTextView);
                 bundle.putSerializable("workflowType", WorkflowType.Complain);
                 startActivity(WorkflowListActivity.class,bundle);
                 break;
@@ -157,5 +186,11 @@ public class HomeFragment extends BaseFragment {
                 startActivity(NoticeActivity.class);
                 break;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }
