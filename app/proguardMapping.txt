@@ -1,7 +1,7 @@
 # compiler: R8
 # compiler_version: 1.5.68
 # min_api: 19
-# pg_map_id: ba37b2e
+# pg_map_id: 7d124de
 android.support.v4.app.INotificationSideChannel -> a.a.a.a.a:
 android.support.v4.app.INotificationSideChannel$Stub -> a.a.a.a.a$a:
     20:22:void <init>() -> <init>
@@ -22434,14 +22434,14 @@ com.chanfinecloud.cflforemployee.ui.OrderDetailActivity -> com.chanfinecloud.cfl
     76:76:void access$1000(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> a
     76:76:void access$400(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> a
     76:76:void access$700(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.util.List) -> a
-    403:435:void initAction(com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> a
-    461:493:void compress(java.util.List) -> a
+    410:442:void initAction(com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> a
+    468:500:void compress(java.util.List) -> a
     76:76:androidx.recyclerview.widget.GridLayoutManager access$100(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> b
     76:76:void access$1300(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> b
     76:76:void access$500(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> b
-    272:351:void initWorkFlow(java.util.List) -> b
-    358:396:void initView(com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> b
-    500:520:void uploadPic(java.lang.String) -> b
+    273:352:void initWorkFlow(java.util.List) -> b
+    359:403:void initView(com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity) -> b
+    507:527:void uploadPic(java.lang.String) -> b
     76:76:void access$1100(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> c
     76:76:void access$1500(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> c
     76:76:com.scwang.smartrefresh.layout.SmartRefreshLayout access$1200(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> d
@@ -22451,8 +22451,8 @@ com.chanfinecloud.cflforemployee.ui.OrderDetailActivity -> com.chanfinecloud.cfl
     76:76:java.util.List access$300(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> g
     76:76:java.util.List access$600(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> h
     76:76:java.util.List access$800(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> i
-    223:265:void getData() -> l
-    440:454:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    223:266:void getData() -> l
+    447:461:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
     178:188:void onClickEvent(android.view.View) -> onClickEvent
     128:174:void onCreate(android.os.Bundle) -> onCreate
     215:217:void onDestroy() -> onDestroy
@@ -22469,33 +22469,33 @@ com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$2 -> com.chanfinecloud.c
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$3 -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$c:
     com.chanfinecloud.cflforemployee.ui.OrderDetailActivity this$0 -> a
     227:227:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
-    253:255:void onError(java.lang.Throwable,boolean) -> onError
-    259:262:void onFinished() -> onFinished
+    254:256:void onError(java.lang.Throwable,boolean) -> onError
+    260:263:void onFinished() -> onFinished
     227:227:void onSuccess(java.lang.Object) -> onSuccess
-    230:249:void onSuccess(java.lang.String) -> onSuccess
+    230:250:void onSuccess(java.lang.String) -> onSuccess
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$4 -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$d:
     com.chanfinecloud.cflforemployee.ui.OrderDetailActivity this$0 -> d
     java.util.List val$data -> c
     androidx.recyclerview.widget.GridLayoutManager val$mGridLayoutManager -> a
     com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter val$imageAdapter -> b
-    322:322:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,androidx.recyclerview.widget.GridLayoutManager,com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter,java.util.List) -> <init>
-    325:341:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
+    323:323:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,androidx.recyclerview.widget.GridLayoutManager,com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter,java.util.List) -> <init>
+    326:342:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$5 -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$e:
     com.chanfinecloud.cflforemployee.ui.OrderDetailActivity this$0 -> a
-    473:473:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
-    481:486:void onSuccess(java.io.File) -> a
-    490:491:void onError(java.lang.Throwable) -> a
-    476:477:void onStart() -> onStart
+    480:480:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
+    488:493:void onSuccess(java.io.File) -> a
+    497:498:void onError(java.lang.Throwable) -> a
+    483:484:void onStart() -> onStart
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$6 -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$f:
-    467:467:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
-    470:470:boolean apply(java.lang.String) -> a
+    474:474:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity) -> <init>
+    477:477:boolean apply(java.lang.String) -> a
 com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$7 -> com.chanfinecloud.cflforemployee.ui.OrderDetailActivity$g:
     java.lang.String val$path -> a
     com.chanfinecloud.cflforemployee.ui.OrderDetailActivity this$0 -> b
-    505:505:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> <init>
-    515:517:void onError(java.lang.Throwable,boolean) -> onError
-    505:505:void onSuccess(java.lang.Object) -> onSuccess
-    508:511:void onSuccess(java.lang.String) -> onSuccess
+    512:512:void <init>(com.chanfinecloud.cflforemployee.ui.OrderDetailActivity,java.lang.String) -> <init>
+    522:524:void onError(java.lang.Throwable,boolean) -> onError
+    512:512:void onSuccess(java.lang.Object) -> onSuccess
+    515:518:void onSuccess(java.lang.String) -> onSuccess
 com.chanfinecloud.cflforemployee.ui.PersonActivity -> com.chanfinecloud.cflforemployee.ui.PersonActivity:
     android.widget.TextView person_tv_tel -> o
     com.chanfinecloud.cflforemployee.weidgt.wheelview.BirthWheelDialog wheelDialog -> p
