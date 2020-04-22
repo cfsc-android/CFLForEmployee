@@ -111,7 +111,6 @@ public class HomeFragment extends BaseFragment {
     private void getData(){
         RequestParam requestParam=new RequestParam(BASE_URL+ARTICLE+"smart/content/pages",HttpMethod.Get);
         Map<String,String> map=new HashMap<>();
-        map.put("projectId","ec93bb06f5be4c1f19522ca78180e2i9");
         map.put("receiver", NoticeReceiverType.全部.getType()+","+NoticeReceiverType.员工.getType());
         map.put("announcementTypeId", NoticeType.热点关注.getType());
         map.put("auditStatus","1");
