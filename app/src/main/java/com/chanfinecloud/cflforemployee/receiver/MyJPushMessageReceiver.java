@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.chanfinecloud.cflforemployee.CFLApplication;
 import com.chanfinecloud.cflforemployee.entity.EventBusMessage;
+import com.chanfinecloud.cflforemployee.entity.JpushType;
 import com.chanfinecloud.cflforemployee.entity.NoticePushEntity;
 import com.chanfinecloud.cflforemployee.ui.ComplainDetailActivity;
 import com.chanfinecloud.cflforemployee.ui.NoticeDetailActivity;
@@ -54,7 +55,7 @@ public class MyJPushMessageReceiver extends JPushMessageReceiver {
         LogUtils.d("onNotifyMessageOpened:"+notificationMessage.toString());
         Gson gson=new Gson();
         NoticePushEntity noticePush=gson.fromJson(notificationMessage.notificationExtras,NoticePushEntity.class);
-        if("1".equals(noticePush.getType())){
+        if((JpushType.News.getType()).equals(noticePush.getType())){
             Intent intent=new Intent(context,NoticeDetailActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             Bundle bundle=new Bundle();
@@ -62,14 +63,14 @@ public class MyJPushMessageReceiver extends JPushMessageReceiver {
             bundle.putString("title",notificationMessage.notificationTitle);
             intent.putExtras(bundle);
             context.startActivity(intent);
-        }else if("2".equals(noticePush.getType())){
+        }else if((JpushType.Orders.getType()).equals(noticePush.getType())){
             Intent intent=new Intent(context, OrderDetailActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             Bundle bundle=new Bundle();
             bundle.putString("order_id",noticePush.getBusinessId());
             intent.putExtras(bundle);
             context.startActivity(intent);
-        }else if("3".equals(noticePush.getType())){
+        }else if((JpushType.Complain.getType()).equals(noticePush.getType())){
             Intent intent=new Intent(context, ComplainDetailActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             Bundle bundle=new Bundle();
@@ -92,12 +93,12 @@ public class MyJPushMessageReceiver extends JPushMessageReceiver {
         Gson gson=new Gson();
         NoticePushEntity noticePush=gson.fromJson(notificationMessage.notificationExtras,NoticePushEntity.class);
 
-        if("1".equals(noticePush.getType())){
+        if((JpushType.News.getType()).equals(noticePush.getType())){
             EventBus.getDefault().post(new EventBusMessage<>("NoticeRefresh"));
-        }else if("2".equals(noticePush.getType())){
+        }else if((JpushType.Orders.getType()).equals(noticePush.getType())){
 
             EventBus.getDefault().post(new EventBusMessage<>("OrderNotice"));
-        }else if("3".equals(noticePush.getType())){
+        }else if((JpushType.Complain.getType()).equals(noticePush.getType())){
 
             EventBus.getDefault().post(new EventBusMessage<>("ComplaintNotice"));
         }

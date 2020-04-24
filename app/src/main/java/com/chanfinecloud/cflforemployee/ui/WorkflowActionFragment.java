@@ -37,6 +37,7 @@ import com.chanfinecloud.cflforemployee.ui.base.BaseFragment;
 import com.chanfinecloud.cflforemployee.util.AnimationUtil;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
+import com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImageViewInfo;
 import com.chanfinecloud.cflforemployee.weidgt.photopicker.PhotoPicker;
@@ -286,7 +287,7 @@ public class WorkflowActionFragment extends BaseFragment {
         View v = LayoutInflater.from(context).inflate(R.layout.workflow_action_remark,null);
         TextView labelView=v.findViewById(R.id.action_remark_label);
         labelView.setText(label);
-        EditText remark=v.findViewById(R.id.action_remark_content);
+        EditTextFilterView remark=v.findViewById(R.id.action_remark_content);
         WorkflowViewEntity<EditText> workflowView=new WorkflowViewEntity<>(v);
         workflowView.setLabel(labelView);
         workflowView.setContent(remark);
@@ -302,7 +303,7 @@ public class WorkflowActionFragment extends BaseFragment {
         View v = LayoutInflater.from(context).inflate(R.layout.workflow_action_input,null);
         TextView labelView=v.findViewById(R.id.action_text_label);
         labelView.setText(label);
-        EditText text=v.findViewById(R.id.action_text_content);
+        EditTextFilterView text=v.findViewById(R.id.action_text_content);
         WorkflowViewEntity<EditText> workflowView=new WorkflowViewEntity<>(v);
         workflowView.setLabel(labelView);
         workflowView.setContent(text);
@@ -487,7 +488,7 @@ public class WorkflowActionFragment extends BaseFragment {
                         break;
                 }
             }else if("textarea".equals(workflowViewTag.getFormType())){
-                EditText remark= (EditText) workflowViewTag.getWorkflowView().getContent();
+                EditTextFilterView remark= (EditTextFilterView) workflowViewTag.getWorkflowView().getContent();
                 map.put(workflowViewTag.getFormKey(),remark.getText().toString());
             }else if("director".equals(workflowViewTag.getFormType())||"employee".equals(workflowViewTag.getFormType())||"emergency".equals(workflowViewTag.getFormType())){
                 MaterialSpinner assignId= (MaterialSpinner) workflowViewTag.getWorkflowView().getContent();
@@ -499,7 +500,7 @@ public class WorkflowActionFragment extends BaseFragment {
                 RatingStarView rate= (RatingStarView) workflowViewTag.getWorkflowView().getContent();
                 map.put(workflowViewTag.getFormKey(),rate.getRating());
             }else if("input_number".equals(workflowViewTag.getFormType())){
-                EditText manualCost= (EditText) workflowViewTag.getWorkflowView().getContent();
+                EditTextFilterView manualCost= (EditTextFilterView) workflowViewTag.getWorkflowView().getContent();
                 map.put(workflowViewTag.getFormKey(),Double.parseDouble(manualCost.getText().toString()));
             }
         }
