@@ -1,7 +1,7 @@
 # compiler: R8
 # compiler_version: 1.5.68
 # min_api: 19
-# pg_map_id: be30f39
+# pg_map_id: 58a0c2b
 android.support.v4.app.INotificationSideChannel -> a.a.a.a.a:
 android.support.v4.app.INotificationSideChannel$Stub -> a.a.a.a.a$a:
     20:22:void <init>() -> <init>
@@ -21159,6 +21159,13 @@ com.chanfinecloud.cflforemployee.entity.HomeTodoType -> com.chanfinecloud.cflfor
     22:22:int size() -> size
     8:8:com.chanfinecloud.cflforemployee.entity.HomeTodoType valueOf(java.lang.String) -> valueOf
     8:8:com.chanfinecloud.cflforemployee.entity.HomeTodoType[] values() -> values
+com.chanfinecloud.cflforemployee.entity.JpushType -> com.chanfinecloud.cflforemployee.entity.JpushType:
+    com.chanfinecloud.cflforemployee.entity.JpushType[] $VALUES -> a
+    9:7:void <clinit>() -> <clinit>
+    24:26:void <init>(java.lang.String,int,java.lang.String) -> <init>
+    21:21:java.lang.String getType() -> getType
+    7:7:com.chanfinecloud.cflforemployee.entity.JpushType valueOf(java.lang.String) -> valueOf
+    7:7:com.chanfinecloud.cflforemployee.entity.JpushType[] values() -> values
 com.chanfinecloud.cflforemployee.entity.ListLoadingType -> com.chanfinecloud.cflforemployee.entity.ListLoadingType:
     com.chanfinecloud.cflforemployee.entity.ListLoadingType[] $VALUES -> a
     9:8:void <clinit>() -> <clinit>
@@ -21779,21 +21786,21 @@ com.chanfinecloud.cflforemployee.http.XHttp -> c.b.a.e.e:
 com.chanfinecloud.cflforemployee.receiver.MyJCommonService -> com.chanfinecloud.cflforemployee.receiver.MyJCommonService:
     10:10:void <init>() -> <init>
 com.chanfinecloud.cflforemployee.receiver.MyJPushMessageReceiver -> com.chanfinecloud.cflforemployee.receiver.MyJPushMessageReceiver:
-    35:35:void <init>() -> <init>
-    39:40:android.app.Notification getNotification(android.content.Context,cn.jpush.android.api.NotificationMessage) -> getNotification
-    157:163:void onAliasOperatorResult(android.content.Context,cn.jpush.android.api.JPushMessage) -> onAliasOperatorResult
-    151:153:void onCheckTagOperatorResult(android.content.Context,cn.jpush.android.api.JPushMessage) -> onCheckTagOperatorResult
-    128:130:void onCommandResult(android.content.Context,cn.jpush.android.api.CmdMessage) -> onCommandResult
-    121:124:void onConnected(android.content.Context,boolean) -> onConnected
-    45:48:void onMessage(android.content.Context,cn.jpush.android.api.CustomMessage) -> onMessage
-    167:169:void onMobileNumberOperatorResult(android.content.Context,cn.jpush.android.api.JPushMessage) -> onMobileNumberOperatorResult
-    134:136:void onMultiActionClicked(android.content.Context,android.content.Intent) -> onMultiActionClicked
-    173:177:void onNotificationSettingsCheck(android.content.Context,boolean,int) -> onNotificationSettingsCheck
-    85:105:void onNotifyMessageArrived(android.content.Context,cn.jpush.android.api.NotificationMessage) -> onNotifyMessageArrived
-    109:111:void onNotifyMessageDismiss(android.content.Context,cn.jpush.android.api.NotificationMessage) -> onNotifyMessageDismiss
-    54:80:void onNotifyMessageOpened(android.content.Context,cn.jpush.android.api.NotificationMessage) -> onNotifyMessageOpened
-    115:117:void onRegister(android.content.Context,java.lang.String) -> onRegister
-    140:147:void onTagOperatorResult(android.content.Context,cn.jpush.android.api.JPushMessage) -> onTagOperatorResult
+    36:36:void <init>() -> <init>
+    40:41:android.app.Notification getNotification(android.content.Context,cn.jpush.android.api.NotificationMessage) -> getNotification
+    158:164:void onAliasOperatorResult(android.content.Context,cn.jpush.android.api.JPushMessage) -> onAliasOperatorResult
+    152:154:void onCheckTagOperatorResult(android.content.Context,cn.jpush.android.api.JPushMessage) -> onCheckTagOperatorResult
+    129:131:void onCommandResult(android.content.Context,cn.jpush.android.api.CmdMessage) -> onCommandResult
+    122:125:void onConnected(android.content.Context,boolean) -> onConnected
+    46:49:void onMessage(android.content.Context,cn.jpush.android.api.CustomMessage) -> onMessage
+    168:170:void onMobileNumberOperatorResult(android.content.Context,cn.jpush.android.api.JPushMessage) -> onMobileNumberOperatorResult
+    135:137:void onMultiActionClicked(android.content.Context,android.content.Intent) -> onMultiActionClicked
+    174:178:void onNotificationSettingsCheck(android.content.Context,boolean,int) -> onNotificationSettingsCheck
+    86:106:void onNotifyMessageArrived(android.content.Context,cn.jpush.android.api.NotificationMessage) -> onNotifyMessageArrived
+    110:112:void onNotifyMessageDismiss(android.content.Context,cn.jpush.android.api.NotificationMessage) -> onNotifyMessageDismiss
+    55:81:void onNotifyMessageOpened(android.content.Context,cn.jpush.android.api.NotificationMessage) -> onNotifyMessageOpened
+    116:118:void onRegister(android.content.Context,java.lang.String) -> onRegister
+    141:148:void onTagOperatorResult(android.content.Context,cn.jpush.android.api.JPushMessage) -> onTagOperatorResult
 com.chanfinecloud.cflforemployee.receiver.NetBroadcastReceiver -> com.chanfinecloud.cflforemployee.receiver.NetBroadcastReceiver:
     com.chanfinecloud.cflforemployee.receiver.NetBroadcastReceiver$NetEvent event -> a
     20:22:void <init>(com.chanfinecloud.cflforemployee.receiver.NetBroadcastReceiver$NetEvent) -> <init>
@@ -22681,99 +22688,99 @@ com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment -> com.chanfinecloud.
     com.chanfinecloud.cflforemployee.entity.WorkflowProcessesEntity workflowProcesses -> m
     java.util.List operationInfo -> n
     com.chanfinecloud.cflforemployee.entity.WorkflowType workflowType -> v
-    77:78:void <init>() -> <init>
-    76:76:java.util.List access$000(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> a
-    76:76:void access$1200(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment,java.lang.String) -> a
-    76:76:com.chanfinecloud.cflforemployee.weidgt.wheelview.BirthWheelDialog access$202(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment,com.chanfinecloud.cflforemployee.weidgt.wheelview.BirthWheelDialog) -> a
-    76:76:void access$900(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment,int) -> a
-    80:82:com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment newInstance(android.os.Bundle) -> a
-    148:150:void setPicData(com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImageViewInfo) -> a
-    350:358:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initChooseButtonView(java.lang.String,java.lang.String) -> a
-    461:468:java.lang.Object getFieldValueByName(java.lang.String,java.lang.Object) -> a
-    477:516:void initHandleMap(int) -> a
-    580:585:void workflowAction(java.util.Map) -> a
-    76:76:java.util.List access$100(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> b
-    76:76:void access$1300(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment,java.lang.String) -> b
-    159:207:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initSpinner(java.lang.String,java.lang.String) -> b
-    216:236:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initDateView(java.lang.String) -> b
-    76:76:android.widget.ImageView access$1000(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> c
-    76:76:void access$700(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment,java.lang.String) -> c
-    303:310:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initInputView(java.lang.String) -> c
-    76:76:android.widget.FrameLayout access$1100(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> d
-    245:278:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initPhotoView(java.lang.String) -> d
-    76:76:void access$1400(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> e
-    319:326:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initRateView(java.lang.String) -> e
-    381:454:void initActionView() -> e
-    76:76:com.chanfinecloud.cflforemployee.weidgt.wheelview.BirthWheelDialog access$200(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> f
-    287:294:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initRemarkView(java.lang.String) -> f
-    76:76:android.app.Activity access$300(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> g
-    335:340:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initSubmitButtonView(java.lang.String) -> g
-    76:76:java.util.List access$400(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> h
-    367:374:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initTextView(java.lang.String) -> h
-    76:76:boolean access$500(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> i
-    76:76:com.chanfinecloud.cflforemployee.entity.WorkflowType access$600(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> j
-    76:76:java.util.List access$800(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> k
-    520:573:void onClickEvent(android.view.View) -> onClickEvent
-    118:134:void onCreate(android.os.Bundle) -> onCreate
-    138:141:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
+    78:79:void <init>() -> <init>
+    77:77:java.util.List access$000(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> a
+    77:77:void access$1200(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment,java.lang.String) -> a
+    77:77:com.chanfinecloud.cflforemployee.weidgt.wheelview.BirthWheelDialog access$202(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment,com.chanfinecloud.cflforemployee.weidgt.wheelview.BirthWheelDialog) -> a
+    77:77:void access$900(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment,int) -> a
+    81:83:com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment newInstance(android.os.Bundle) -> a
+    149:151:void setPicData(com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImageViewInfo) -> a
+    351:359:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initChooseButtonView(java.lang.String,java.lang.String) -> a
+    463:470:java.lang.Object getFieldValueByName(java.lang.String,java.lang.Object) -> a
+    479:523:void initHandleMap(int) -> a
+    587:592:void workflowAction(java.util.Map) -> a
+    77:77:java.util.List access$100(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> b
+    77:77:void access$1300(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment,java.lang.String) -> b
+    160:208:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initSpinner(java.lang.String,java.lang.String) -> b
+    217:237:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initDateView(java.lang.String) -> b
+    77:77:android.widget.ImageView access$1000(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> c
+    77:77:void access$700(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment,java.lang.String) -> c
+    304:311:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initInputView(java.lang.String) -> c
+    77:77:android.widget.FrameLayout access$1100(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> d
+    246:279:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initPhotoView(java.lang.String) -> d
+    77:77:void access$1400(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> e
+    320:327:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initRateView(java.lang.String) -> e
+    382:456:void initActionView() -> e
+    77:77:com.chanfinecloud.cflforemployee.weidgt.wheelview.BirthWheelDialog access$200(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> f
+    288:295:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initRemarkView(java.lang.String) -> f
+    77:77:android.app.Activity access$300(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> g
+    336:341:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initSubmitButtonView(java.lang.String) -> g
+    77:77:java.util.List access$400(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> h
+    368:375:com.chanfinecloud.cflforemployee.entity.WorkflowViewEntity initTextView(java.lang.String) -> h
+    77:77:boolean access$500(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> i
+    77:77:com.chanfinecloud.cflforemployee.entity.WorkflowType access$600(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> j
+    77:77:java.util.List access$800(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> k
+    527:580:void onClickEvent(android.view.View) -> onClickEvent
+    119:135:void onCreate(android.os.Bundle) -> onCreate
+    139:142:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
 com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$1 -> com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$d:
     com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment this$0 -> a
-    171:171:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
-    174:175:void onItemSelected(com.jaredrummler.materialspinner.MaterialSpinner,int,long,java.lang.Object) -> a
+    172:172:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
+    175:176:void onItemSelected(com.jaredrummler.materialspinner.MaterialSpinner,int,long,java.lang.Object) -> a
 com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$10 -> com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$a:
     com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment this$0 -> a
-    544:544:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
-    560:562:void onAnimationEnd(android.animation.Animator,boolean) -> onAnimationEnd
-    566:568:void onAnimationEnd(android.animation.Animator) -> onAnimationEnd
-    547:550:void onAnimationStart(android.animation.Animator,boolean) -> onAnimationStart
-    554:556:void onAnimationStart(android.animation.Animator) -> onAnimationStart
+    551:551:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
+    567:569:void onAnimationEnd(android.animation.Animator,boolean) -> onAnimationEnd
+    573:575:void onAnimationEnd(android.animation.Animator) -> onAnimationEnd
+    554:557:void onAnimationStart(android.animation.Animator,boolean) -> onAnimationStart
+    561:563:void onAnimationStart(android.animation.Animator) -> onAnimationStart
 com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$11 -> com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$b:
     com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment this$0 -> a
-    590:590:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
-    606:608:void onError(java.lang.Throwable,boolean) -> onError
-    612:614:void onFinished() -> onFinished
-    590:590:void onSuccess(java.lang.Object) -> onSuccess
-    593:602:void onSuccess(java.lang.String) -> onSuccess
+    597:597:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
+    613:615:void onError(java.lang.Throwable,boolean) -> onError
+    619:621:void onFinished() -> onFinished
+    597:597:void onSuccess(java.lang.Object) -> onSuccess
+    600:609:void onSuccess(java.lang.String) -> onSuccess
 com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$12 -> com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$c:
     int[] $SwitchMap$com$chanfinecloud$cflforemployee$entity$WorkflowType -> a
-    259:259:void <clinit>() -> <clinit>
+    260:260:void <clinit>() -> <clinit>
 com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$2 -> com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$e:
     com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment this$0 -> a
-    186:186:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
-    189:190:void onItemSelected(com.jaredrummler.materialspinner.MaterialSpinner,int,long,java.lang.Object) -> a
+    187:187:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
+    190:191:void onItemSelected(com.jaredrummler.materialspinner.MaterialSpinner,int,long,java.lang.Object) -> a
 com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$3 -> com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$f:
-    197:197:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
-    200:201:void onItemSelected(com.jaredrummler.materialspinner.MaterialSpinner,int,long,java.lang.Object) -> a
+    198:198:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
+    201:202:void onItemSelected(com.jaredrummler.materialspinner.MaterialSpinner,int,long,java.lang.Object) -> a
 com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$4 -> com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$g:
     android.widget.TextView val$date -> a
     com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment this$0 -> b
-    220:220:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment,android.widget.TextView) -> <init>
-    223:231:void onClick(android.view.View) -> onClick
+    221:221:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment,android.widget.TextView) -> <init>
+    224:232:void onClick(android.view.View) -> onClick
 com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$4$1 -> com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$g$a:
     com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$4 this$1 -> a
-    223:223:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$4) -> <init>
-    226:228:void returnData(java.lang.String,java.lang.String) -> a
+    224:224:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$4) -> <init>
+    227:229:void returnData(java.lang.String,java.lang.String) -> a
 com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$5 -> com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$h:
     com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment this$0 -> a
-    253:253:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
-    256:272:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
+    254:254:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
+    257:273:void onSimpleItemClick(com.chad.library.adapter.base.BaseQuickAdapter,android.view.View,int) -> onSimpleItemClick
 com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$6 -> com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$i:
     com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment this$0 -> a
-    392:392:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
-    395:400:void onClick(android.view.View) -> onClick
+    393:393:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
+    396:401:void onClick(android.view.View) -> onClick
 com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$7 -> com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$j:
     com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment this$0 -> a
-    402:402:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
-    405:410:void onClick(android.view.View) -> onClick
+    403:403:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
+    406:411:void onClick(android.view.View) -> onClick
 com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$8 -> com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$k:
     com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment this$0 -> a
-    442:442:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
-    445:446:void onClick(android.view.View) -> onClick
+    444:444:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
+    447:448:void onClick(android.view.View) -> onClick
 com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$9 -> com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment$l:
     com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment this$0 -> a
-    530:530:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
-    533:535:void onAnimationStart(android.animation.Animator,boolean) -> onAnimationStart
-    539:541:void onAnimationStart(android.animation.Animator) -> onAnimationStart
+    537:537:void <init>(com.chanfinecloud.cflforemployee.ui.WorkflowActionFragment) -> <init>
+    540:542:void onAnimationStart(android.animation.Animator,boolean) -> onAnimationStart
+    546:548:void onAnimationStart(android.animation.Animator) -> onAnimationStart
 com.chanfinecloud.cflforemployee.ui.WorkflowListActivity -> com.chanfinecloud.cflforemployee.ui.WorkflowListActivity:
     int page -> n
     int pageSize -> o
@@ -23147,31 +23154,31 @@ com.chanfinecloud.cflforemployee.weidgt.BadgeView -> com.chanfinecloud.cflforemp
     401:402:void setBadgePosition(int) -> setBadgePosition
 com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView -> com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView:
     android.content.Context mContext -> a
-    20:23:void <init>(android.content.Context) -> <init>
-    26:29:void <init>(android.content.Context,android.util.AttributeSet) -> <init>
-    32:35:void <init>(android.content.Context,android.util.AttributeSet,int) -> <init>
-    15:15:boolean access$000(com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView,char) -> a
-    15:15:android.content.Context access$100(com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView) -> a
-    38:57:void addWatcher() -> a
-    99:104:boolean getIsEmoji(char) -> a
-    15:15:boolean access$200(com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView,char) -> b
-    144:147:boolean getIsSp(char) -> b
-    67:93:android.text.InputFilter getInputFilterProhibitEmoji() -> getInputFilterProhibitEmoji
-    110:140:android.text.InputFilter getInputFilterProhibitSP() -> getInputFilterProhibitSP
-    62:64:void setProhibitEmoji(android.widget.EditText) -> setProhibitEmoji
+    21:24:void <init>(android.content.Context) -> <init>
+    27:30:void <init>(android.content.Context,android.util.AttributeSet) -> <init>
+    33:36:void <init>(android.content.Context,android.util.AttributeSet,int) -> <init>
+    16:16:boolean access$000(com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView,char) -> a
+    16:16:android.content.Context access$100(com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView) -> a
+    39:58:void addWatcher() -> a
+    100:105:boolean getIsEmoji(char) -> a
+    16:16:boolean access$200(com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView,char) -> b
+    145:149:boolean getIsSp(char) -> b
+    68:94:android.text.InputFilter getInputFilterProhibitEmoji() -> getInputFilterProhibitEmoji
+    111:141:android.text.InputFilter getInputFilterProhibitSP() -> getInputFilterProhibitSP
+    63:65:void setProhibitEmoji(android.widget.EditText) -> setProhibitEmoji
 com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView$1 -> com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView$a:
-    38:38:void <init>(com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView) -> <init>
-    52:52:void afterTextChanged(android.text.Editable) -> afterTextChanged
-    42:42:void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
-    47:47:void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
+    39:39:void <init>(com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView) -> <init>
+    53:53:void afterTextChanged(android.text.Editable) -> afterTextChanged
+    43:43:void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
+    48:48:void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
 com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView$2 -> com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView$b:
     com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView this$0 -> a
-    67:67:void <init>(com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView) -> <init>
-    71:89:java.lang.CharSequence filter(java.lang.CharSequence,int,int,android.text.Spanned,int,int) -> filter
+    68:68:void <init>(com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView) -> <init>
+    72:90:java.lang.CharSequence filter(java.lang.CharSequence,int,int,android.text.Spanned,int,int) -> filter
 com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView$3 -> com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView$c:
     com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView this$0 -> a
-    110:110:void <init>(com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView) -> <init>
-    114:136:java.lang.CharSequence filter(java.lang.CharSequence,int,int,android.text.Spanned,int,int) -> filter
+    111:111:void <init>(com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView) -> <init>
+    115:137:java.lang.CharSequence filter(java.lang.CharSequence,int,int,android.text.Spanned,int,int) -> filter
 com.chanfinecloud.cflforemployee.weidgt.MaxHeightRecyclerView -> com.chanfinecloud.cflforemployee.weidgt.MaxHeightRecyclerView:
     int maxHeight -> a
     28:30:void <init>(android.content.Context) -> <init>

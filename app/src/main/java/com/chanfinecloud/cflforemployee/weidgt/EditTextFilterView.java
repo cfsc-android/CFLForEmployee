@@ -8,6 +8,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -141,7 +142,8 @@ public class EditTextFilterView extends androidx.appcompat.widget.AppCompatEditT
     }
 
     private boolean getIsSp(char codePoint){
-        if(Character.getType(codePoint)>Character.LETTER_NUMBER){
+        Log.e( "getIsSp: ", Character.getType(codePoint) + "");
+        if(Character.getType(codePoint)>Character.CURRENCY_SYMBOL){
             return true;
         }
         return false;
