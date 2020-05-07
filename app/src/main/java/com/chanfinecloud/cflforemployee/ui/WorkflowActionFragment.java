@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -288,7 +289,7 @@ public class WorkflowActionFragment extends BaseFragment {
         TextView labelView=v.findViewById(R.id.action_remark_label);
         labelView.setText(label);
         EditTextFilterView remark=v.findViewById(R.id.action_remark_content);
-        WorkflowViewEntity<EditText> workflowView=new WorkflowViewEntity<>(v);
+        WorkflowViewEntity<EditTextFilterView> workflowView=new WorkflowViewEntity<>(v);
         workflowView.setLabel(labelView);
         workflowView.setContent(remark);
         return workflowView;
@@ -304,7 +305,7 @@ public class WorkflowActionFragment extends BaseFragment {
         TextView labelView=v.findViewById(R.id.action_text_label);
         labelView.setText(label);
         EditTextFilterView text=v.findViewById(R.id.action_text_content);
-        WorkflowViewEntity<EditText> workflowView=new WorkflowViewEntity<>(v);
+        WorkflowViewEntity<EditTextFilterView> workflowView=new WorkflowViewEntity<>(v);
         workflowView.setLabel(labelView);
         workflowView.setContent(text);
         return workflowView;
@@ -425,8 +426,9 @@ public class WorkflowActionFragment extends BaseFragment {
                 workflowViewEntity=initRateView(formContent.get(i).getFormItemLabel());
             }else if("input_number".equals(formContent.get(i).getFormItemType())){
                 workflowViewEntity=initInputView(formContent.get(i).getFormItemLabel());
-                EditText et= (EditText) workflowViewEntity.getContent();
-                et.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                EditTextFilterView et= (EditTextFilterView) workflowViewEntity.getContent();
+                //et.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                et.setInputType(0x00002002);
             }else if("text".equals(formContent.get(i).getFormItemType())){
                 workflowViewEntity=initTextView(formContent.get(i).getFormItemLabel());
                 TextView textView= (TextView) workflowViewEntity.getContent();
@@ -501,7 +503,12 @@ public class WorkflowActionFragment extends BaseFragment {
                 map.put(workflowViewTag.getFormKey(),rate.getRating());
             }else if("input_number".equals(workflowViewTag.getFormType())){
                 EditTextFilterView manualCost= (EditTextFilterView) workflowViewTag.getWorkflowView().getContent();
-                map.put(workflowViewTag.getFormKey(),Double.parseDouble(manualCost.getText().toString()));
+                if (TextUtils.isEmpty(manualCost.getText().toString())){
+                    showToast("请填写正确的数值内容");
+                    return;
+                }else {
+                    map.put(workflowViewTag.getFormKey(), Double.parseDouble(manualCost.getText().toString()));
+                }
             }
         }
         map.put("businessId",businessId);
