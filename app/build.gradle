@@ -5,7 +5,7 @@ apply plugin: 'com.android.application'
 //def Release_Url = "\"http://10.88.0.58:9200/\""
 //def Debug_Url = "\"http://10.222.5.45:8888/\""
 def Release_Url = "\"http://222.240.190.70:9200/\""
-def Debug_Url = "\"http://10.222.5.49:8888/\""
+def Debug_Url = "\"http://10.222.5.14:8888/\""
 
 android {
     compileSdkVersion 29
@@ -13,7 +13,7 @@ android {
         applicationId "com.chanfinecloud.cflforemployee"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 6
+        versionCode 7
         versionName "1.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         flavorDimensions "versionCode"
@@ -46,10 +46,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.cfl
             //测试
-//            buildConfigField "String", "BASE_URL", Debug_Url
-//            buildConfigField "String", "ENV", "\"debug\""
-            buildConfigField "String", "BASE_URL", Release_Url
-            buildConfigField "String", "ENV", "\"release\""
+            buildConfigField "String", "BASE_URL", Debug_Url
+            buildConfigField "String", "ENV", "\"debug\""
+//            buildConfigField "String", "BASE_URL", Release_Url
+//            buildConfigField "String", "ENV", "\"release\""
         }
         release {
             debuggable true

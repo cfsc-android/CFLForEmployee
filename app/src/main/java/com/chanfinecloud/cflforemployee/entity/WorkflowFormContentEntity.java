@@ -1,6 +1,7 @@
 package com.chanfinecloud.cflforemployee.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Loong on 2020/3/14.
@@ -22,6 +23,8 @@ public class WorkflowFormContentEntity implements Serializable {
     private String formItemLabel;
     private String fieldName;
     private int sort;
+    private String required;
+    private List<WorkflowContentVerificationEntity> valid;
 
     public String getFormItemType() {
         return formItemType;
@@ -61,5 +64,21 @@ public class WorkflowFormContentEntity implements Serializable {
 
     public void setSort(int sort) {
         this.sort = sort;
+    }
+
+    public String getRequired() {
+        return required;
+    }
+
+    public void setRequired(String required) {
+        this.required = required;
+    }
+
+    public List<WorkflowContentVerificationEntity> getValid() {
+        return valid;
+    }
+
+    public void setValid(List<WorkflowContentVerificationEntity> valid) {
+        this.valid = valid;
     }
 }

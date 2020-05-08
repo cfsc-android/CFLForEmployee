@@ -13,11 +13,13 @@ public class WorkflowViewTagEntity implements Serializable {
     private String formType;
     private String formKey;
     private WorkflowViewEntity workflowView;
+    private WorkflowFormContentEntity workflowFormContent;
 
-    public WorkflowViewTagEntity(String formType, String formKey, WorkflowViewEntity workflowView) {
+    public WorkflowViewTagEntity(String formType, String formKey, WorkflowViewEntity workflowView,WorkflowFormContentEntity workflowFormContent) {
         this.formType = formType;
         this.formKey = formKey;
         this.workflowView = workflowView;
+        this.workflowFormContent = workflowFormContent;
     }
 
     public String getFormKey() {
@@ -42,5 +44,13 @@ public class WorkflowViewTagEntity implements Serializable {
 
     public void setWorkflowView(WorkflowViewEntity workflowView) {
         this.workflowView = workflowView;
+    }
+
+    public WorkflowFormContentEntity getWorkflowFormContent() {
+        return workflowFormContent;
+    }
+
+    public void setWorkflowFormContent(WorkflowFormContentEntity workflowFormContent) {
+        this.workflowFormContent = workflowFormContent;
     }
 }

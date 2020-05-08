@@ -15,6 +15,9 @@ import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chanfinecloud.cflforemployee.CFLApplication;
 import com.chanfinecloud.cflforemployee.R;
 import com.chanfinecloud.cflforemployee.weidgt.BadgeView;
@@ -171,4 +174,53 @@ public class Utils {
             badgeView.setText(0+"");
         }
     }
+
+    /**
+     * @param str
+     * @return
+     * @方法说明:判断字符串是否为 * @方法名称:isEmpty
+     * @返回 boolean
+     */
+    public static boolean isEmpty(String str) {
+        if (str == null || str.equals("") || str.equals("null")) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * damien recyclerView 是否滑动到底部
+     * @param recyclerView
+     * @return
+     */
+    public static boolean isVisBottom(RecyclerView recyclerView){
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        //屏幕中最后一个可见子项的position
+        int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+        //当前屏幕所看到的子项个数
+        int visibleItemCount = layoutManager.getChildCount();
+        //当前RecyclerView的所有子项个数
+        int totalItemCount = layoutManager.getItemCount();
+        //RecyclerView的滑动状态
+        int state = recyclerView.getScrollState();
+        if(visibleItemCount > 0 && lastVisibleItemPosition == totalItemCount - 1 && state == recyclerView.SCROLL_STATE_IDLE){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    /**
+     * recyclerView 是否滑动到底部
+     * @param recyclerView
+     * @return
+     */
+    public static boolean isSlideToBottom(RecyclerView recyclerView) {
+        if (recyclerView == null) return false;
+        if (recyclerView.computeVerticalScrollExtent() + recyclerView.computeVerticalScrollOffset()
+                >= recyclerView.computeVerticalScrollRange())
+            return true;
+        return false;
+    }
+
 }

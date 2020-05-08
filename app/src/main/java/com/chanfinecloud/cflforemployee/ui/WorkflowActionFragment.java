@@ -24,6 +24,7 @@ import com.chanfinecloud.cflforemployee.entity.EventBusMessage;
 import com.chanfinecloud.cflforemployee.entity.OperationInfoEntity;
 import com.chanfinecloud.cflforemployee.entity.OrderDetailsEntity;
 import com.chanfinecloud.cflforemployee.entity.UserEntity;
+import com.chanfinecloud.cflforemployee.entity.WorkflowContentVerificationEntity;
 import com.chanfinecloud.cflforemployee.entity.WorkflowFormContentEntity;
 import com.chanfinecloud.cflforemployee.entity.WorkflowProcessesEntity;
 import com.chanfinecloud.cflforemployee.entity.WorkflowType;
@@ -38,6 +39,7 @@ import com.chanfinecloud.cflforemployee.ui.base.BaseFragment;
 import com.chanfinecloud.cflforemployee.util.AnimationUtil;
 import com.chanfinecloud.cflforemployee.util.LogUtils;
 import com.chanfinecloud.cflforemployee.util.SharedPreferencesManage;
+import com.chanfinecloud.cflforemployee.util.Utils;
 import com.chanfinecloud.cflforemployee.weidgt.EditTextFilterView;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImagePreviewListAdapter;
 import com.chanfinecloud.cflforemployee.weidgt.imagepreview.ImageViewInfo;
@@ -55,6 +57,7 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.lang.reflect.Method;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -450,7 +453,7 @@ public class WorkflowActionFragment extends BaseFragment {
             }
             if(workflowViewEntity!=null){
                 workflow_action_content_ll.addView(workflowViewEntity.getView());
-                workflowViewTagList.add(new WorkflowViewTagEntity(formContent.get(i).getFormItemType(),formContent.get(i).getFormKey(),workflowViewEntity));
+                workflowViewTagList.add(new WorkflowViewTagEntity(formContent.get(i).getFormItemType(),formContent.get(i).getFormKey(),workflowViewEntity, formContent.get(i)));
             }
         }
     }
@@ -491,6 +494,9 @@ public class WorkflowActionFragment extends BaseFragment {
                 }
             }else if("textarea".equals(workflowViewTag.getFormType())){
                 EditTextFilterView remark= (EditTextFilterView) workflowViewTag.getWorkflowView().getContent();
+                if (!contentVerificationPass(remark.getText().toString(), workflowViewTag.getWorkflowFormContent())){
+                    return;
+                }
                 map.put(workflowViewTag.getFormKey(),remark.getText().toString());
             }else if("director".equals(workflowViewTag.getFormType())||"employee".equals(workflowViewTag.getFormType())||"emergency".equals(workflowViewTag.getFormType())){
                 MaterialSpinner assignId= (MaterialSpinner) workflowViewTag.getWorkflowView().getContent();
@@ -503,12 +509,11 @@ public class WorkflowActionFragment extends BaseFragment {
                 map.put(workflowViewTag.getFormKey(),rate.getRating());
             }else if("input_number".equals(workflowViewTag.getFormType())){
                 EditTextFilterView manualCost= (EditTextFilterView) workflowViewTag.getWorkflowView().getContent();
-                if (TextUtils.isEmpty(manualCost.getText().toString())){
-                    showToast("请填写正确的数值内容");
+                if (!contentVerificationPass(manualCost.getText().toString(), workflowViewTag.getWorkflowFormContent())){
                     return;
-                }else {
-                    map.put(workflowViewTag.getFormKey(), Double.parseDouble(manualCost.getText().toString()));
                 }
+                map.put(workflowViewTag.getFormKey(), Double.parseDouble(manualCost.getText().toString()));
+
             }
         }
         map.put("businessId",businessId);
@@ -577,6 +582,52 @@ public class WorkflowActionFragment extends BaseFragment {
                 }
                 break;
         }
+    }
+
+    /**
+     * 统一校验流程提交内容的合法性
+     * @param content
+     * @param workflowFormContentEntity
+     * @return
+     */
+    private boolean contentVerificationPass(String content, WorkflowFormContentEntity workflowFormContentEntity) {
+        if (workflowFormContentEntity.getRequired() != null && workflowFormContentEntity.getRequired().equals("true")){
+            if (Utils.isEmpty(content)){
+                showToast("提交内容不能为空");
+                return false;
+            }
+        }
+
+        List<WorkflowContentVerificationEntity> valid = workflowFormContentEntity.getValid();
+        if (!Utils.isEmpty(content) && valid != null && valid.size() > 0){
+            for (int i = 0; i < valid.size(); i++){
+                WorkflowContentVerificationEntity verificationEntity = valid.get(i);
+                if (verificationEntity != null){
+                    switch (verificationEntity.getType()){
+                        case "String":
+                            if (content.length() > Integer.parseInt(verificationEntity.getMaxLength())){
+                                showToast(verificationEntity.getMessage());
+                                return false;
+                            }
+                            break;
+                        case "Number":
+                            if (Double.parseDouble(content) > Double.parseDouble(verificationEntity.getMax())
+                                    || Double.parseDouble(content) < Double.parseDouble(verificationEntity.getMin())){
+
+                                showToast(verificationEntity.getMessage());
+                                return false;
+                            }
+                            break;
+                    }
+
+                }
+
+            }
+
+        }
+
+
+        return true;
     }
 
     /**
